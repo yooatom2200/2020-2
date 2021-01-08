@@ -1,0 +1,502 @@
+HR20164091>select *
+  2  from emp
+  3  where sal>=1000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+12 개의 행이 선택되었습니다.
+
+HR20164091>select ename from emp where empno=7369;
+
+ENAME                                                                                                                   
+----------                                                                                                              
+SMITH                                                                                                                   
+
+HR20164091>select sal from emp where ename='SMITH'
+  2  ;
+
+       SAL                                                                                                              
+----------                                                                                                              
+       800                                                                                                              
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select * from dept;
+
+    DEPTNO DNAME          LOC                                                                                           
+---------- -------------- -------------                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                      
+        20 RESEARCH       DALLAS                                                                                        
+        30 SALES          CHICAGO                                                                                       
+        40 OPERATIONS     BOSTON                                                                                        
+
+HR20164091>select * from bonus;
+
+선택된 레코드가 없습니다.
+
+HR20164091>select job from emp;
+
+JOB                                                                                                                     
+---------                                                                                                               
+CLERK                                                                                                                   
+SALESMAN                                                                                                                
+SALESMAN                                                                                                                
+MANAGER                                                                                                                 
+SALESMAN                                                                                                                
+MANAGER                                                                                                                 
+MANAGER                                                                                                                 
+ANALYST                                                                                                                 
+PRESIDENT                                                                                                               
+SALESMAN                                                                                                                
+CLERK                                                                                                                   
+CLERK                                                                                                                   
+ANALYST                                                                                                                 
+CLERK                                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>select distinct job from emp;
+
+JOB                                                                                                                     
+---------                                                                                                               
+CLERK                                                                                                                   
+SALESMAN                                                                                                                
+PRESIDENT                                                                                                               
+MANAGER                                                                                                                 
+ANALYST                                                                                                                 
+
+HR20164091>select unique job from emp;
+
+JOB                                                                                                                     
+---------                                                                                                               
+CLERK                                                                                                                   
+SALESMAN                                                                                                                
+PRESIDENT                                                                                                               
+MANAGER                                                                                                                 
+ANALYST                                                                                                                 
+
+HR20164091>select ename, sal, sal+300
+  2  from emp;
+
+ENAME             SAL    SAL+300                                                                                        
+---------- ---------- ----------                                                                                        
+SMITH             800       1100                                                                                        
+ALLEN            1600       1900                                                                                        
+WARD             1250       1550                                                                                        
+JONES            2975       3275                                                                                        
+MARTIN           1250       1550                                                                                        
+BLAKE            2850       3150                                                                                        
+CLARK            2450       2750                                                                                        
+SCOTT            3000       3300                                                                                        
+KING             5000       5300                                                                                        
+TURNER           1500       1800                                                                                        
+ADAMS            1100       1400                                                                                        
+JAMES             950       1250                                                                                        
+FORD             3000       3300                                                                                        
+MILLER           1300       1600                                                                                        
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename NAME, sal Salary
+  2  from emp;
+
+NAME           SALARY                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ALLEN            1600                                                                                                   
+WARD             1250                                                                                                   
+JONES            2975                                                                                                   
+MARTIN           1250                                                                                                   
+BLAKE            2850                                                                                                   
+CLARK            2450                                                                                                   
+SCOTT            3000                                                                                                   
+KING             5000                                                                                                   
+TURNER           1500                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+FORD             3000                                                                                                   
+MILLER           1300                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename, sal
+  2  from emp
+  3  where sal BETWEEN 1000 AND 1500;
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+WARD             1250                                                                                                   
+MARTIN           1250                                                                                                   
+TURNER           1500                                                                                                   
+ADAMS            1100                                                                                                   
+MILLER           1300                                                                                                   
+
+HR20164091>select ename, sal, mgr
+  2  from emp
+  3  where mgr in (7902, 7566);
+
+ENAME             SAL        MGR                                                                                        
+---------- ---------- ----------                                                                                        
+SMITH             800       7902                                                                                        
+SCOTT            3000       7566                                                                                        
+FORD             3000       7566                                                                                        
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename
+  2  from emp
+  3  where ename like 'S%';
+
+ENAME                                                                                                                   
+----------                                                                                                              
+SMITH                                                                                                                   
+SCOTT                                                                                                                   
+
+HR20164091>
+HR20164091>select ename
+  2  from emp
+  3  where ename like '_A%';
+
+ENAME                                                                                                                   
+----------                                                                                                              
+WARD                                                                                                                    
+MARTIN                                                                                                                  
+JAMES                                                                                                                   
+
+HR20164091>update emp set ename='S_SMITH' where empno=7396;
+
+0 행이 갱신되었습니다.
+
+HR20164091> update emp set ename='S_SMITH' where empno=7369;
+
+1 행이 갱신되었습니다.
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 S_SMITH    CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename
+  2  from emp
+  3  where ename like '%_%';
+
+ENAME                                                                                                                   
+----------                                                                                                              
+S_SMITH                                                                                                                 
+ALLEN                                                                                                                   
+WARD                                                                                                                    
+JONES                                                                                                                   
+MARTIN                                                                                                                  
+BLAKE                                                                                                                   
+CLARK                                                                                                                   
+SCOTT                                                                                                                   
+KING                                                                                                                    
+TURNER                                                                                                                  
+ADAMS                                                                                                                   
+JAMES                                                                                                                   
+FORD                                                                                                                    
+MILLER                                                                                                                  
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename
+  2  from emp
+  3  where ename like '%\_%' escape '\';
+
+ENAME                                                                                                                   
+----------                                                                                                              
+S_SMITH                                                                                                                 
+
+HR20164091>select sysdate from dual;
+
+SYSDATE                                                                                                                 
+--------                                                                                                                
+20/09/10                                                                                                                
+
+HR20164091>select table_name from user_tables;
+
+TABLE_NAME                                                                                                              
+------------------------------                                                                                          
+DEPT                                                                                                                    
+EMP                                                                                                                     
+BONUS                                                                                                                   
+SALGRADE                                                                                                                
+DUMMY                                                                                                                   
+S                                                                                                                       
+P                                                                                                                       
+SP                                                                                                                      
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>select ename, deptno
+  2  from emp
+  3  order by deptno;
+
+ENAME          DEPTNO                                                                                                   
+---------- ----------                                                                                                   
+CLARK              10                                                                                                   
+KING               10                                                                                                   
+MILLER             10                                                                                                   
+JONES              20                                                                                                   
+FORD               20                                                                                                   
+ADAMS              20                                                                                                   
+S_SMITH            20                                                                                                   
+SCOTT              20                                                                                                   
+WARD               30                                                                                                   
+TURNER             30                                                                                                   
+ALLEN              30                                                                                                   
+JAMES              30                                                                                                   
+BLAKE              30                                                                                                   
+MARTIN             30                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>select ename, deptno
+  2  from emp
+  3  order by deptno desc;
+
+ENAME          DEPTNO                                                                                                   
+---------- ----------                                                                                                   
+BLAKE              30                                                                                                   
+TURNER             30                                                                                                   
+ALLEN              30                                                                                                   
+MARTIN             30                                                                                                   
+WARD               30                                                                                                   
+JAMES              30                                                                                                   
+SCOTT              20                                                                                                   
+JONES              20                                                                                                   
+S_SMITH            20                                                                                                   
+ADAMS              20                                                                                                   
+FORD               20                                                                                                   
+KING               10                                                                                                   
+MILLER             10                                                                                                   
+CLARK              10                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>desc emp;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ EMPNO                                                             NOT NULL NUMBER(4)
+ ENAME                                                                      VARCHAR2(10)
+ JOB                                                                        VARCHAR2(9)
+ MGR                                                                        NUMBER(4)
+ HIREDATE                                                                   DATE
+ SAL                                                                        NUMBER(7,2)
+ COMM                                                                       NUMBER(7,2)
+ DEPTNO                                                            NOT NULL NUMBER(2)
+
+HR20164091>select round(45.926,2), trunc(45.926,2)
+  2  from dual;
+
+ROUND(45.926,2) TRUNC(45.926,2)                                                                                         
+--------------- ---------------                                                                                         
+          45.93           45.92                                                                                         
+
+HR20164091>select ename, sal, mgr
+  2  from emp
+  3  where ename = 'blake';
+
+선택된 레코드가 없습니다.
+
+HR20164091>
+HR20164091>select ename, sal, mgr
+  2  from emp
+  3  where lower(ename) = 'blake';
+
+ENAME             SAL        MGR                                                                                        
+---------- ---------- ----------                                                                                        
+BLAKE            2850       7839                                                                                        
+
+HR20164091>select to_char(sysdate, 'fmDD Month YYYY') from dual;
+
+TO_CHAR(SYSDAT                                                                                                          
+--------------                                                                                                          
+10 9월 2020                                                                                                             
+
+HR20164091>
+HR20164091>select to_char(sysdate, 'fmHH : MI : SS') from dual;
+
+TO_CHAR(SYSD                                                                                                            
+------------                                                                                                            
+2 : 16 : 57                                                                                                             
+
+HR20164091>
+HR20164091>select to_char(sysdate, 'fmHH : MI : SS AM') from dual;
+
+TO_CHAR(SYSDATE,'                                                                                                       
+-----------------                                                                                                       
+2 : 16 : 58 오후                                                                                                        
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 S_SMITH    CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename, hiredate from emp where hiredate='81%'
+  2  ;
+select ename, hiredate from emp where hiredate='81%'
+                                               *
+1행에 오류:
+ORA-01840: 입력된 값의 길이가 날짜 형식에 비해 부족합니다 
+
+
+HR20164091>select ename, hiredate from emp where to_char(hiredate)='81%';
+
+선택된 레코드가 없습니다.
+
+HR20164091>select ename, hiredate from emp where to_char(hiredate) like '81%';
+
+ENAME      HIREDATE                                                                                                     
+---------- --------                                                                                                     
+ALLEN      81/02/20                                                                                                     
+WARD       81/02/22                                                                                                     
+JONES      81/04/02                                                                                                     
+MARTIN     81/09/28                                                                                                     
+BLAKE      81/05/01                                                                                                     
+CLARK      81/09/09                                                                                                     
+KING       81/11/17                                                                                                     
+TURNER     81/09/08                                                                                                     
+JAMES      81/12/03                                                                                                     
+FORD       81/12/03                                                                                                     
+
+10 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp where mgr is NULL;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+
+HR20164091>select ename NAME, 12*sal+comm
+  2  from emp;
+
+NAME       12*SAL+COMM                                                                                                  
+---------- -----------                                                                                                  
+S_SMITH                                                                                                                 
+ALLEN            19500                                                                                                  
+WARD             15500                                                                                                  
+JONES                                                                                                                   
+MARTIN           16400                                                                                                  
+BLAKE                                                                                                                   
+CLARK                                                                                                                   
+SCOTT                                                                                                                   
+KING                                                                                                                    
+TURNER           18000                                                                                                  
+ADAMS                                                                                                                   
+JAMES                                                                                                                   
+FORD                                                                                                                    
+MILLER                                                                                                                  
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>
+HR20164091>select ename, sal, comm, (sal*12)+NVL(comm,0)
+  2  from emp;
+
+ENAME             SAL       COMM (SAL*12)+NVL(COMM,0)                                                                   
+---------- ---------- ---------- --------------------                                                                   
+S_SMITH           800                            9600                                                                   
+ALLEN            1600        300                19500                                                                   
+WARD             1250        500                15500                                                                   
+JONES            2975                           35700                                                                   
+MARTIN           1250       1400                16400                                                                   
+BLAKE            2850                           34200                                                                   
+CLARK            2450                           29400                                                                   
+SCOTT            3000                           36000                                                                   
+KING             5000                           60000                                                                   
+TURNER           1500          0                18000                                                                   
+ADAMS            1100                           13200                                                                   
+JAMES             950                           11400                                                                   
+FORD             3000                           36000                                                                   
+MILLER           1300                           15600                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>spool off

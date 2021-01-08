@@ -1,0 +1,260 @@
+HR20164091>CREATE TABLE EMP_SUMMARY(
+  2  EMPNOO NUMBER(4) PRIMARY KEY,
+  3  ENAME VARCHAR2(10),
+  4  JOB VARCHAR2(9),
+  5  INCOMDE NUMBER(7,2),
+  6  DNAME VARCHAR2(14));
+CREATE TABLE EMP_SUMMARY(
+             *
+1행에 오류:
+ORA-00955: 기존의 객체가 이름을 사용하고 있습니다. 
+
+
+HR20164091>SELECT * FROOM EMP_SUMMARY
+  2  ;
+SELECT * FROOM EMP_SUMMARY
+         *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>SELECT * FROM EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7934 MILLER     CLERK          15600 ACCOUNTING                                                                   
+      7369 SMITH      CLERK          19500 RESEARCH                                                                     
+      7876 ADAMS      CLERK          13200 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK          11400 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM EMP_SUMMARY ORDER BY EMPNO;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7369 SMITH      CLERK          19500 RESEARCH                                                                     
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7876 ADAMS      CLERK          13200 RESEARCH                                                                     
+      7900 JAMES      CLERK          11400 SALES                                                                        
+      7934 MILLER     CLERK          15600 ACCOUNTING                                                                   
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>DROP TABLE EMP_SUMMARY
+  2  ;
+
+테이블이 삭제되었습니다.
+
+HR20164091>COMMIT;
+
+커밋이 완료되었습니다.
+
+HR20164091>SELECT * FROM 주문
+  2  ;
+
+선택된 레코드가 없습니다.
+
+HR20164091>SELECT * FROM 주문
+  2  ;
+
+선택된 레코드가 없습니다.
+
+HR20164091>CREATE TABLE 주문 (주문번호 CHAR(12));
+CREATE TABLE 주문 (주문번호 CHAR(12))
+             *
+1행에 오류:
+ORA-00955: 기존의 객체가 이름을 사용하고 있습니다. 
+
+
+HR20164091>
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201022011                                                                                                             
+20201022012                                                                                                             
+20201022013                                                                                                             
+20201022014                                                                                                             
+20201022015                                                                                                             
+20201022016                                                                                                             
+20201022017                                                                                                             
+20201022018                                                                                                             
+20201022019                                                                                                             
+20201022020                                                                                                             
+20201022021                                                                                                             
+20201022022                                                                                                             
+20201022023                                                                                                             
+20201022024                                                                                                             
+20201022025                                                                                                             
+20201022026                                                                                                             
+20201022027                                                                                                             
+20201022028                                                                                                             
+20201022029                                                                                                             
+20201022030                                                                                                             
+20201022031                                                                                                             
+
+21 개의 행이 선택되었습니다.
+
+HR20164091>COMMIT;
+
+커밋이 완료되었습니다.
+
+HR20164091>SPOOL OFF

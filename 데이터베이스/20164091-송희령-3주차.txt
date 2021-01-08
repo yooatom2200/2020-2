@@ -1,0 +1,541 @@
+HR20164091>SELECT AVG(SAL), MAX(SAL), MIN(SAL), SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB LIKE 'SALES%';
+
+  AVG(SAL)   MAX(SAL)   MIN(SAL)   SUM(SAL)                                                                             
+---------- ---------- ---------- ----------                                                                             
+      1400       1600       1250       5600                                                                             
+
+HR20164091>
+HR20164091>SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE DEPTNO = 30;
+
+  COUNT(*)                                                                                                              
+----------                                                                                                              
+         6                                                                                                              
+
+HR20164091>SELECT COUNT(COMM)
+  2  FROM EMP
+  3  WHERE DEPTNO = 30;
+
+COUNT(COMM)                                                                                                             
+-----------                                                                                                             
+          4                                                                                                             
+
+HR20164091>SELECT AVG(COMM)
+  2  FROM EMP;
+
+ AVG(COMM)                                                                                                              
+----------                                                                                                              
+       550                                                                                                              
+
+HR20164091>
+HR20164091>SELECT AVG(NVL(COMM,0))
+  2  FROM EMP;
+
+AVG(NVL(COMM,0))                                                                                                        
+----------------                                                                                                        
+      157.142857                                                                                                        
+
+HR20164091>SELECT DEPTNO, ROUND(AVG(sal),1)
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+    DEPTNO ROUND(AVG(SAL),1)                                                                                            
+---------- -----------------                                                                                            
+        30            1566.7                                                                                            
+        20              2175                                                                                            
+        10            2916.7                                                                                            
+
+HR20164091>
+HR20164091>SELECT DEPTNO, ROUND(AVG(sal),1)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  ORDER BY AVG(SAL);
+
+    DEPTNO ROUND(AVG(SAL),1)                                                                                            
+---------- -----------------                                                                                            
+        30            1566.7                                                                                            
+        20              2175                                                                                            
+        10            2916.7                                                                                            
+
+HR20164091>
+HR20164091>SELECT DEPTNO, JOB, SUM(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO, JOB;
+
+    DEPTNO JOB         SUM(SAL)                                                                                         
+---------- --------- ----------                                                                                         
+        20 CLERK           1900                                                                                         
+        30 SALESMAN        5600                                                                                         
+        20 MANAGER         2975                                                                                         
+        30 CLERK            950                                                                                         
+        10 PRESIDENT       5000                                                                                         
+        30 MANAGER         2850                                                                                         
+        10 CLERK           1300                                                                                         
+        10 MANAGER         2450                                                                                         
+        20 ANALYST         6000                                                                                         
+
+9 개의 행이 선택되었습니다.
+
+HR20164091>SELECT DEPTNO, AVG(SAL)
+  2  FROM EMP
+  3  WHERE MAX(SAL) >2000
+  4  GROUP BY DEPTNO;
+WHERE MAX(SAL) >2000
+      *
+3행에 오류:
+ORA-00934: 그룹 함수는 허가되지 않습니다 
+
+
+HR20164091>
+HR20164091>SELECT DEPTNO,MAX(SAL), AVG(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4  HAVING MAX(SAL) >2000;
+
+    DEPTNO   MAX(SAL)   AVG(SAL)                                                                                        
+---------- ---------- ----------                                                                                        
+        30       2850 1566.66667                                                                                        
+        20       3000       2175                                                                                        
+        10       5000 2916.66667                                                                                        
+
+HR20164091>SELECT  MAX(AVG(SAL))
+  2  FROM EMP
+  3  GROUP BY DEPTNO;
+
+MAX(AVG(SAL))                                                                                                           
+-------------                                                                                                           
+   2916.66667                                                                                                           
+
+HR20164091>SELECT ename,job
+  2        FROM emp
+  3        WHERE job = (SELECT job
+  4                      FROM emp
+  5                      WHERE EMPNO = 7369);
+
+ENAME      JOB                                                                                                          
+---------- ---------                                                                                                    
+SMITH      CLERK                                                                                                        
+ADAMS      CLERK                                                                                                        
+JAMES      CLERK                                                                                                        
+MILLER     CLERK                                                                                                        
+
+HR20164091>SELECT ename,job
+  2        FROM emp
+  3        WHERE job in (SELECT job
+  4                      FROM emp
+  5                      WHERE deptno = 10);
+
+ENAME      JOB                                                                                                          
+---------- ---------                                                                                                    
+CLARK      MANAGER                                                                                                      
+BLAKE      MANAGER                                                                                                      
+JONES      MANAGER                                                                                                      
+KING       PRESIDENT                                                                                                    
+MILLER     CLERK                                                                                                        
+JAMES      CLERK                                                                                                        
+ADAMS      CLERK                                                                                                        
+SMITH      CLERK                                                                                                        
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>SELECT ename,job
+  2        FROM emp
+  3        WHERE job = any (SELECT job
+  4                      FROM emp
+  5                      WHERE deptno = 10);
+
+ENAME      JOB                                                                                                          
+---------- ---------                                                                                                    
+CLARK      MANAGER                                                                                                      
+BLAKE      MANAGER                                                                                                      
+JONES      MANAGER                                                                                                      
+KING       PRESIDENT                                                                                                    
+MILLER     CLERK                                                                                                        
+JAMES      CLERK                                                                                                        
+ADAMS      CLERK                                                                                                        
+SMITH      CLERK                                                                                                        
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>SELECT empno, ename, sal
+  2  FROM emp e
+  3  WHERE EXISTS (SELECT empno
+  4                FROM emp
+  5                WHERE e.empno = mgr);
+
+     EMPNO ENAME             SAL                                                                                        
+---------- ---------- ----------                                                                                        
+      7566 JONES            2975                                                                                        
+      7698 BLAKE            2850                                                                                        
+      7782 CLARK            2450                                                                                        
+      7788 SCOTT            3000                                                                                        
+      7839 KING             5000                                                                                        
+      7902 FORD             3000                                                                                        
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>select * from salgrade
+  2  ;
+
+     GRADE      LOSAL      HISAL                                                                                        
+---------- ---------- ----------                                                                                        
+         1        700       1200                                                                                        
+         2       1201       1400                                                                                        
+         3       1401       2000                                                                                        
+         4       2001       3000                                                                                        
+         5       3001       9999                                                                                        
+
+HR20164091>SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+
+     EMPNO ENAME             SAL     DEPTNO                                                                             
+---------- ---------- ---------- ----------                                                                             
+      7698 BLAKE            2850         30                                                                             
+      7788 SCOTT            3000         20                                                                             
+      7839 KING             5000         10                                                                             
+      7902 FORD             3000         20                                                                             
+
+HR20164091>SELECT ENAME, SAL S FROM EMP WHERE SAL IN (SELECT SAL FROM SALGRADE WHERE S.SAL < 1200);
+SELECT ENAME, SAL S FROM EMP WHERE SAL IN (SELECT SAL FROM SALGRADE WHERE S.SAL < 1200)
+                                                                          *
+1행에 오류:
+ORA-00904: "S"."SAL": 부적합한 식별자 
+
+
+HR20164091>SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+
+     EMPNO ENAME             SAL     DEPTNO                                                                             
+---------- ---------- ---------- ----------                                                                             
+      7698 BLAKE            2850         30                                                                             
+      7788 SCOTT            3000         20                                                                             
+      7839 KING             5000         10                                                                             
+      7902 FORD             3000         20                                                                             
+
+HR20164091>UPDATE EMP SET DEPTNO = 10 WHERE EMPNO = 7902;
+
+1 행이 갱신되었습니다.
+
+HR20164091>SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+
+     EMPNO ENAME             SAL     DEPTNO                                                                             
+---------- ---------- ---------- ----------                                                                             
+      7698 BLAKE            2850         30                                                                             
+      7788 SCOTT            3000         20                                                                             
+      7839 KING             5000         10                                                                             
+      7902 FORD             3000         10                                                                             
+
+HR20164091>SELECT EMPNO,ENAME,SAL,DEPTNO FROM EMP WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+
+     EMPNO ENAME             SAL     DEPTNO                                                                             
+---------- ---------- ---------- ----------                                                                             
+      7698 BLAKE            2850         30                                                                             
+      7788 SCOTT            3000         20                                                                             
+      7839 KING             5000         10                                                                             
+      7902 FORD             3000         10                                                                             
+
+HR20164091>SELECT DEPTNO,AVG(SAL) FROM EMP WHERE MAX(AVG(SAL))
+  2  ;
+SELECT DEPTNO,AVG(SAL) FROM EMP WHERE MAX(AVG(SAL))
+                                      *
+1행에 오류:
+ORA-00934: 그룹 함수는 허가되지 않습니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO;
+SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+HR20164091>SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO);
+SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO)
+                  *
+1행에 오류:
+ORA-00904: "SAL": 부적합한 식별자 
+
+
+HR20164091>SELECT DEPTNO,AVG(SAL) FROM (SELECT * FROM EMP WHERE MAX(AVG(SAL));
+SELECT DEPTNO,AVG(SAL) FROM (SELECT * FROM EMP WHERE MAX(AVG(SAL))
+                                                     *
+1행에 오류:
+ORA-00934: 그룹 함수는 허가되지 않습니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP;
+SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP
+                  *
+1행에 오류:
+ORA-00978: GROUP BY 구 없이 그룹 함수가 내포되었습니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO;
+SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO;
+SELECT DEPTNO,MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+HR20164091>SELECT MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO;
+
+MAX(AVG(SAL))                                                                                                           
+-------------                                                                                                           
+       2937.5                                                                                                           
+
+HR20164091>SELECT MAX(AVG(SAL)) FROM EMP
+  2  ;
+SELECT MAX(AVG(SAL)) FROM EMP
+           *
+1행에 오류:
+ORA-00978: GROUP BY 구 없이 그룹 함수가 내포되었습니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM (SELECT * FROM EMP);
+SELECT DEPTNO,MAX(AVG(SAL)) FROM (SELECT * FROM EMP)
+                  *
+1행에 오류:
+ORA-00978: GROUP BY 구 없이 그룹 함수가 내포되었습니다 
+
+
+HR20164091>SELECT DEPTNO,MAX(AVG(SAL)) FROM (SELECT * FROM EMP) GROUP BY SAL;
+SELECT DEPTNO,MAX(AVG(SAL)) FROM (SELECT * FROM EMP) GROUP BY SAL
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+HR20164091>SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL) FROM EMP GROUP BY DEPTNO);
+SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL) FROM EMP GROUP BY DEPTNO)
+                                                 *
+1행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+HR20164091>SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO);
+SELECT DEPTNO,AVG(SAL) FROM (SELECT MAX(AVG(SAL)) FROM EMP GROUP BY DEPTNO)
+                  *
+1행에 오류:
+ORA-00904: "SAL": 부적합한 식별자 
+
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    10                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM SALGRADE;
+
+     GRADE      LOSAL      HISAL                                                                                        
+---------- ---------- ----------                                                                                        
+         1        700       1200                                                                                        
+         2       1201       1400                                                                                        
+         3       1401       2000                                                                                        
+         4       2001       3000                                                                                        
+         5       3001       9999                                                                                        
+
+HR20164091>SELECT ENAME, SAL FROM EMP;
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ALLEN            1600                                                                                                   
+WARD             1250                                                                                                   
+JONES            2975                                                                                                   
+MARTIN           1250                                                                                                   
+BLAKE            2850                                                                                                   
+CLARK            2450                                                                                                   
+SCOTT            3000                                                                                                   
+KING             5000                                                                                                   
+TURNER           1500                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+FORD             3000                                                                                                   
+MILLER           1300                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL IN (SELECT * FROM SALGRADE WHERE GRADE == 1);
+SELECT ENAME, SAL FROM EMP WHERE SAL IN (SELECT * FROM SALGRADE WHERE GRADE == 1)
+                                                                             *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL IN (SELECT * FROM SALGRADE WHERE GRADE = 1);
+SELECT ENAME, SAL FROM EMP WHERE SAL IN (SELECT * FROM SALGRADE WHERE GRADE = 1)
+                                         *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1);
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ALLEN            1600                                                                                                   
+WARD             1250                                                                                                   
+JONES            2975                                                                                                   
+MARTIN           1250                                                                                                   
+BLAKE            2850                                                                                                   
+CLARK            2450                                                                                                   
+SCOTT            3000                                                                                                   
+KING             5000                                                                                                   
+TURNER           1500                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+FORD             3000                                                                                                   
+MILLER           1300                                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1), SAL < (SELECT HISAL FROOM SALGRADE WHERE GRADE = 1);
+SELECT ENAME, SAL FROM EMP WHERE SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1), SAL < (SELECT HISAL FROOM SALGRADE WHERE GRADE = 1)
+                                                                                    *
+1행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL <= (SELECT HISAL FROM SALGRADE WHERE GRADE = 1);
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL <= (SELECT HISAL FROM SALGRADE WHERE GRADE = 1)
+  2  && SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1);
+sal의 값을 입력하십시오: 1
+구   2: && SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1)
+신   2: 1 >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1)
+1 >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1)
+*
+2행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL <= (SELECT HISAL FROM SALGRADE WHERE GRADE = 1)
+  2  AND SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1);
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+
+HR20164091>SELECT ENAME, SAL FROM EMP WHERE SAL <= (SELECT HISAL FROM SALGRADE WHERE GRADE = 1)
+  2  AND SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1);
+
+ENAME             SAL                                                                                                   
+---------- ----------                                                                                                   
+SMITH             800                                                                                                   
+ADAMS            1100                                                                                                   
+JAMES             950                                                                                                   
+
+HR20164091>SELECT empno, ename, sal
+  2  FROM emp e
+  3  WHERE EXISTS (SELECT empno
+  4                FROM emp
+  5                WHERE e.empno = mgr);
+
+     EMPNO ENAME             SAL                                                                                        
+---------- ---------- ----------                                                                                        
+      7566 JONES            2975                                                                                        
+      7698 BLAKE            2850                                                                                        
+      7782 CLARK            2450                                                                                        
+      7788 SCOTT            3000                                                                                        
+      7839 KING             5000                                                                                        
+      7902 FORD             3000                                                                                        
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>SELECT DEPTNO, ENAME, SAL WHERE EMP E WHERE (SELECT EMPNO FRMP EMP WHERE E.EMPNO = MGR);
+SELECT DEPTNO, ENAME, SAL WHERE EMP E WHERE (SELECT EMPNO FRMP EMP WHERE E.EMPNO = MGR)
+                          *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FRMP EMP WHERE E.EMPNO = MGR);
+SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FRMP EMP WHERE E.EMPNO = MGR)
+                                                              *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FROP EMP WHERE E.EMPNO = MGR);
+SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FROP EMP WHERE E.EMPNO = MGR)
+                                                              *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FROM EMP WHERE E.EMPNO = MGR);
+SELECT DEPTNO, ENAME, SAL FROM EMP E WHERE (SELECT EMPNO FROM EMP WHERE E.EMPNO = MGR)
+                                                                                     *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT DEPTNO, ENAME, SAL FROM (SELECT * FROM EMP WHERE EMPNO = MGR);
+
+선택된 레코드가 없습니다.
+
+HR20164091>SELECT * FROM EMP WHERE EMPNO = MGR;
+
+선택된 레코드가 없습니다.
+
+HR20164091>SPOOL OFF
+
+2번 질의 :
+SELECT ENAME, SAL FROM EMP WHERE SAL <= (SELECT HISAL FROM SALGRADE WHERE GRADE = 1) 
+AND SAL >= (SELECT LOSAL FROM SALGRADE WHERE GRADE = 1);
+
+나머지 문제는 못풀었습니다...

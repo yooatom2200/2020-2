@@ -1,0 +1,673 @@
+HR20164091>conn system/Hr970924
+연결되었습니다.
+SYSTEM>
+SYSTEM>CREATE USER lee identified by lee DEFAULT TABLESPACE student;
+
+사용자가 생성되었습니다.
+
+SYSTEM>CREATE USER kim identified by kim DEFAULT TABLESPACE student;
+
+사용자가 생성되었습니다.
+
+SYSTEM>
+SYSTEM>grant connect, resource to lee;
+
+권한이 부여되었습니다.
+
+SYSTEM>grant connect, resource to kim;
+
+권한이 부여되었습니다.
+
+SYSTEM>grant create view, create role to scott with admin option;
+
+권한이 부여되었습니다.
+
+SYSTEM>
+SYSTEM>conn scott/tiger
+연결되었습니다.
+SCOTT>create role customer;
+
+롤이 생성되었습니다.
+
+SCOTT>grant select, update(sal) on emp to customer;
+
+권한이 부여되었습니다.
+
+SCOTT>
+SCOTT>grant customer to lee;
+
+권한이 부여되었습니다.
+
+SCOTT>grant select on emp to kim;
+
+권한이 부여되었습니다.
+
+SCOTT>conn lee/lee
+연결되었습니다.
+LEE>select * from scott.emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+LEE>update scott.emp set sal=sal+50 where empno=7369;
+
+1 행이 갱신되었습니다.
+
+LEE>conn kim/kim
+연결되었습니다.
+KIM>select * from scott.emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        850                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+KIM>update scott.emp set sal=sal+50 where empno=7369;
+update scott.emp set sal=sal+50 where empno=7369
+             *
+1행에 오류:
+ORA-01031: 권한이 불충분합니다 
+
+
+KIM>conn scott/tiger
+연결되었습니다.
+SCOTT>grant update(sal) on emp to lee with grant option;
+
+권한이 부여되었습니다.
+
+SCOTT>
+SCOTT>conn lee/lee
+연결되었습니다.
+LEE>grant update(sal) on scott.emp to kim;
+
+권한이 부여되었습니다.
+
+LEE>conn kim/kim
+연결되었습니다.
+KIM>update scott.emp set sal=sal+50 where empno=7369;
+
+1 행이 갱신되었습니다.
+
+KIM>conn scott/tiger
+연결되었습니다.
+SCOTT>revoke update on emp from lee restrict;
+revoke update on emp from lee restrict
+                              *
+1행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+SCOTT>revoke update on emp from lee cascade;
+revoke update on emp from lee cascade
+                                    *
+1행에 오류:
+ORA-00905: 누락된 키워드 
+
+
+SCOTT>conn kim/kim
+연결되었습니다.
+KIM>update scott.emp set sal=sal+50 where empno=7369;
+
+1 행이 갱신되었습니다.
+
+KIM>
+KIM>conn scott/tiger
+연결되었습니다.
+SCOTT>drop role customer;
+
+롤이 삭제되었습니다.
+
+SCOTT>grant select on emp to public;
+
+권한이 부여되었습니다.
+
+SCOTT>conn kim/kim
+연결되었습니다.
+KIM>select * from scott.emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        950                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+KIM>update scott.emp set sal=sal+50 where empno=7369;
+
+1 행이 갱신되었습니다.
+
+KIM>revoke select on emp from public;
+revoke select on emp from public
+                 *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+KIM>conn scott/tiger
+연결되었습니다.
+SCOTT>revoke select on emp from public;
+
+권한이 취소되었습니다.
+
+SCOTT>create or replace trigger emp_update
+  2  before update on emp
+  3  begin
+  4  update update_count set count=count+1;
+  5  end;
+  6  /
+
+경고: 컴파일 오류와 함께 트리거가 생성되었습니다.
+
+SCOTT>drop trigger emp_update;
+
+트리거가 삭제되었습니다.
+
+SCOTT>select * from s;
+
+S#  SNAME     STATUS CITY                                                                                               
+--- ----- ---------- -------                                                                                            
+S1  HONG          20 SEOUL                                                                                              
+S2  SON           10 PUSAN                                                                                              
+S3  PARK          30 PUSAN                                                                                              
+S4  SHIN          20 SEOUL                                                                                              
+S5  BAHN          30 KYUNGJU                                                                                            
+
+SCOTT>select * from sp;
+
+S#  P#         QTY                                                                                                      
+--- --- ----------                                                                                                      
+S1  P1         300                                                                                                      
+S1  P2         200                                                                                                      
+S1  P3         400                                                                                                      
+S1  P4         200                                                                                                      
+S1  P5         100                                                                                                      
+S1  P6         100                                                                                                      
+S2  P1         300                                                                                                      
+S2  P2         400                                                                                                      
+S3  P2         200                                                                                                      
+S4  P2         200                                                                                                      
+S4  P4         300                                                                                                      
+S4  P5         400                                                                                                      
+
+12 개의 행이 선택되었습니다.
+
+SCOTT>delete from s where s#='s1';
+
+0 행이 삭제되었습니다.
+
+SCOTT>delete from s where s#='S1';
+delete from s where s#='S1'
+*
+1행에 오류:
+ORA-02292: 무결성 제약조건(SCOTT.SYS_C0013462)이 위배되었습니다- 자식 레코드가 발견되었습니다 
+
+
+SCOTT>CREATE OR REPLACE TRIGGER s_del
+  2   BEFORE DELETE ON S
+  3  FOR EACH ROW
+  4  BEGIN
+  5   DELETE FROM SP
+  6   WHERE S# = :OLD.S#;
+  7  END;
+  8  /
+
+트리거가 생성되었습니다.
+
+SCOTT>DELETE FROM S WHERE S# = 'S1';
+
+1 행이 삭제되었습니다.
+
+SCOTT>SELECT * FROM SP;
+
+S#  P#         QTY                                                                                                      
+--- --- ----------                                                                                                      
+S2  P1         300                                                                                                      
+S2  P2         400                                                                                                      
+S3  P2         200                                                                                                      
+S4  P2         200                                                                                                      
+S4  P4         300                                                                                                      
+S4  P5         400                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SCOTT>DROP TRIGGER s_del;
+
+트리거가 삭제되었습니다.
+
+SCOTT>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17       1000                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER null_changer
+  2   BEFORE INSERT ON emp
+  3  FOR EACH ROW
+  4   WHEN (NEW.sal IS NULL)
+  5   BEGIN
+  6  :NEW.sal := 0;
+  7   END;
+  8  /
+
+트리거가 생성되었습니다.
+
+SCOTT>INSERT INTO EMP VALUES (8000,'LEE','CLERK',7782,'82-01-23', NULL, NULL, 10);
+
+1 개의 행이 만들어졌습니다.
+
+SCOTT>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17       1000                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      8000 LEE        CLERK           7782 82/01/23          0                    10                                    
+
+15 개의 행이 선택되었습니다.
+
+SCOTT>DROP TRIGGER null_changer;
+
+트리거가 삭제되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER day_protection
+  2  BEFORE DELETE OR INSERT OR UPDATE ON EMP
+  3  BEGIN
+  4  IF TO_CHAR(SYSDATE, 'DAY') = '수요일'
+  5  THEN
+  6  RAISE_APLICATION_ERROR(-20005, '수요일엔 자료수정 불가!');
+  7  END IF;
+  8  END;
+  9  /
+
+경고: 컴파일 오류와 함께 트리거가 생성되었습니다.
+
+SCOTT>DROP TRIGGER day_protection;
+
+트리거가 삭제되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER day_protection
+  2   BEFORE DELETE OR INSERT OR UPDATE ON EMP
+  3   BEGIN
+  4  IF TO_CHAR(SYSDATE, 'DAY') = '수요일'
+  5  THEN
+  6  RAISE_APLICATION_ERROR(-20005, '수요일엔 자료수정 불가!');
+  7  END IF;
+  8   END;
+  9  /
+
+경고: 컴파일 오류와 함께 트리거가 생성되었습니다.
+
+SCOTT>
+SCOTT>DROP TRIGGER day_protection;
+
+트리거가 삭제되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER day_protection
+  2   BEFORE DELETE OR INSERT OR UPDATE ON EMP
+  3   BEGIN
+  4  IF TO_CHAR(SYSDATE, 'DAY') = '수요일'
+  5  THEN
+  6  RAISE_APPLICATION_ERROR(-20005, '수요일엔 자료수정 불가!');
+  7  END IF;
+  8   END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>UPDATE EMP SET SAL=SAL+500 WHERE EMPNO=7369
+  2  ;
+
+1 행이 갱신되었습니다.
+
+SCOTT>SELECT * FROM EMP;'
+  2  
+SCOTT>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17       1500                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      8000 LEE        CLERK           7782 82/01/23          0                    10                                    
+
+15 개의 행이 선택되었습니다.
+
+SCOTT>DROP TRIGGER day_protection;
+
+트리거가 삭제되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER day_protection
+  2   BEFORE DELETE OR INSERT OR UPDATE ON EMP
+  3   BEGIN
+  4  IF TO_CHAR(SYSDATE, 'DAY') = '목요일'
+  5  THEN
+  6  RAISE_APPLICATION_ERROR(-20005, '목요일엔 자료수정 불가!');
+  7  END IF;
+  8   END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>UPDATE EMP SET SAL=SAL+500 WHERE EMPNO=7369;
+UPDATE EMP SET SAL=SAL+500 WHERE EMPNO=7369
+       *
+1행에 오류:
+ORA-20005: 목요일엔 자료수정 불가!
+ORA-06512: "SCOTT.DAY_PROTECTION",  4행
+ORA-04088: 트리거 'SCOTT.DAY_PROTECTION'의 수행시 오류 
+
+
+SCOTT>CREATE TABLE emp_log (
+  2  Emp_id NUMBER(4),
+  3  Log_date DATE,
+  4  old_salary NUMBER(7, 2),
+  5  New_salary NUMBER(7, 2),
+  6  chg_rateNUMBER(7, 2)
+  7  );
+chg_rateNUMBER(7, 2)
+              *
+6행에 오류:
+ORA-00902: 데이터유형이 부적합합니다 
+
+
+SCOTT>CREATE TABLE emp_log (
+  2  Emp_id NUMBER(4),
+  3  Log_date DATE,
+  4  old_salary NUMBER(7, 2),
+  5  New_salary NUMBER(7, 2),
+  6  chg_rate NUMBER(7, 2)
+  7  );
+
+테이블이 생성되었습니다.
+
+SCOTT>CREATE OR REPLACE TRIGGER TR_ROG_SALARY
+  2  AFTER UPDATE OF SAL ON EMP
+  3  FOR EACH ROW
+  4  WHEN (new.SAL != old.SAL)
+  5   BEGIN
+  6  INSERT INTO emp_log(
+  7  Emp_id,
+  8  Log_date,
+  9  old_salary,
+ 10  new_salary,
+ 11  chg_rate
+ 12  )
+ 13  VALUES(
+ 14  :new.Empno,
+ 15  SYSDATE,
+ 16  :old.SAL,
+ 17  :new.SAL,
+ 18  (:new.SAL - :old.SAL) / :old.SAL
+ 19  );
+ 20  END;
+ 21  /
+
+트리거가 생성되었습니다.
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+update emp set sal=sal+100 where empno = 7369
+       *
+1행에 오류:
+ORA-20005: 목요일엔 자료수정 불가!
+ORA-06512: "SCOTT.DAY_PROTECTION",  4행
+ORA-04088: 트리거 'SCOTT.DAY_PROTECTION'의 수행시 오류 
+
+
+SCOTT>DROP TRIGGER day_protection;
+
+트리거가 삭제되었습니다.
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+
+1 행이 갱신되었습니다.
+
+SCOTT>select * from emp_log;
+
+    EMP_ID LOG_DATE OLD_SALARY NEW_SALARY   CHG_RATE                                                                    
+---------- -------- ---------- ---------- ----------                                                                    
+      7369 20/11/26       1500       1600        .07                                                                    
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+
+1 행이 갱신되었습니다.
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+
+1 행이 갱신되었습니다.
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+
+1 행이 갱신되었습니다.
+
+SCOTT>update emp set sal=sal+100 where empno = 7369;
+
+1 행이 갱신되었습니다.
+
+SCOTT>select * from emp_log;
+
+    EMP_ID LOG_DATE OLD_SALARY NEW_SALARY   CHG_RATE                                                                    
+---------- -------- ---------- ---------- ----------                                                                    
+      7369 20/11/26       1500       1600        .07                                                                    
+      7369 20/11/26       1600       1700        .06                                                                    
+      7369 20/11/26       1700       1800        .06                                                                    
+      7369 20/11/26       1800       1900        .06                                                                    
+      7369 20/11/26       1900       2000        .05                                                                    
+
+SCOTT>CREATE or REPLACE TRIGGER S_UPDATE
+  2  BEFORE
+  3  UPDATE ON S
+  4  FOR EACH ROW
+  5  BEGIN
+  6  DBMS_OUTPUT.PUT_LINE('변경 전 컬럼값 : ' || :old.SNAME);
+  7  DBMS_OUTPUT.PUT_LINE('변경 후 컬럼값 : ' || :new.SNAME);
+  8  END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>SET SERVEROUTPUT ON;
+SCOTT>UPDATE S SET SNAME='HHH' WHERE S#='S1';
+
+0 행이 갱신되었습니다.
+
+SCOTT>DROP TRIGGER S_UPDATE;
+
+트리거가 삭제되었습니다.
+SCOTT>CREATE or REPLACE TRIGGER S_UPDATE
+  2  BEFORE
+  3  UPDATE ON S
+  4  FOR EACH ROW
+  5  BEGIN
+  6  DBMS_OUTPUT.PUT_LINE('변경 전 컬럼값 : ' || :old.SNAME);
+  7  DBMS_OUTPUT.PUT_LINE('변경 후 컬럼값 : ' || :new.SNAME);
+  8  END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>SET SERVVEROUTPUT ON;
+SP2-0735: SET 옵션은 "SERVVEROUT..."(으)로 시작되는 알 수 없는 옵션입니다
+SCOTT>SET SERVEROUTPUT ON;
+SCOTT>UPDATE S SET SNAME='HHH' WHERE S#='S2';
+변경 전 컬럼값 : SON
+변경 후 컬럼값 : HHH
+
+1 행이 갱신되었습니다.
+
+SCOTT>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 80/12/17       2000                    20
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20
+      7839 KING       PRESIDENT            81/11/17       5000                    10
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20
+      7900 JAMES      CLERK           7698 81/12/03        950                    30
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10
+      8000 LEE        CLERK           7782 82/01/23          0                    10
+
+15 개의 행이 선택되었습니다.
+
+SCOTT>SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SCOTT>CREATE or REPLACE TRIGGER DN_UPDATE
+  2  BEFORE
+  3  UPDATE ON DEPT
+  4  FOR EACH ROW
+  5  BEGIN
+  6  DBMS_OUTPUT.PUT_LINE('변경 전 컬럼값 : ' || :old.DNAME);
+  7  DBMS_OUTPUT.PUT_LINE('변경 후 컬럼값 : ' || :new.DNAME);
+  8  END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>UPDATE DEPT SET DNAME='RESEARCH' WHERE DEPTNO=30;
+변경 전 컬럼값 : SALES
+변경 후 컬럼값 : RESEARCH
+
+1 행이 갱신되었습니다.
+
+SCOTT>DELETE DROP TRIGGER DN_UPDATE;
+DELETE DROP TRIGGER DN_UPDATE
+       *
+1행에 오류:
+ORA-00903: 테이블명이 부적합합니다
+
+
+SCOTT>DROP TRIGGER DN_UPDATE;
+
+트리거가 삭제되었습니다.
+
+SCOTT>CREATE or REPLACE TRIGGER DN_UPDATE
+  2  BEFORE
+  3  UPDATE ON DEPT
+  4  FOR EACH ROW
+  5  BEGIN
+  6  DBMS_OUTPUT.PUT_LINE('변경 전 부서명값 : ' || :old.DNAME);
+  7  DBMS_OUTPUT.PUT_LINE('변경 후 부서명값 : ' || :new.DNAME);
+  8  END;
+  9  /
+
+트리거가 생성되었습니다.
+
+SCOTT>UPDATE DEPT SET DNAME='SALES' WHERE DEPTNO=30;
+변경 전 부서명값 : RESEARCH
+변경 후 부서명값 : SALES
+
+1 행이 갱신되었습니다.
+
+SCOTT>UPDATE DEPT SET DNAME='RESEARCH' WHERE DEPTNO=30;
+변경 전 부서명값 : SALES
+변경 후 부서명값 : RESEARCH
+
+1 행이 갱신되었습니다.
+
+SCOTT>SPOOL OFF
+
+---------------------------연습문제 답-----------------------
+
+CREATE or REPLACE TRIGGER DN_UPDATE
+BEFORE
+UPDATE ON DEPT
+FOR EACH ROW
+BEGIN
+DBMS_OUTPUT.PUT_LINE('변경 전 부서명값 : ' || :old.DNAME);
+DBMS_OUTPUT.PUT_LINE('변경 후 부서명값 : ' || :new.DNAME);
+END;
+/

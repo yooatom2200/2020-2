@@ -1,0 +1,102 @@
+CREATE TABLE ȸ�� (
+	ȸ����ȣ VARCHAR(10) NOT NULL,
+	��й�ȣ VARCHAR(30) NOT NULL,
+	���� VARCHAR(30) NOT NULL,
+	CONSTRAINT ȸ��_PK PRIMARY KEY (ȸ����ȣ));
+
+INSERT INTO ȸ�� VALUES ('admin','1234','������');
+
+CREATE TABLE ȸ��_�ּҷ� (
+	ȸ����ȣ VARCHAR(10) NOT NULL,
+	����� VARCHAR(10) NOT NULL,
+	�����ȣ VARCHAR(10) NOT NULL,
+	�⺻�ּ� VARCHAR(100) NOT NULL,
+	���ּ� VARCHAR(100) NOT NULL,	
+	CONSTRAINT �ּҷ�_PK PRIMARY KEY (ȸ����ȣ,�����),
+	CONSTRAINT �ּҷ�_ȸ��_FK FOREIGN KEY(ȸ����ȣ) REFERENCES ȸ��(ȸ����ȣ) ON DELETE CASCADE,
+	CONSTRAINT �����_CK CHECK (����� IN ('��','����')));
+
+INSERT INTO ȸ��_�ּҷ� VALUES ('qwe','����','330-730','�泲 �ƻ�� ��â�� ������ 646','��Ƽ�̵��� 606ȣ');
+
+CREATE TABLE ȸ��_�ſ�ī�� (
+	ȸ����ȣ VARCHAR(10) NOT NULL,
+	ī���ȣ VARCHAR(20) NOT NULL,
+	��ȿ�Ⱓ DATE NOT NULL,
+	ī������ VARCHAR(10) NOT NULL,
+	CONSTRAINT �ſ�ī��_PK PRIMARY KEY (ȸ����ȣ,ī���ȣ),
+	CONSTRAINT �ſ�ī��_ȸ��_FK FOREIGN KEY(ȸ����ȣ) REFERENCES ȸ��(ȸ����ȣ) ON DELETE CASCADE);
+
+INSERT INTO ȸ��_�ſ�ī�� VALUES ('qwe','123456789',TO_DATE('2021-12-12','YYYY-MM-DD'),'����ī��');
+
+CREATE TABLE ���� (
+	������ȣ VARCHAR(10) NOT NULL,
+	������ VARCHAR(30) NOT NULL,
+	���� INTEGER NOT NULL,
+	�ǸŰ� INTEGER NOT NULL,
+	CONSTRAINT ����_PK PRIMARY KEY (������ȣ));
+
+CREATE TABLE �ֹ� (
+	�ֹ���ȣ VARCHAR(20) NOT NULL,
+	�ֹ����� DATE NOT NULL,
+	�ֹ��Ѿ� INTEGER NOT NULL,
+	�ֹ����� VARCHAR(10) NOT NULL,
+	�ſ�ī��_ī���ȣ VARCHAR(20) NOT NULL,
+	�ſ�ī��_��ȿ�Ⱓ DATE NOT NULL,
+	�ſ�ī��_ī������ VARCHAR(10) NOT NULL,
+	�����_�����ȣ VARCHAR(10) NOT NULL,
+	�����_�⺻�ּ� VARCHAR(100) NOT NULL,
+	�����_���ּ� VARCHAR(100) NOT NULL,
+	ȸ����ȣ VARCHAR(10) NOT NULL,
+	CONSTRAINT �ֹ�_PK PRIMARY KEY (�ֹ���ȣ),
+	CONSTRAINT �ֹ�_ȸ��_FK FOREIGN KEY(ȸ����ȣ) REFERENCES ȸ��(ȸ����ȣ) ON DELETE CASCADE,
+	CONSTRAINT �ֹ�����_CK CHECK (�ֹ����� IN('��û','�߼�','�ǸſϷ�')));
+
+INSERT INTO �ֹ� VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')||TO_CHAR(SETNO.NEXTVAL,'FM000'), SYSDATE, 30000, '��û', '1234567890', TO_DATE('2022-02-22','YYYY-MM-DD'), '����ī��', '123-456', '��������', '��������?', 'qwe');
+
+CREATE TABLE �ֹ�_���� (
+	�ֹ���ȣ VARCHAR(20)NOT NULL,
+	������ȣ VARCHAR(10) NOT NULL,
+	���� INTEGER NOT NULL,
+	CONSTRAINT ����_PK PRIMARY KEY (�ֹ���ȣ,������ȣ),
+	CONSTRAINT ����_�ֹ�_FK FOREIGN KEY(�ֹ���ȣ) REFERENCES �ֹ�(�ֹ���ȣ) ON DELETE CASCADE,
+	CONSTRAINT ����_����_FK FOREIGN KEY(������ȣ) REFERENCES ����(������ȣ) ON DELETE CASCADE,
+	CONSTRAINT ����_CK CHECK (���� >= 1));
+
+CREATE TABLE ��ٱ��� (
+	�ٱ��Ϲ�ȣ INTEGER NOT NULL,
+	�������� DATE NOT NULL,
+	ȸ����ȣ VARCHAR(10) NOT NULL,
+	CONSTRAINT ��ٱ���_PK PRIMARY KEY (�ٱ��Ϲ�ȣ),
+	CONSTRAINT ��ٱ���_ȸ����ȣ_FK FOREIGN KEY(ȸ����ȣ) REFERENCES ȸ��(ȸ����ȣ) ON DELETE CASCADE);
+
+CREATE SEQUENCE KART_NUM START WITH 1;
+
+
+CREATE TABLE ��ٱ���_��� (
+	�ٱ��Ϲ�ȣ INTEGER NOT NULL,
+	������ȣ VARCHAR(10) NOT NULL,
+	���� INTEGER NOT NULL,
+	CONSTRAINT ���_PK PRIMARY KEY (�ٱ��Ϲ�ȣ,������ȣ),
+	CONSTRAINT ���_����_FK FOREIGN KEY(������ȣ) REFERENCES ����(������ȣ) ON DELETE CASCADE,
+	CONSTRAINT ���__��ٱ���FK FOREIGN KEY(�ٱ��Ϲ�ȣ) REFERENCES ��ٱ���(�ٱ��Ϲ�ȣ) ON DELETE CASCADE);
+
+insert into ���� values ('2197368054','����Ʈ���� ���� ����',5,25000);
+
+CREATE SEQUENCE SETNO
+START WITH 1
+MAXVALUE 999
+MINVALUE 1
+INCREMENT BY 1
+CYCLE
+NOCACHE
+NOORDER;
+
+������ �ʱ�ȭ:
+SELECT LAST_NUMBER 
+FROM USER_SEQUENCES 
+WHERE SEQUENCE_NAME = 'SETNO';	       :����������� Ȯ��;��
+
+ALTER SEQUENCE SETNO INCREMENT BY ???;	(���簪��ŭ ���� ex.-33)
+SELECT SETNO.NEXTVAL FROM DUAL;
+SELECT SETNO.CURRVAL FROM DUAL;
+ALTER SEQUENCE SETNO INCREMENT BY 1;

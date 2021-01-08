@@ -1,0 +1,639 @@
+HR20164091>CERATE TABLE 학과{
+SP2-0734: "CERATE TAB..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>create table 학과(
+  2  학과이름 CHAR(15),
+  3  학과장 number(3),
+  4  constraint 학과_PK PRIMARY KEY (학과이름));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE TABLE 교수(
+  2  교수번호 NUMBER(3)
+  3  교수이름 CHAR(10)
+  4  , 학과이름 CHAR(15) NOT NULL,
+  5  CONSTRAINT 교수_PK PRIMARY KEY (교수번호),
+  6  CONSTRAINT 교수_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름));
+교수이름 CHAR(10)
+*
+3행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+HR20164091>CREATE TABLE 교수(
+  2  교수번호 NUMBER(3),
+  3  교수이름 CHAR(10),
+  4  학과이름 CHAR(15) NOT NULL,
+  5  CONSTRAINT 교수_PK PRIMARY KEY (교수번호),
+  6  CONSTRAINT 교수_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE TABLE 학생(
+  2  학생번호 CHAR(10),
+  3  학생이름 CHAR(10),
+  4  학과이름 CHAR(15) NOT NULL,
+  5  CONSTRAINT 학생_PK PRIMARY KEY (학생번호),
+  6  CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCE 학과(학과이름),
+  7  CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES ,ㅋ,ㅋ,ㅋ
+  8  );
+CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCE 학과(학과이름),
+                                              *
+6행에 오류:
+ORA-00905: 누락된 키워드 
+
+
+HR20164091>CREATE TABLE 학생(
+  2  학생번호 CHAR(10),
+  3  학생이름 CHAR(10),
+  4  CONSTRAINT 학생_PK PRIMARY KEY (학생번호),
+  5  CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름),
+  6  CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호));
+CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름),
+                                    *
+5행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>
+HR20164091>CREATE TABLE 학생(
+  2  학생번호 CHAR(10),
+  3  학생이름 CHAR(10),
+  4  학과이름 CHAR(15) NOT NULL,
+  5  CONSTRAINT 학생_PK PRIMARY KEY (학생번호),
+  6  CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름),
+  7  CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호));
+CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호))
+                                    *
+7행에 오류:
+ORA-00904: "교수번호": 부적합한 식별자 
+
+
+HR20164091>CREATE TABLE 학생(
+  2  학생번호 CHAR(10),
+  3  학생이름 CHAR(10),
+  4  학과이름 CHAR(15) NOT NULL,
+  5  CONSTRAINT 학생_PK PRIMARY KEY (학생번호),
+  6  CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름),
+  7  CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호));
+CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호))
+                                    *
+7행에 오류:
+ORA-00904: "교수번호": 부적합한 식별자 
+
+
+HR20164091>CREATE TABLE 과목 (
+  2         과목이름  CHAR(10),
+  3         과목구분  CHAR(10),
+  4         CONSTRAINT 과목_PK PRIMARY KEY (과목이름),
+  5         CONSTRAINT 과목_CK CHECK (과목구분 IN ('교양','학초', '전공')));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE TABLE 수강 (
+  2         학생번호  CHAR(10),
+  3         과목이름  CHAR(15),
+  4         성적      NUMBER(3),
+  5         CONSTRAINT 수강_PK PRIMARY KEY (학생번호,과목이름),
+  6         CONSTRAINT 수강_학생_FK FOREIGN KEY(학생번호) REFERENCES 학생(학생번호),
+  7         CONSTRAINT 수강_과목_FK FOREIGN KEY(과목이름) REFERENCES 과목(과목이름),
+  8         CONSTRAINT 수강_CK CHECK (성적 <= 100));
+       CONSTRAINT 수강_학생_FK FOREIGN KEY(학생번호) REFERENCES 학생(학생번호),
+                                                                *
+6행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+HR20164091>CREATE TABLE 학생(
+  2  학생번호 CHAR(10),
+  3  학생이름 CHAR(10),
+  4  학과이름 CHAR(15) NOT NULL,
+  5  교수번호 NUMBER(3) NOT NULL,
+  6  CONSTRAINT 학생_PK PRIMARY KEY (학생번호),
+  7  CONSTRAINT 학생_학과_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름),
+  8  CONSTRAINT 학생_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE TABLE 수강 (
+  2         학생번호  CHAR(10),
+  3         과목이름  CHAR(15),
+  4         성적      NUMBER(3),
+  5         CONSTRAINT 수강_PK PRIMARY KEY (학생번호,과목이름),
+  6         CONSTRAINT 수강_학생_FK FOREIGN KEY(학생번호) REFERENCES 학생(학생번호),
+  7         CONSTRAINT 수강_과목_FK FOREIGN KEY(과목이름) REFERENCES 과목(과목이름),
+  8         CONSTRAINT 수강_CK CHECK (성적 <= 100));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE TABLE 교수 (
+  2         교수번호  NUMBER(3),
+  3         교수이름 CHAR(10),
+  4         학과이름 CHAR(15),
+  5         CONSTRAINT 교수_PK PRIMARY KEY (교수번호),
+  6         CONSTRAINT 교수_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름));
+CREATE TABLE 교수 (
+             *
+1행에 오류:
+ORA-00955: 기존의 객체가 이름을 사용하고 있습니다. 
+
+
+HR20164091>
+HR20164091>
+HR20164091>INSERT INTO 학과 VALUES ('컴퓨터공학과',101,'M609');
+INSERT INTO 학과 VALUES ('컴퓨터공학과',101,'M609')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>INSERT INTO 학과 VALUES ('전기공학과',201,'M509');
+INSERT INTO 학과 VALUES ('전기공학과',201,'M509')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>INSERT INTO 학과 VALUES ('전자공학과',301,'M109');
+INSERT INTO 학과 VALUES ('전자공학과',301,'M109')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>
+HR20164091>INSERT INTO 교수 VALUES ('101','이해각','컴퓨터공학과');
+INSERT INTO 교수 VALUES ('101','이해각','컴퓨터공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('102','홍인식','컴퓨터공학과');
+INSERT INTO 교수 VALUES ('102','홍인식','컴퓨터공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('103','천인국','컴퓨터공학과');
+INSERT INTO 교수 VALUES ('103','천인국','컴퓨터공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('201','차귀수','전기공학과');
+INSERT INTO 교수 VALUES ('201','차귀수','전기공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('202','전창완','전기공학과');
+INSERT INTO 교수 VALUES ('202','전창완','전기공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('203','임종식','전기공학과');
+INSERT INTO 교수 VALUES ('203','임종식','전기공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('301','박광민','전자공학과');
+INSERT INTO 교수 VALUES ('301','박광민','전자공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('302','김은성','전자공학과');
+INSERT INTO 교수 VALUES ('302','김은성','전자공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 교수 VALUES ('303','김두용','전자공학과');
+INSERT INTO 교수 VALUES ('303','김두용','전자공학과')
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(HR20164091.교수_학과_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+HR20164091>INSERT INTO 학과 VALUES ('컴퓨터공학과',101,'M609');
+INSERT INTO 학과 VALUES ('컴퓨터공학과',101,'M609')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>INSERT INTO 학과 VALUES ('전기공학과',201,'M509');
+INSERT INTO 학과 VALUES ('전기공학과',201,'M509')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>INSERT INTO 학과 VALUES ('전자공학과',301,'M109');
+INSERT INTO 학과 VALUES ('전자공학과',301,'M109')
+            *
+1행에 오류:
+ORA-00913: 값의 수가 너무 많습니다 
+
+
+HR20164091>ALTER TABLE 학과 ADD (사무실  CHAR(10));
+
+테이블이 변경되었습니다.
+
+HR20164091>
+HR20164091>ALTER TABLE 학과 ADD CONSTRAINT  학과_UK UNIQUE(사무실);
+
+테이블이 변경되었습니다.
+
+HR20164091>
+HR20164091>SELECT * FROM 학과;
+
+선택된 레코드가 없습니다.
+
+HR20164091>ALTER TABLE 학과
+  2  MODIFY (사무실  CHAR(5));
+
+테이블이 변경되었습니다.
+
+HR20164091>
+HR20164091>DESC 학과;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ 학과이름                                                          NOT NULL CHAR(15)
+ 학과장                                                                     NUMBER(3)
+ 사무실                                                                     CHAR(5)
+
+HR20164091>
+HR20164091>ALTER TABLE 학과 ADD (행정조교  CHAR(10));
+
+테이블이 변경되었습니다.
+
+HR20164091>DESC 학과;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ 학과이름                                                          NOT NULL CHAR(15)
+ 학과장                                                                     NUMBER(3)
+ 사무실                                                                     CHAR(5)
+ 행정조교                                                                   CHAR(10)
+
+HR20164091>ALTER TABLE 학과 DROP COLUMN 행정조교;
+
+테이블이 변경되었습니다.
+
+HR20164091>DESC 학과;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ 학과이름                                                          NOT NULL CHAR(15)
+ 학과장                                                                     NUMBER(3)
+ 사무실                                                                     CHAR(5)
+
+HR20164091>INSERT INTO 학과 VALUES ('컴퓨터공학과',101,'M609');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 학과 VALUES ('전기공학과',201,'M509');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 학과 VALUES ('전자공학과',301,'M109');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('101','이해각','컴퓨터공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('102','홍인식','컴퓨터공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('103','천인국','컴퓨터공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('201','차귀수','전기공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('202','전창완','전기공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('203','임종식','전기공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('301','박광민','전자공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('302','김은성','전자공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('303','김두용','전자공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>SELECT * FROM 학과;
+
+학과이름            학과장 사무                                                                                         
+--------------- ---------- -----                                                                                        
+컴퓨터공학과           101 M609                                                                                         
+전기공학과             201 M509                                                                                         
+전자공학과             301 M109                                                                                         
+
+HR20164091>SELECT * FROM 교수;
+
+  교수번호 교수이름   학과이름                                                                                          
+---------- ---------- ---------------                                                                                   
+       101 이해각     컴퓨터공학과                                                                                      
+       102 홍인식     컴퓨터공학과                                                                                      
+       103 천인국     컴퓨터공학과                                                                                      
+       201 차귀수     전기공학과                                                                                        
+       202 전창완     전기공학과                                                                                        
+       203 임종식     전기공학과                                                                                        
+       301 박광민     전자공학과                                                                                        
+       302 김은성     전자공학과                                                                                        
+       303 김두용     전자공학과                                                                                        
+
+9 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>ALTER TABLE 학과 ADD CONSTRAINT 학과_FK FOREIGN KEY(학과장) REFERENCES 교수(교수번호);
+
+테이블이 변경되었습니다.
+
+HR20164091>INSERT INTO 학과 VALUES ('기계공학과',NULL,'M209');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>
+HR20164091>INSERT INTO 교수 VALUES ('401','엄태준','기계공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('402','주영철','기계공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>INSERT INTO 교수 VALUES ('403','이상욱','기계공학과');
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>UPDATE 학과 SET 학과장 = '401' WHERE 학과이름='기계공학과';
+
+1 행이 갱신되었습니다.
+
+HR20164091>ALTER TABLE 과목 ADD FOREIGN KEY (학과이름) REFERENCES 학과;
+ALTER TABLE 과목 ADD FOREIGN KEY (학과이름) REFERENCES 학과
+                                  *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD FOREIGIGN KEY(학과이름) REFERENCES 학과;
+ALTER TABLE 과목 ADD FOREIGIGN KEY(학과이름) REFERENCES 학과
+                                   *
+1행에 오류:
+ORA-01735: 부적합한 ALTER TABLE 옵션입니다 
+
+
+HR20164091>ALTER TABLE 과목 ADD FOREIGIGN KEY (학과이름) REFERENCES 학과;
+ALTER TABLE 과목 ADD FOREIGIGN KEY (학과이름) REFERENCES 학과
+                                    *
+1행에 오류:
+ORA-01735: 부적합한 ALTER TABLE 옵션입니다 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT 학과_PK PRIMARY KEY(학과이름);
+ALTER TABLE 과목 ADD CONSTRAINT 학과_PK PRIMARY KEY(학과이름)
+                                                    *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT 학과_PK PRIMARY KEY (학과이름);
+ALTER TABLE 과목 ADD CONSTRAINT 학과_PK PRIMARY KEY (학과이름)
+                                                     *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT 학과이름 FOREIGN KEY  (학과이름) REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD CONSTRAINT 학과이름 FOREIGN KEY  (학과이름) REFERENCES 학과(학과이름)
+                                                       *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT 학과이름 FOREIGN KEY (학과이름) REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD CONSTRAINT 학과이름 FOREIGN KEY (학과이름) REFERENCES 학과(학과이름)
+                                                      *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD FOREIGN KEY (학과이름) REFERENCES 학과(학과이름);ERENCES
+  2  
+HR20164091>ALTER TABLE 과목 ADD FOREIGN KEY (학과이름) REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD FOREIGN KEY (학과이름) REFERENCES 학과(학과이름)
+                                  *
+1행에 오류:
+ORA-00904: "학과이름": 부적합한 식별자 
+
+
+HR20164091>ALTER TABLE 과목 ADD FOREIGN KEY 학과_PK REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD FOREIGN KEY 학과_PK REFERENCES 학과(학과이름)
+                                 *
+1행에 오류:
+ORA-00906: 누락된 좌괄호 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT FOREIGN KEY 학과_PK REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD CONSTRAINT FOREIGN KEY 학과_PK REFERENCES 학과(학과이름)
+                                            *
+1행에 오류:
+ORA-00902: 데이터유형이 부적합합니다 
+
+
+HR20164091>ALTER TABLE 과목 ADD PRIMARY KEY 학과_PK REFERENCES 학과(학과이름);S 학과(학과이름);
+ALTER TABLE 과목 ADD PRIMARY KEY 학과_PK REFERENCES 학과(학과이름);S 학과(학과이름)
+                                 *
+1행에 오류:
+ORA-00906: 누락된 좌괄호 
+
+
+HR20164091>ALTER TABLE 과목 ADD PRIMARY KEY 학과_PK REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD PRIMARY KEY 학과_PK REFERENCES 학과(학과이름)
+                                 *
+1행에 오류:
+ORA-00906: 누락된 좌괄호 
+
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAIN PRIMARY KEY 학과_PK REFERENCES 학과(학과이름);
+ALTER TABLE 과목 ADD CONSTRAIN PRIMARY KEY 학과_PK REFERENCES 학과(학과이름)
+                                           *
+1행에 오류:
+ORA-01735: 부적합한 ALTER TABLE 옵션입니다 
+
+
+HR20164091>ALTER TABLE 과목 ADD 학과번호 CONSTRAIN 학과_PK  학과_P PRIMARY KEY 학과(학과번호);
+ALTER TABLE 과목 ADD 학과번호 CONSTRAIN 학과_PK  학과_P PRIMARY KEY 학과(학과번호)
+                                        *
+1행에 오류:
+ORA-01735: 부적합한 ALTER TABLE 옵션입니다 
+
+
+HR20164091>
+HR20164091>
+HR20164091>ALTER TABLE 과목 ADD  학과이름 CHAR(15);
+
+테이블이 변경되었습니다.
+
+HR20164091>ALTER TABLE 과목 ADD CONSTRAINT  과목_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름);
+
+테이블이 변경되었습니다.
+
+HR20164091>DESC 과목;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ 과목이름                                                          NOT NULL CHAR(10)
+ 과목구분                                                                   CHAR(10)
+ 학과이름                                                                   CHAR(15)
+
+HR20164091>ALTER TABLE 과목 MODIFY  과목이름 CHAR(20);
+
+테이블이 변경되었습니다.
+
+HR20164091>CREATE TABLE 담당(
+  2  교수번호 NUMBER(3),
+  3  과목이름 CHAR(10),
+  4  CONSTRAINT
+  5  
+HR20164091>
+HR20164091>CREATE TABLE 담당(
+  2  교수번호 NUMBER CONSTRAINT 교수 PRIMARY KEY,
+  3  과목이름 CHAR CONSTRAINT 과목 PRIMARY KEY);
+과목이름 CHAR CONSTRAINT 과목 PRIMARY KEY)
+              *
+3행에 오류:
+ORA-02260: 테이블에는 하나의 기본 키만 가질 수 있습니다. 
+
+
+HR20164091>CREATE TABLE 담당(
+  2  교수번호 NUMBER(3),
+  3  과목이름 CHAR(10),
+  4  CONSTRAINT 담당_PK PRIMARY KEY (교수번호,과목이름),
+  5  CONSTRAINT 담당_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호),
+  6  CONSTRAINT 담당_과목_FK FOREIGN KEY(과목이름) REFERENCES 과목(과목이름));
+
+테이블이 생성되었습니다.
+
+HR20164091>desc 담당;
+ 이름                                                              널?      유형
+ ----------------------------------------------------------------- -------- --------------------------------------------
+ 교수번호                                                          NOT NULL NUMBER(3)
+ 과목이름                                                          NOT NULL CHAR(10)
+
+HR20164091>select 학생이름 from 과목 where 과목이름 == "데이터베이스";
+select 학생이름 from 과목 where 과목이름 == "데이터베이스"
+                                          *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 is "데이터베이스";
+select 학생이름 from 과목 where 과목이름 is "데이터베이스"
+                                            *
+1행에 오류:
+ORA-00908: 누락된 NULL 키워드 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 like "데이터베이스";
+select 학생이름 from 과목 where 과목이름 like "데이터베이스"
+                                              *
+1행에 오류:
+ORA-00904: "데이터베이스": 부적합한 식별자 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 like 데이터베이스
+  2  ;
+select 학생이름 from 과목 where 과목이름 like 데이터베이스
+                                              *
+1행에 오류:
+ORA-00904: "데이터베이스": 부적합한 식별자 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 = "데이터베이스;
+ERROR:
+ORA-01740: 이중 인용부를 지정해 주십시오 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 = "데이터베이스";
+select 학생이름 from 과목 where 과목이름 = "데이터베이스"
+                                           *
+1행에 오류:
+ORA-00904: "데이터베이스": 부적합한 식별자 
+
+
+HR20164091>select 학생이름 from 과목 where 과목이름 = 데이터베이스;
+select 학생이름 from 과목 where 과목이름 = 데이터베이스
+                                           *
+1행에 오류:
+ORA-00904: "데이터베이스": 부적합한 식별자 
+
+
+HR20164091>select * from 과목 where 과목이름 like '%데이터베이스%'
+  2  ;
+
+선택된 레코드가 없습니다.
+
+HR20164091>select * from 과목 where 과목이름 like 데이터베이스;
+select * from 과목 where 과목이름 like 데이터베이스
+                                       *
+1행에 오류:
+ORA-00904: "데이터베이스": 부적합한 식별자 
+
+
+HR20164091>select * from 과목 where 과목이름 like '데이터베이스';
+
+선택된 레코드가 없습니다.
+
+HR20164091>select * from 수강 where 과목이름 like '데이터베이스';
+
+선택된 레코드가 없습니다.
+
+HR20164091>select * from 수강 where 과목이름 = '데이터베이스';
+
+선택된 레코드가 없습니다.
+
+HR20164091>spool off
+
+
+
+
+문제 답
+1. ALTER TABLE 과목 ADD  학과이름 CHAR(15);
+ALTER TABLE 과목 ADD CONSTRAINT  과목_FK FOREIGN KEY(학과이름) REFERENCES 학과(학과이름);
+DESC 과목;
+
+2. ALTER TABLE 과목 MODIFY  과목이름 CHAR(20);
+
+4. CREATE TABLE 담당(
+교수번호 NUMBER(3),
+과목이름 CHAR(10),
+CONSTRAINT 담당_PK PRIMARY KEY (교수번호,과목이름),
+CONSTRAINT 담당_교수_FK FOREIGN KEY(교수번호) REFERENCES 교수(교수번호),
+CONSTRAINT 담당_과목_FK FOREIGN KEY(과목이름) REFERENCES 과목(과목이름));
+
+5. 

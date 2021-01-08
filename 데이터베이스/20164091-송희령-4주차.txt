@@ -1,0 +1,1554 @@
+HR20164091>select distinct deptno from emp;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        30                                                                                                              
+        20                                                                                                              
+        10                                                                                                              
+
+HR20164091>select deptno from dept;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        10                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        40                                                                                                              
+
+HR20164091>select deptno from emp
+  2  union
+  3  select deptno from dept;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        10                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        40                                                                                                              
+
+HR20164091>select deptno from emp
+  2  union all
+  3  select deptno from dept;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        30                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        30                                                                                                              
+        10                                                                                                              
+        20                                                                                                              
+        10                                                                                                              
+        30                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        20                                                                                                              
+        10                                                                                                              
+        10                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+        40                                                                                                              
+
+18 개의 행이 선택되었습니다.
+
+HR20164091>select deptno from emp
+  2  intersect
+  3  select deptno from dept;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        10                                                                                                              
+        20                                                                                                              
+        30                                                                                                              
+
+HR20164091>select deptno from dept
+  2  minus
+  3  select deptno from emp;
+
+    DEPTNO                                                                                                              
+----------                                                                                                              
+        40                                                                                                              
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select * from dept;
+
+    DEPTNO DNAME          LOC                                                                                           
+---------- -------------- -------------                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                      
+        20 RESEARCH       DALLAS                                                                                        
+        30 SALES          CHICAGO                                                                                       
+        40 OPERATIONS     BOSTON                                                                                        
+
+HR20164091>select * from emp, dept;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                   
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- --------------          
+LOC                                                                                                                     
+-------------                                                                                                           
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         20 RESEARCH                
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                   
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- --------------          
+LOC                                                                                                                     
+-------------                                                                                                           
+DALLAS                                                                                                                  
+                                                                                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10         30 SALES                   
+CHICAGO                                                                                                                 
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                   
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- --------------          
+LOC                                                                                                                     
+-------------                                                                                                           
+                                                                                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                   
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- --------------          
+LOC                                                                                                                     
+-------------                                                                                                           
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         40 OPERATIONS              
+BOSTON                                                                                                                  
+                                                                                                                        
+
+56 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp, dept
+  2  where emp.deptno = dept.deptno;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                   
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- --------------          
+LOC                                                                                                                     
+-------------                                                                                                           
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10 ACCOUNTING              
+NEW YORK                                                                                                                
+                                                                                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20         20 RESEARCH                
+DALLAS                                                                                                                  
+                                                                                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30 SALES                   
+CHICAGO                                                                                                                 
+                                                                                                                        
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select emp.empno, emp.ename, emp.deptno, dept.deptno, dept.dname, dept.loc from emp,dept where emp.deptno = dept.deptno;
+
+     EMPNO ENAME          DEPTNO     DEPTNO DNAME          LOC                                                          
+---------- ---------- ---------- ---------- -------------- -------------                                                
+      7782 CLARK              10         10 ACCOUNTING     NEW YORK                                                     
+      7839 KING               10         10 ACCOUNTING     NEW YORK                                                     
+      7934 MILLER             10         10 ACCOUNTING     NEW YORK                                                     
+      7566 JONES              20         20 RESEARCH       DALLAS                                                       
+      7902 FORD               20         20 RESEARCH       DALLAS                                                       
+      7876 ADAMS              20         20 RESEARCH       DALLAS                                                       
+      7369 SMITH              20         20 RESEARCH       DALLAS                                                       
+      7788 SCOTT              20         20 RESEARCH       DALLAS                                                       
+      7521 WARD               30         30 SALES          CHICAGO                                                      
+      7844 TURNER             30         30 SALES          CHICAGO                                                      
+      7499 ALLEN              30         30 SALES          CHICAGO                                                      
+      7900 JAMES              30         30 SALES          CHICAGO                                                      
+      7698 BLAKE              30         30 SALES          CHICAGO                                                      
+      7654 MARTIN             30         30 SALES          CHICAGO                                                      
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select empno, ename, emp.deptno, dept.deptno, dname, loc from emp, dept where emp.deptno = dept.deptno;
+
+     EMPNO ENAME          DEPTNO     DEPTNO DNAME          LOC                                                          
+---------- ---------- ---------- ---------- -------------- -------------                                                
+      7782 CLARK              10         10 ACCOUNTING     NEW YORK                                                     
+      7839 KING               10         10 ACCOUNTING     NEW YORK                                                     
+      7934 MILLER             10         10 ACCOUNTING     NEW YORK                                                     
+      7566 JONES              20         20 RESEARCH       DALLAS                                                       
+      7902 FORD               20         20 RESEARCH       DALLAS                                                       
+      7876 ADAMS              20         20 RESEARCH       DALLAS                                                       
+      7369 SMITH              20         20 RESEARCH       DALLAS                                                       
+      7788 SCOTT              20         20 RESEARCH       DALLAS                                                       
+      7521 WARD               30         30 SALES          CHICAGO                                                      
+      7844 TURNER             30         30 SALES          CHICAGO                                                      
+      7499 ALLEN              30         30 SALES          CHICAGO                                                      
+      7900 JAMES              30         30 SALES          CHICAGO                                                      
+      7698 BLAKE              30         30 SALES          CHICAGO                                                      
+      7654 MARTIN             30         30 SALES          CHICAGO                                                      
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select e.ename, e.sal, s.grade
+  2  from emp e, salgrade s
+  3  where e.sal between s.losal and s.hisal;
+
+ENAME             SAL      GRADE                                                                                        
+---------- ---------- ----------                                                                                        
+SMITH             800          1                                                                                        
+JAMES             950          1                                                                                        
+ADAMS            1100          1                                                                                        
+WARD             1250          2                                                                                        
+MARTIN           1250          2                                                                                        
+MILLER           1300          2                                                                                        
+TURNER           1500          3                                                                                        
+ALLEN            1600          3                                                                                        
+CLARK            2450          4                                                                                        
+BLAKE            2850          4                                                                                        
+JONES            2975          4                                                                                        
+SCOTT            3000          4                                                                                        
+FORD             3000          4                                                                                        
+KING             5000          5                                                                                        
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select * from salgrade;
+
+     GRADE      LOSAL      HISAL                                                                                        
+---------- ---------- ----------                                                                                        
+         1        700       1200                                                                                        
+         2       1201       1400                                                                                        
+         3       1401       2000                                                                                        
+         4       2001       3000                                                                                        
+         5       3001       9999                                                                                        
+
+HR20164091>select  e.ename, d.deptno, d.dname
+  2  from emp e, dept d
+  3  where e.deptno(+) = d.deptno;
+
+ENAME          DEPTNO DNAME                                                                                             
+---------- ---------- --------------                                                                                    
+CLARK              10 ACCOUNTING                                                                                        
+KING               10 ACCOUNTING                                                                                        
+MILLER             10 ACCOUNTING                                                                                        
+JONES              20 RESEARCH                                                                                          
+FORD               20 RESEARCH                                                                                          
+ADAMS              20 RESEARCH                                                                                          
+SMITH              20 RESEARCH                                                                                          
+SCOTT              20 RESEARCH                                                                                          
+WARD               30 SALES                                                                                             
+TURNER             30 SALES                                                                                             
+ALLEN              30 SALES                                                                                             
+JAMES              30 SALES                                                                                             
+BLAKE              30 SALES                                                                                             
+MARTIN             30 SALES                                                                                             
+                   40 OPERATIONS                                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>select  e.ename, d.deptno, d.dname
+  2  from emp e, dept d
+  3  where e.deptno = d.deptno;
+
+ENAME          DEPTNO DNAME                                                                                             
+---------- ---------- --------------                                                                                    
+CLARK              10 ACCOUNTING                                                                                        
+KING               10 ACCOUNTING                                                                                        
+MILLER             10 ACCOUNTING                                                                                        
+JONES              20 RESEARCH                                                                                          
+FORD               20 RESEARCH                                                                                          
+ADAMS              20 RESEARCH                                                                                          
+SMITH              20 RESEARCH                                                                                          
+SCOTT              20 RESEARCH                                                                                          
+WARD               30 SALES                                                                                             
+TURNER             30 SALES                                                                                             
+ALLEN              30 SALES                                                                                             
+JAMES              30 SALES                                                                                             
+BLAKE              30 SALES                                                                                             
+MARTIN             30 SALES                                                                                             
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select first.empno, first.ename, second.empno, second.ename from emp first, emp second;
+
+     EMPNO ENAME           EMPNO ENAME                                                                                  
+---------- ---------- ---------- ----------                                                                             
+      7369 SMITH            7369 SMITH                                                                                  
+      7369 SMITH            7499 ALLEN                                                                                  
+      7369 SMITH            7521 WARD                                                                                   
+      7369 SMITH            7566 JONES                                                                                  
+      7369 SMITH            7654 MARTIN                                                                                 
+      7369 SMITH            7698 BLAKE                                                                                  
+      7369 SMITH            7782 CLARK                                                                                  
+      7369 SMITH            7788 SCOTT                                                                                  
+      7369 SMITH            7839 KING                                                                                   
+      7369 SMITH            7844 TURNER                                                                                 
+      7369 SMITH            7876 ADAMS                                                                                  
+      7369 SMITH            7900 JAMES                                                                                  
+      7369 SMITH            7902 FORD                                                                                   
+      7369 SMITH            7934 MILLER                                                                                 
+      7499 ALLEN            7369 SMITH                                                                                  
+      7499 ALLEN            7499 ALLEN                                                                                  
+      7499 ALLEN            7521 WARD                                                                                   
+      7499 ALLEN            7566 JONES                                                                                  
+      7499 ALLEN            7654 MARTIN                                                                                 
+      7499 ALLEN            7698 BLAKE                                                                                  
+      7499 ALLEN            7782 CLARK                                                                                  
+      7499 ALLEN            7788 SCOTT                                                                                  
+      7499 ALLEN            7839 KING                                                                                   
+      7499 ALLEN            7844 TURNER                                                                                 
+      7499 ALLEN            7876 ADAMS                                                                                  
+      7499 ALLEN            7900 JAMES                                                                                  
+      7499 ALLEN            7902 FORD                                                                                   
+      7499 ALLEN            7934 MILLER                                                                                 
+      7521 WARD             7369 SMITH                                                                                  
+      7521 WARD             7499 ALLEN                                                                                  
+      7521 WARD             7521 WARD                                                                                   
+      7521 WARD             7566 JONES                                                                                  
+      7521 WARD             7654 MARTIN                                                                                 
+      7521 WARD             7698 BLAKE                                                                                  
+      7521 WARD             7782 CLARK                                                                                  
+      7521 WARD             7788 SCOTT                                                                                  
+      7521 WARD             7839 KING                                                                                   
+      7521 WARD             7844 TURNER                                                                                 
+      7521 WARD             7876 ADAMS                                                                                  
+      7521 WARD             7900 JAMES                                                                                  
+      7521 WARD             7902 FORD                                                                                   
+      7521 WARD             7934 MILLER                                                                                 
+      7566 JONES            7369 SMITH                                                                                  
+      7566 JONES            7499 ALLEN                                                                                  
+      7566 JONES            7521 WARD                                                                                   
+      7566 JONES            7566 JONES                                                                                  
+      7566 JONES            7654 MARTIN                                                                                 
+      7566 JONES            7698 BLAKE                                                                                  
+      7566 JONES            7782 CLARK                                                                                  
+      7566 JONES            7788 SCOTT                                                                                  
+      7566 JONES            7839 KING                                                                                   
+      7566 JONES            7844 TURNER                                                                                 
+      7566 JONES            7876 ADAMS                                                                                  
+      7566 JONES            7900 JAMES                                                                                  
+      7566 JONES            7902 FORD                                                                                   
+      7566 JONES            7934 MILLER                                                                                 
+      7654 MARTIN           7369 SMITH                                                                                  
+
+     EMPNO ENAME           EMPNO ENAME                                                                                  
+---------- ---------- ---------- ----------                                                                             
+      7654 MARTIN           7499 ALLEN                                                                                  
+      7654 MARTIN           7521 WARD                                                                                   
+      7654 MARTIN           7566 JONES                                                                                  
+      7654 MARTIN           7654 MARTIN                                                                                 
+      7654 MARTIN           7698 BLAKE                                                                                  
+      7654 MARTIN           7782 CLARK                                                                                  
+      7654 MARTIN           7788 SCOTT                                                                                  
+      7654 MARTIN           7839 KING                                                                                   
+      7654 MARTIN           7844 TURNER                                                                                 
+      7654 MARTIN           7876 ADAMS                                                                                  
+      7654 MARTIN           7900 JAMES                                                                                  
+      7654 MARTIN           7902 FORD                                                                                   
+      7654 MARTIN           7934 MILLER                                                                                 
+      7698 BLAKE            7369 SMITH                                                                                  
+      7698 BLAKE            7499 ALLEN                                                                                  
+      7698 BLAKE            7521 WARD                                                                                   
+      7698 BLAKE            7566 JONES                                                                                  
+      7698 BLAKE            7654 MARTIN                                                                                 
+      7698 BLAKE            7698 BLAKE                                                                                  
+      7698 BLAKE            7782 CLARK                                                                                  
+      7698 BLAKE            7788 SCOTT                                                                                  
+      7698 BLAKE            7839 KING                                                                                   
+      7698 BLAKE            7844 TURNER                                                                                 
+      7698 BLAKE            7876 ADAMS                                                                                  
+      7698 BLAKE            7900 JAMES                                                                                  
+      7698 BLAKE            7902 FORD                                                                                   
+      7698 BLAKE            7934 MILLER                                                                                 
+      7782 CLARK            7369 SMITH                                                                                  
+      7782 CLARK            7499 ALLEN                                                                                  
+      7782 CLARK            7521 WARD                                                                                   
+      7782 CLARK            7566 JONES                                                                                  
+      7782 CLARK            7654 MARTIN                                                                                 
+      7782 CLARK            7698 BLAKE                                                                                  
+      7782 CLARK            7782 CLARK                                                                                  
+      7782 CLARK            7788 SCOTT                                                                                  
+      7782 CLARK            7839 KING                                                                                   
+      7782 CLARK            7844 TURNER                                                                                 
+      7782 CLARK            7876 ADAMS                                                                                  
+      7782 CLARK            7900 JAMES                                                                                  
+      7782 CLARK            7902 FORD                                                                                   
+      7782 CLARK            7934 MILLER                                                                                 
+      7788 SCOTT            7369 SMITH                                                                                  
+      7788 SCOTT            7499 ALLEN                                                                                  
+      7788 SCOTT            7521 WARD                                                                                   
+      7788 SCOTT            7566 JONES                                                                                  
+      7788 SCOTT            7654 MARTIN                                                                                 
+      7788 SCOTT            7698 BLAKE                                                                                  
+      7788 SCOTT            7782 CLARK                                                                                  
+      7788 SCOTT            7788 SCOTT                                                                                  
+      7788 SCOTT            7839 KING                                                                                   
+      7788 SCOTT            7844 TURNER                                                                                 
+      7788 SCOTT            7876 ADAMS                                                                                  
+      7788 SCOTT            7900 JAMES                                                                                  
+      7788 SCOTT            7902 FORD                                                                                   
+      7788 SCOTT            7934 MILLER                                                                                 
+      7839 KING             7369 SMITH                                                                                  
+      7839 KING             7499 ALLEN                                                                                  
+
+     EMPNO ENAME           EMPNO ENAME                                                                                  
+---------- ---------- ---------- ----------                                                                             
+      7839 KING             7521 WARD                                                                                   
+      7839 KING             7566 JONES                                                                                  
+      7839 KING             7654 MARTIN                                                                                 
+      7839 KING             7698 BLAKE                                                                                  
+      7839 KING             7782 CLARK                                                                                  
+      7839 KING             7788 SCOTT                                                                                  
+      7839 KING             7839 KING                                                                                   
+      7839 KING             7844 TURNER                                                                                 
+      7839 KING             7876 ADAMS                                                                                  
+      7839 KING             7900 JAMES                                                                                  
+      7839 KING             7902 FORD                                                                                   
+      7839 KING             7934 MILLER                                                                                 
+      7844 TURNER           7369 SMITH                                                                                  
+      7844 TURNER           7499 ALLEN                                                                                  
+      7844 TURNER           7521 WARD                                                                                   
+      7844 TURNER           7566 JONES                                                                                  
+      7844 TURNER           7654 MARTIN                                                                                 
+      7844 TURNER           7698 BLAKE                                                                                  
+      7844 TURNER           7782 CLARK                                                                                  
+      7844 TURNER           7788 SCOTT                                                                                  
+      7844 TURNER           7839 KING                                                                                   
+      7844 TURNER           7844 TURNER                                                                                 
+      7844 TURNER           7876 ADAMS                                                                                  
+      7844 TURNER           7900 JAMES                                                                                  
+      7844 TURNER           7902 FORD                                                                                   
+      7844 TURNER           7934 MILLER                                                                                 
+      7876 ADAMS            7369 SMITH                                                                                  
+      7876 ADAMS            7499 ALLEN                                                                                  
+      7876 ADAMS            7521 WARD                                                                                   
+      7876 ADAMS            7566 JONES                                                                                  
+      7876 ADAMS            7654 MARTIN                                                                                 
+      7876 ADAMS            7698 BLAKE                                                                                  
+      7876 ADAMS            7782 CLARK                                                                                  
+      7876 ADAMS            7788 SCOTT                                                                                  
+      7876 ADAMS            7839 KING                                                                                   
+      7876 ADAMS            7844 TURNER                                                                                 
+      7876 ADAMS            7876 ADAMS                                                                                  
+      7876 ADAMS            7900 JAMES                                                                                  
+      7876 ADAMS            7902 FORD                                                                                   
+      7876 ADAMS            7934 MILLER                                                                                 
+      7900 JAMES            7369 SMITH                                                                                  
+      7900 JAMES            7499 ALLEN                                                                                  
+      7900 JAMES            7521 WARD                                                                                   
+      7900 JAMES            7566 JONES                                                                                  
+      7900 JAMES            7654 MARTIN                                                                                 
+      7900 JAMES            7698 BLAKE                                                                                  
+      7900 JAMES            7782 CLARK                                                                                  
+      7900 JAMES            7788 SCOTT                                                                                  
+      7900 JAMES            7839 KING                                                                                   
+      7900 JAMES            7844 TURNER                                                                                 
+      7900 JAMES            7876 ADAMS                                                                                  
+      7900 JAMES            7900 JAMES                                                                                  
+      7900 JAMES            7902 FORD                                                                                   
+      7900 JAMES            7934 MILLER                                                                                 
+      7902 FORD             7369 SMITH                                                                                  
+      7902 FORD             7499 ALLEN                                                                                  
+      7902 FORD             7521 WARD                                                                                   
+
+     EMPNO ENAME           EMPNO ENAME                                                                                  
+---------- ---------- ---------- ----------                                                                             
+      7902 FORD             7566 JONES                                                                                  
+      7902 FORD             7654 MARTIN                                                                                 
+      7902 FORD             7698 BLAKE                                                                                  
+      7902 FORD             7782 CLARK                                                                                  
+      7902 FORD             7788 SCOTT                                                                                  
+      7902 FORD             7839 KING                                                                                   
+      7902 FORD             7844 TURNER                                                                                 
+      7902 FORD             7876 ADAMS                                                                                  
+      7902 FORD             7900 JAMES                                                                                  
+      7902 FORD             7902 FORD                                                                                   
+      7902 FORD             7934 MILLER                                                                                 
+      7934 MILLER           7369 SMITH                                                                                  
+      7934 MILLER           7499 ALLEN                                                                                  
+      7934 MILLER           7521 WARD                                                                                   
+      7934 MILLER           7566 JONES                                                                                  
+      7934 MILLER           7654 MARTIN                                                                                 
+      7934 MILLER           7698 BLAKE                                                                                  
+      7934 MILLER           7782 CLARK                                                                                  
+      7934 MILLER           7788 SCOTT                                                                                  
+      7934 MILLER           7839 KING                                                                                   
+      7934 MILLER           7844 TURNER                                                                                 
+      7934 MILLER           7876 ADAMS                                                                                  
+      7934 MILLER           7900 JAMES                                                                                  
+      7934 MILLER           7902 FORD                                                                                   
+      7934 MILLER           7934 MILLER                                                                                 
+
+196 개의 행이 선택되었습니다.
+
+HR20164091>select first.empno, first.ename, first.mgr, second.empno, second.ename
+  2  from emp first, emp second;
+
+     EMPNO ENAME             MGR      EMPNO ENAME                                                                       
+---------- ---------- ---------- ---------- ----------                                                                  
+      7369 SMITH            7902       7369 SMITH                                                                       
+      7369 SMITH            7902       7499 ALLEN                                                                       
+      7369 SMITH            7902       7521 WARD                                                                        
+      7369 SMITH            7902       7566 JONES                                                                       
+      7369 SMITH            7902       7654 MARTIN                                                                      
+      7369 SMITH            7902       7698 BLAKE                                                                       
+      7369 SMITH            7902       7782 CLARK                                                                       
+      7369 SMITH            7902       7788 SCOTT                                                                       
+      7369 SMITH            7902       7839 KING                                                                        
+      7369 SMITH            7902       7844 TURNER                                                                      
+      7369 SMITH            7902       7876 ADAMS                                                                       
+      7369 SMITH            7902       7900 JAMES                                                                       
+      7369 SMITH            7902       7902 FORD                                                                        
+      7369 SMITH            7902       7934 MILLER                                                                      
+      7499 ALLEN            7698       7369 SMITH                                                                       
+      7499 ALLEN            7698       7499 ALLEN                                                                       
+      7499 ALLEN            7698       7521 WARD                                                                        
+      7499 ALLEN            7698       7566 JONES                                                                       
+      7499 ALLEN            7698       7654 MARTIN                                                                      
+      7499 ALLEN            7698       7698 BLAKE                                                                       
+      7499 ALLEN            7698       7782 CLARK                                                                       
+      7499 ALLEN            7698       7788 SCOTT                                                                       
+      7499 ALLEN            7698       7839 KING                                                                        
+      7499 ALLEN            7698       7844 TURNER                                                                      
+      7499 ALLEN            7698       7876 ADAMS                                                                       
+      7499 ALLEN            7698       7900 JAMES                                                                       
+      7499 ALLEN            7698       7902 FORD                                                                        
+      7499 ALLEN            7698       7934 MILLER                                                                      
+      7521 WARD             7698       7369 SMITH                                                                       
+      7521 WARD             7698       7499 ALLEN                                                                       
+      7521 WARD             7698       7521 WARD                                                                        
+      7521 WARD             7698       7566 JONES                                                                       
+      7521 WARD             7698       7654 MARTIN                                                                      
+      7521 WARD             7698       7698 BLAKE                                                                       
+      7521 WARD             7698       7782 CLARK                                                                       
+      7521 WARD             7698       7788 SCOTT                                                                       
+      7521 WARD             7698       7839 KING                                                                        
+      7521 WARD             7698       7844 TURNER                                                                      
+      7521 WARD             7698       7876 ADAMS                                                                       
+      7521 WARD             7698       7900 JAMES                                                                       
+      7521 WARD             7698       7902 FORD                                                                        
+      7521 WARD             7698       7934 MILLER                                                                      
+      7566 JONES            7839       7369 SMITH                                                                       
+      7566 JONES            7839       7499 ALLEN                                                                       
+      7566 JONES            7839       7521 WARD                                                                        
+      7566 JONES            7839       7566 JONES                                                                       
+      7566 JONES            7839       7654 MARTIN                                                                      
+      7566 JONES            7839       7698 BLAKE                                                                       
+      7566 JONES            7839       7782 CLARK                                                                       
+      7566 JONES            7839       7788 SCOTT                                                                       
+      7566 JONES            7839       7839 KING                                                                        
+      7566 JONES            7839       7844 TURNER                                                                      
+      7566 JONES            7839       7876 ADAMS                                                                       
+      7566 JONES            7839       7900 JAMES                                                                       
+      7566 JONES            7839       7902 FORD                                                                        
+      7566 JONES            7839       7934 MILLER                                                                      
+      7654 MARTIN           7698       7369 SMITH                                                                       
+
+     EMPNO ENAME             MGR      EMPNO ENAME                                                                       
+---------- ---------- ---------- ---------- ----------                                                                  
+      7654 MARTIN           7698       7499 ALLEN                                                                       
+      7654 MARTIN           7698       7521 WARD                                                                        
+      7654 MARTIN           7698       7566 JONES                                                                       
+      7654 MARTIN           7698       7654 MARTIN                                                                      
+      7654 MARTIN           7698       7698 BLAKE                                                                       
+      7654 MARTIN           7698       7782 CLARK                                                                       
+      7654 MARTIN           7698       7788 SCOTT                                                                       
+      7654 MARTIN           7698       7839 KING                                                                        
+      7654 MARTIN           7698       7844 TURNER                                                                      
+      7654 MARTIN           7698       7876 ADAMS                                                                       
+      7654 MARTIN           7698       7900 JAMES                                                                       
+      7654 MARTIN           7698       7902 FORD                                                                        
+      7654 MARTIN           7698       7934 MILLER                                                                      
+      7698 BLAKE            7839       7369 SMITH                                                                       
+      7698 BLAKE            7839       7499 ALLEN                                                                       
+      7698 BLAKE            7839       7521 WARD                                                                        
+      7698 BLAKE            7839       7566 JONES                                                                       
+      7698 BLAKE            7839       7654 MARTIN                                                                      
+      7698 BLAKE            7839       7698 BLAKE                                                                       
+      7698 BLAKE            7839       7782 CLARK                                                                       
+      7698 BLAKE            7839       7788 SCOTT                                                                       
+      7698 BLAKE            7839       7839 KING                                                                        
+      7698 BLAKE            7839       7844 TURNER                                                                      
+      7698 BLAKE            7839       7876 ADAMS                                                                       
+      7698 BLAKE            7839       7900 JAMES                                                                       
+      7698 BLAKE            7839       7902 FORD                                                                        
+      7698 BLAKE            7839       7934 MILLER                                                                      
+      7782 CLARK            7839       7369 SMITH                                                                       
+      7782 CLARK            7839       7499 ALLEN                                                                       
+      7782 CLARK            7839       7521 WARD                                                                        
+      7782 CLARK            7839       7566 JONES                                                                       
+      7782 CLARK            7839       7654 MARTIN                                                                      
+      7782 CLARK            7839       7698 BLAKE                                                                       
+      7782 CLARK            7839       7782 CLARK                                                                       
+      7782 CLARK            7839       7788 SCOTT                                                                       
+      7782 CLARK            7839       7839 KING                                                                        
+      7782 CLARK            7839       7844 TURNER                                                                      
+      7782 CLARK            7839       7876 ADAMS                                                                       
+      7782 CLARK            7839       7900 JAMES                                                                       
+      7782 CLARK            7839       7902 FORD                                                                        
+      7782 CLARK            7839       7934 MILLER                                                                      
+      7788 SCOTT            7566       7369 SMITH                                                                       
+      7788 SCOTT            7566       7499 ALLEN                                                                       
+      7788 SCOTT            7566       7521 WARD                                                                        
+      7788 SCOTT            7566       7566 JONES                                                                       
+      7788 SCOTT            7566       7654 MARTIN                                                                      
+      7788 SCOTT            7566       7698 BLAKE                                                                       
+      7788 SCOTT            7566       7782 CLARK                                                                       
+      7788 SCOTT            7566       7788 SCOTT                                                                       
+      7788 SCOTT            7566       7839 KING                                                                        
+      7788 SCOTT            7566       7844 TURNER                                                                      
+      7788 SCOTT            7566       7876 ADAMS                                                                       
+      7788 SCOTT            7566       7900 JAMES                                                                       
+      7788 SCOTT            7566       7902 FORD                                                                        
+      7788 SCOTT            7566       7934 MILLER                                                                      
+      7839 KING                        7369 SMITH                                                                       
+      7839 KING                        7499 ALLEN                                                                       
+
+     EMPNO ENAME             MGR      EMPNO ENAME                                                                       
+---------- ---------- ---------- ---------- ----------                                                                  
+      7839 KING                        7521 WARD                                                                        
+      7839 KING                        7566 JONES                                                                       
+      7839 KING                        7654 MARTIN                                                                      
+      7839 KING                        7698 BLAKE                                                                       
+      7839 KING                        7782 CLARK                                                                       
+      7839 KING                        7788 SCOTT                                                                       
+      7839 KING                        7839 KING                                                                        
+      7839 KING                        7844 TURNER                                                                      
+      7839 KING                        7876 ADAMS                                                                       
+      7839 KING                        7900 JAMES                                                                       
+      7839 KING                        7902 FORD                                                                        
+      7839 KING                        7934 MILLER                                                                      
+      7844 TURNER           7698       7369 SMITH                                                                       
+      7844 TURNER           7698       7499 ALLEN                                                                       
+      7844 TURNER           7698       7521 WARD                                                                        
+      7844 TURNER           7698       7566 JONES                                                                       
+      7844 TURNER           7698       7654 MARTIN                                                                      
+      7844 TURNER           7698       7698 BLAKE                                                                       
+      7844 TURNER           7698       7782 CLARK                                                                       
+      7844 TURNER           7698       7788 SCOTT                                                                       
+      7844 TURNER           7698       7839 KING                                                                        
+      7844 TURNER           7698       7844 TURNER                                                                      
+      7844 TURNER           7698       7876 ADAMS                                                                       
+      7844 TURNER           7698       7900 JAMES                                                                       
+      7844 TURNER           7698       7902 FORD                                                                        
+      7844 TURNER           7698       7934 MILLER                                                                      
+      7876 ADAMS            7788       7369 SMITH                                                                       
+      7876 ADAMS            7788       7499 ALLEN                                                                       
+      7876 ADAMS            7788       7521 WARD                                                                        
+      7876 ADAMS            7788       7566 JONES                                                                       
+      7876 ADAMS            7788       7654 MARTIN                                                                      
+      7876 ADAMS            7788       7698 BLAKE                                                                       
+      7876 ADAMS            7788       7782 CLARK                                                                       
+      7876 ADAMS            7788       7788 SCOTT                                                                       
+      7876 ADAMS            7788       7839 KING                                                                        
+      7876 ADAMS            7788       7844 TURNER                                                                      
+      7876 ADAMS            7788       7876 ADAMS                                                                       
+      7876 ADAMS            7788       7900 JAMES                                                                       
+      7876 ADAMS            7788       7902 FORD                                                                        
+      7876 ADAMS            7788       7934 MILLER                                                                      
+      7900 JAMES            7698       7369 SMITH                                                                       
+      7900 JAMES            7698       7499 ALLEN                                                                       
+      7900 JAMES            7698       7521 WARD                                                                        
+      7900 JAMES            7698       7566 JONES                                                                       
+      7900 JAMES            7698       7654 MARTIN                                                                      
+      7900 JAMES            7698       7698 BLAKE                                                                       
+      7900 JAMES            7698       7782 CLARK                                                                       
+      7900 JAMES            7698       7788 SCOTT                                                                       
+      7900 JAMES            7698       7839 KING                                                                        
+      7900 JAMES            7698       7844 TURNER                                                                      
+      7900 JAMES            7698       7876 ADAMS                                                                       
+      7900 JAMES            7698       7900 JAMES                                                                       
+      7900 JAMES            7698       7902 FORD                                                                        
+      7900 JAMES            7698       7934 MILLER                                                                      
+      7902 FORD             7566       7369 SMITH                                                                       
+      7902 FORD             7566       7499 ALLEN                                                                       
+      7902 FORD             7566       7521 WARD                                                                        
+
+     EMPNO ENAME             MGR      EMPNO ENAME                                                                       
+---------- ---------- ---------- ---------- ----------                                                                  
+      7902 FORD             7566       7566 JONES                                                                       
+      7902 FORD             7566       7654 MARTIN                                                                      
+      7902 FORD             7566       7698 BLAKE                                                                       
+      7902 FORD             7566       7782 CLARK                                                                       
+      7902 FORD             7566       7788 SCOTT                                                                       
+      7902 FORD             7566       7839 KING                                                                        
+      7902 FORD             7566       7844 TURNER                                                                      
+      7902 FORD             7566       7876 ADAMS                                                                       
+      7902 FORD             7566       7900 JAMES                                                                       
+      7902 FORD             7566       7902 FORD                                                                        
+      7902 FORD             7566       7934 MILLER                                                                      
+      7934 MILLER           7782       7369 SMITH                                                                       
+      7934 MILLER           7782       7499 ALLEN                                                                       
+      7934 MILLER           7782       7521 WARD                                                                        
+      7934 MILLER           7782       7566 JONES                                                                       
+      7934 MILLER           7782       7654 MARTIN                                                                      
+      7934 MILLER           7782       7698 BLAKE                                                                       
+      7934 MILLER           7782       7782 CLARK                                                                       
+      7934 MILLER           7782       7788 SCOTT                                                                       
+      7934 MILLER           7782       7839 KING                                                                        
+      7934 MILLER           7782       7844 TURNER                                                                      
+      7934 MILLER           7782       7876 ADAMS                                                                       
+      7934 MILLER           7782       7900 JAMES                                                                       
+      7934 MILLER           7782       7902 FORD                                                                        
+      7934 MILLER           7782       7934 MILLER                                                                      
+
+196 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename || '  의 매니저는  ' || manager.ename
+  2  from emp worker, emp manager
+  3  where worker.mgr = manager.empno;
+
+WORKER.ENAME||'의매니저는'||MANAGER                                                                                     
+-----------------------------------                                                                                     
+FORD  의 매니저는  JONES                                                                                                
+SCOTT  의 매니저는  JONES                                                                                               
+TURNER  의 매니저는  BLAKE                                                                                              
+ALLEN  의 매니저는  BLAKE                                                                                               
+WARD  의 매니저는  BLAKE                                                                                                
+JAMES  의 매니저는  BLAKE                                                                                               
+MARTIN  의 매니저는  BLAKE                                                                                              
+MILLER  의 매니저는  CLARK                                                                                              
+ADAMS  의 매니저는  SCOTT                                                                                               
+BLAKE  의 매니저는  KING                                                                                                
+JONES  의 매니저는  KING                                                                                                
+CLARK  의 매니저는  KING                                                                                                
+SMITH  의 매니저는  FORD                                                                                                
+
+13 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename || '  의 매니저는  ' || manager.ename
+  2  from emp worker, emp manager
+  3  where worker.mgr = manager.empno(+);
+
+WORKER.ENAME||'의매니저는'||MANAGER                                                                                     
+-----------------------------------                                                                                     
+FORD  의 매니저는  JONES                                                                                                
+SCOTT  의 매니저는  JONES                                                                                               
+JAMES  의 매니저는  BLAKE                                                                                               
+TURNER  의 매니저는  BLAKE                                                                                              
+MARTIN  의 매니저는  BLAKE                                                                                              
+WARD  의 매니저는  BLAKE                                                                                                
+ALLEN  의 매니저는  BLAKE                                                                                               
+MILLER  의 매니저는  CLARK                                                                                              
+ADAMS  의 매니저는  SCOTT                                                                                               
+CLARK  의 매니저는  KING                                                                                                
+BLAKE  의 매니저는  KING                                                                                                
+JONES  의 매니저는  KING                                                                                                
+SMITH  의 매니저는  FORD                                                                                                
+KING  의 매니저는                                                                                                       
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename, worker.deptno, mgr.ename, mgr.deptno
+  2  from emp worker, emp mgr
+  3  
+HR20164091>;
+  1  select worker.ename, worker.deptno, mgr.ename, mgr.deptno
+  2* from emp worker, emp mgr
+HR20164091>select e.ename, d.deptno, d.dname
+  2  from emp e left outer join dept d on (e.deptno = d.deptno);
+
+ENAME          DEPTNO DNAME                                                                                             
+---------- ---------- --------------                                                                                    
+MILLER             10 ACCOUNTING                                                                                        
+KING               10 ACCOUNTING                                                                                        
+CLARK              10 ACCOUNTING                                                                                        
+FORD               20 RESEARCH                                                                                          
+ADAMS              20 RESEARCH                                                                                          
+SCOTT              20 RESEARCH                                                                                          
+JONES              20 RESEARCH                                                                                          
+SMITH              20 RESEARCH                                                                                          
+JAMES              30 SALES                                                                                             
+TURNER             30 SALES                                                                                             
+BLAKE              30 SALES                                                                                             
+MARTIN             30 SALES                                                                                             
+WARD               30 SALES                                                                                             
+ALLEN              30 SALES                                                                                             
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select RANK(1300) within group(ORDER BY sal DESC) from emp;
+
+RANK(1300)WITHINGROUP(ORDERBYSALDESC)                                                                                   
+-------------------------------------                                                                                   
+                                    9                                                                                   
+
+HR20164091>select ename 이름, sal 급여, RANK() (ORDER BY sal DESC) 순위
+  2  from emp;
+select ename 이름, sal 급여, RANK() (ORDER BY sal DESC) 순위
+                             *
+1행에 오류:
+ORA-30484: 이 함수에 대한 윈도우 지정이 없습니다 
+
+
+HR20164091>select ename 이름, sal 급여, RANK() OVER(ORDER BY sal DESC) 순위
+  2  from emp;
+
+이름             급여       순위                                                                                        
+---------- ---------- ----------                                                                                        
+KING             5000          1                                                                                        
+FORD             3000          2                                                                                        
+SCOTT            3000          2                                                                                        
+JONES            2975          4                                                                                        
+BLAKE            2850          5                                                                                        
+CLARK            2450          6                                                                                        
+ALLEN            1600          7                                                                                        
+TURNER           1500          8                                                                                        
+MILLER           1300          9                                                                                        
+WARD             1250         10                                                                                        
+MARTIN           1250         10                                                                                        
+ADAMS            1100         12                                                                                        
+JAMES             950         13                                                                                        
+SMITH             800         14                                                                                        
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select ename 이름, sal 급여, RANK() OVER(ORDER BY sal DESC) 순위
+  2  from emp order by empno;
+
+이름             급여       순위                                                                                        
+---------- ---------- ----------                                                                                        
+SMITH             800         14                                                                                        
+ALLEN            1600          7                                                                                        
+WARD             1250         10                                                                                        
+JONES            2975          4                                                                                        
+MARTIN           1250         10                                                                                        
+BLAKE            2850          5                                                                                        
+CLARK            2450          6                                                                                        
+SCOTT            3000          2                                                                                        
+KING             5000          1                                                                                        
+TURNER           1500          8                                                                                        
+ADAMS            1100         12                                                                                        
+JAMES             950         13                                                                                        
+FORD             3000          2                                                                                        
+MILLER           1300          9                                                                                        
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename 이름, worker.deptno 부서번호, mgr.ename 상사이름, mgr.deptno 상사부서
+  2  from emp worker, emp mgr
+  3  ;
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+SMITH              20 SMITH              20                                                                             
+SMITH              20 ALLEN              30                                                                             
+SMITH              20 WARD               30                                                                             
+SMITH              20 JONES              20                                                                             
+SMITH              20 MARTIN             30                                                                             
+SMITH              20 BLAKE              30                                                                             
+SMITH              20 CLARK              10                                                                             
+SMITH              20 SCOTT              20                                                                             
+SMITH              20 KING               10                                                                             
+SMITH              20 TURNER             30                                                                             
+SMITH              20 ADAMS              20                                                                             
+SMITH              20 JAMES              30                                                                             
+SMITH              20 FORD               20                                                                             
+SMITH              20 MILLER             10                                                                             
+ALLEN              30 SMITH              20                                                                             
+ALLEN              30 ALLEN              30                                                                             
+ALLEN              30 WARD               30                                                                             
+ALLEN              30 JONES              20                                                                             
+ALLEN              30 MARTIN             30                                                                             
+ALLEN              30 BLAKE              30                                                                             
+ALLEN              30 CLARK              10                                                                             
+ALLEN              30 SCOTT              20                                                                             
+ALLEN              30 KING               10                                                                             
+ALLEN              30 TURNER             30                                                                             
+ALLEN              30 ADAMS              20                                                                             
+ALLEN              30 JAMES              30                                                                             
+ALLEN              30 FORD               20                                                                             
+ALLEN              30 MILLER             10                                                                             
+WARD               30 SMITH              20                                                                             
+WARD               30 ALLEN              30                                                                             
+WARD               30 WARD               30                                                                             
+WARD               30 JONES              20                                                                             
+WARD               30 MARTIN             30                                                                             
+WARD               30 BLAKE              30                                                                             
+WARD               30 CLARK              10                                                                             
+WARD               30 SCOTT              20                                                                             
+WARD               30 KING               10                                                                             
+WARD               30 TURNER             30                                                                             
+WARD               30 ADAMS              20                                                                             
+WARD               30 JAMES              30                                                                             
+WARD               30 FORD               20                                                                             
+WARD               30 MILLER             10                                                                             
+JONES              20 SMITH              20                                                                             
+JONES              20 ALLEN              30                                                                             
+JONES              20 WARD               30                                                                             
+JONES              20 JONES              20                                                                             
+JONES              20 MARTIN             30                                                                             
+JONES              20 BLAKE              30                                                                             
+JONES              20 CLARK              10                                                                             
+JONES              20 SCOTT              20                                                                             
+JONES              20 KING               10                                                                             
+JONES              20 TURNER             30                                                                             
+JONES              20 ADAMS              20                                                                             
+JONES              20 JAMES              30                                                                             
+JONES              20 FORD               20                                                                             
+JONES              20 MILLER             10                                                                             
+MARTIN             30 SMITH              20                                                                             
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+MARTIN             30 ALLEN              30                                                                             
+MARTIN             30 WARD               30                                                                             
+MARTIN             30 JONES              20                                                                             
+MARTIN             30 MARTIN             30                                                                             
+MARTIN             30 BLAKE              30                                                                             
+MARTIN             30 CLARK              10                                                                             
+MARTIN             30 SCOTT              20                                                                             
+MARTIN             30 KING               10                                                                             
+MARTIN             30 TURNER             30                                                                             
+MARTIN             30 ADAMS              20                                                                             
+MARTIN             30 JAMES              30                                                                             
+MARTIN             30 FORD               20                                                                             
+MARTIN             30 MILLER             10                                                                             
+BLAKE              30 SMITH              20                                                                             
+BLAKE              30 ALLEN              30                                                                             
+BLAKE              30 WARD               30                                                                             
+BLAKE              30 JONES              20                                                                             
+BLAKE              30 MARTIN             30                                                                             
+BLAKE              30 BLAKE              30                                                                             
+BLAKE              30 CLARK              10                                                                             
+BLAKE              30 SCOTT              20                                                                             
+BLAKE              30 KING               10                                                                             
+BLAKE              30 TURNER             30                                                                             
+BLAKE              30 ADAMS              20                                                                             
+BLAKE              30 JAMES              30                                                                             
+BLAKE              30 FORD               20                                                                             
+BLAKE              30 MILLER             10                                                                             
+CLARK              10 SMITH              20                                                                             
+CLARK              10 ALLEN              30                                                                             
+CLARK              10 WARD               30                                                                             
+CLARK              10 JONES              20                                                                             
+CLARK              10 MARTIN             30                                                                             
+CLARK              10 BLAKE              30                                                                             
+CLARK              10 CLARK              10                                                                             
+CLARK              10 SCOTT              20                                                                             
+CLARK              10 KING               10                                                                             
+CLARK              10 TURNER             30                                                                             
+CLARK              10 ADAMS              20                                                                             
+CLARK              10 JAMES              30                                                                             
+CLARK              10 FORD               20                                                                             
+CLARK              10 MILLER             10                                                                             
+SCOTT              20 SMITH              20                                                                             
+SCOTT              20 ALLEN              30                                                                             
+SCOTT              20 WARD               30                                                                             
+SCOTT              20 JONES              20                                                                             
+SCOTT              20 MARTIN             30                                                                             
+SCOTT              20 BLAKE              30                                                                             
+SCOTT              20 CLARK              10                                                                             
+SCOTT              20 SCOTT              20                                                                             
+SCOTT              20 KING               10                                                                             
+SCOTT              20 TURNER             30                                                                             
+SCOTT              20 ADAMS              20                                                                             
+SCOTT              20 JAMES              30                                                                             
+SCOTT              20 FORD               20                                                                             
+SCOTT              20 MILLER             10                                                                             
+KING               10 SMITH              20                                                                             
+KING               10 ALLEN              30                                                                             
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+KING               10 WARD               30                                                                             
+KING               10 JONES              20                                                                             
+KING               10 MARTIN             30                                                                             
+KING               10 BLAKE              30                                                                             
+KING               10 CLARK              10                                                                             
+KING               10 SCOTT              20                                                                             
+KING               10 KING               10                                                                             
+KING               10 TURNER             30                                                                             
+KING               10 ADAMS              20                                                                             
+KING               10 JAMES              30                                                                             
+KING               10 FORD               20                                                                             
+KING               10 MILLER             10                                                                             
+TURNER             30 SMITH              20                                                                             
+TURNER             30 ALLEN              30                                                                             
+TURNER             30 WARD               30                                                                             
+TURNER             30 JONES              20                                                                             
+TURNER             30 MARTIN             30                                                                             
+TURNER             30 BLAKE              30                                                                             
+TURNER             30 CLARK              10                                                                             
+TURNER             30 SCOTT              20                                                                             
+TURNER             30 KING               10                                                                             
+TURNER             30 TURNER             30                                                                             
+TURNER             30 ADAMS              20                                                                             
+TURNER             30 JAMES              30                                                                             
+TURNER             30 FORD               20                                                                             
+TURNER             30 MILLER             10                                                                             
+ADAMS              20 SMITH              20                                                                             
+ADAMS              20 ALLEN              30                                                                             
+ADAMS              20 WARD               30                                                                             
+ADAMS              20 JONES              20                                                                             
+ADAMS              20 MARTIN             30                                                                             
+ADAMS              20 BLAKE              30                                                                             
+ADAMS              20 CLARK              10                                                                             
+ADAMS              20 SCOTT              20                                                                             
+ADAMS              20 KING               10                                                                             
+ADAMS              20 TURNER             30                                                                             
+ADAMS              20 ADAMS              20                                                                             
+ADAMS              20 JAMES              30                                                                             
+ADAMS              20 FORD               20                                                                             
+ADAMS              20 MILLER             10                                                                             
+JAMES              30 SMITH              20                                                                             
+JAMES              30 ALLEN              30                                                                             
+JAMES              30 WARD               30                                                                             
+JAMES              30 JONES              20                                                                             
+JAMES              30 MARTIN             30                                                                             
+JAMES              30 BLAKE              30                                                                             
+JAMES              30 CLARK              10                                                                             
+JAMES              30 SCOTT              20                                                                             
+JAMES              30 KING               10                                                                             
+JAMES              30 TURNER             30                                                                             
+JAMES              30 ADAMS              20                                                                             
+JAMES              30 JAMES              30                                                                             
+JAMES              30 FORD               20                                                                             
+JAMES              30 MILLER             10                                                                             
+FORD               20 SMITH              20                                                                             
+FORD               20 ALLEN              30                                                                             
+FORD               20 WARD               30                                                                             
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+FORD               20 JONES              20                                                                             
+FORD               20 MARTIN             30                                                                             
+FORD               20 BLAKE              30                                                                             
+FORD               20 CLARK              10                                                                             
+FORD               20 SCOTT              20                                                                             
+FORD               20 KING               10                                                                             
+FORD               20 TURNER             30                                                                             
+FORD               20 ADAMS              20                                                                             
+FORD               20 JAMES              30                                                                             
+FORD               20 FORD               20                                                                             
+FORD               20 MILLER             10                                                                             
+MILLER             10 SMITH              20                                                                             
+MILLER             10 ALLEN              30                                                                             
+MILLER             10 WARD               30                                                                             
+MILLER             10 JONES              20                                                                             
+MILLER             10 MARTIN             30                                                                             
+MILLER             10 BLAKE              30                                                                             
+MILLER             10 CLARK              10                                                                             
+MILLER             10 SCOTT              20                                                                             
+MILLER             10 KING               10                                                                             
+MILLER             10 TURNER             30                                                                             
+MILLER             10 ADAMS              20                                                                             
+MILLER             10 JAMES              30                                                                             
+MILLER             10 FORD               20                                                                             
+MILLER             10 MILLER             10                                                                             
+
+196 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename 이름, worker.deptno 부서번호, mgr.ename 상사이름, mgr.deptno 상사부서
+  2  from emp worker, emp mgr
+  3  where worker.mgr = mgr.empno;
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+FORD               20 JONES              20                                                                             
+SCOTT              20 JONES              20                                                                             
+TURNER             30 BLAKE              30                                                                             
+ALLEN              30 BLAKE              30                                                                             
+WARD               30 BLAKE              30                                                                             
+JAMES              30 BLAKE              30                                                                             
+MARTIN             30 BLAKE              30                                                                             
+MILLER             10 CLARK              10                                                                             
+ADAMS              20 SCOTT              20                                                                             
+BLAKE              30 KING               10                                                                             
+JONES              20 KING               10                                                                             
+CLARK              10 KING               10                                                                             
+SMITH              20 FORD               20                                                                             
+
+13 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename 이름, worker.deptno 부서번호, mgr.ename 상사이름, mgr.deptno 상사부서
+  2  from emp worker, emp mgr
+  3  where worker.mgr = mgr.empno and worker.deptno = mgr.deptno;
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+FORD               20 JONES              20                                                                             
+SCOTT              20 JONES              20                                                                             
+JAMES              30 BLAKE              30                                                                             
+TURNER             30 BLAKE              30                                                                             
+MARTIN             30 BLAKE              30                                                                             
+WARD               30 BLAKE              30                                                                             
+ALLEN              30 BLAKE              30                                                                             
+MILLER             10 CLARK              10                                                                             
+ADAMS              20 SCOTT              20                                                                             
+CLARK              10 KING               10                                                                             
+SMITH              20 FORD               20                                                                             
+
+11 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename 이름, worker.deptno 부서번호, mgr.ename 상사이름, mgr.deptno 상사부서
+  2  from emp worker, emp mgr
+  3  where worker.mgr = mgr.empno and worker.deptno = mgr.deptno
+  4  order by worker.ename;
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+ADAMS              20 SCOTT              20                                                                             
+ALLEN              30 BLAKE              30                                                                             
+CLARK              10 KING               10                                                                             
+FORD               20 JONES              20                                                                             
+JAMES              30 BLAKE              30                                                                             
+MARTIN             30 BLAKE              30                                                                             
+MILLER             10 CLARK              10                                                                             
+SCOTT              20 JONES              20                                                                             
+SMITH              20 FORD               20                                                                             
+TURNER             30 BLAKE              30                                                                             
+WARD               30 BLAKE              30                                                                             
+
+11 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select worker.ename 이름, worker.deptno 부서번호, manager.ename 상사이름, manager.deptno 상사부서
+  2  from emp worker, emp manager
+  3  where worker.mgr = manager.empno and worker.deptno = manager.deptno;
+
+이름         부서번호 상사이름     상사부서                                                                             
+---------- ---------- ---------- ----------                                                                             
+FORD               20 JONES              20                                                                             
+SCOTT              20 JONES              20                                                                             
+JAMES              30 BLAKE              30                                                                             
+TURNER             30 BLAKE              30                                                                             
+MARTIN             30 BLAKE              30                                                                             
+WARD               30 BLAKE              30                                                                             
+ALLEN              30 BLAKE              30                                                                             
+MILLER             10 CLARK              10                                                                             
+ADAMS              20 SCOTT              20                                                                             
+CLARK              10 KING               10                                                                             
+SMITH              20 FORD               20                                                                             
+
+11 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>select deptno, trunc(AVG(sal),2) from emp group by deptno
+  2  ;
+
+    DEPTNO TRUNC(AVG(SAL),2)                                                                                            
+---------- -----------------                                                                                            
+        30           1566.66                                                                                            
+        20              2175                                                                                            
+        10           2916.66                                                                                            
+
+HR20164091>select deptno, trunc(AVG(sal)) from emp group by deptno
+  2  ;
+
+    DEPTNO TRUNC(AVG(SAL))                                                                                              
+---------- ---------------                                                                                              
+        30            1566                                                                                              
+        20            2175                                                                                              
+        10            2916                                                                                              
+
+HR20164091>select ename 이름, sal 급여, deptno 부서번호, trunc(AVG(sal)) 부서평균급여 from emp group by deptno;
+select ename 이름, sal 급여, deptno 부서번호, trunc(AVG(sal)) 부서평균급여 from emp group by deptno
+       *
+1행에 오류:
+ORA-00979: GROUP BY 표현식이 아닙니다. 
+
+
+HR20164091>select ename 이름, sal 급여, deptno 부서번호, trunc(AVG(sal)) 부서평균급여 from emp;
+select ename 이름, sal 급여, deptno 부서번호, trunc(AVG(sal)) 부서평균급여 from emp
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 급여, tmp.trunc(AVG(sal)) 부서평균급여
+  2  from emp e, (
+  3  select deptno, trunc(AVG(sal),1) from emp group by deptno) tmp;
+select e.ename 이름, e.sal 급여, e.deptno 급여, tmp.trunc(AVG(sal)) 부서평균급여
+                                                *
+1행에 오류:
+ORA-00904: "TMP"."TRUNC": 부적합한 식별자 
+
+
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 급여, tmp.trunc(AVG(sal)) 부서평균급여
+  2  from emp e, (select deptno, trunc(AVG(sal),1) from emp group by deptno) tmp;
+select e.ename 이름, e.sal 급여, e.deptno 급여, tmp.trunc(AVG(sal)) 부서평균급여
+                                                *
+1행에 오류:
+ORA-00904: "TMP"."TRUNC": 부적합한 식별자 
+
+
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 급여, tmp.trunc(AVG(sal)) 부서평균급여
+  2  ;
+
+*
+2행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>select ename 이름, sal 급여, deptno 급여, trunc(AVG(sal)) 부서평균급여
+  2  from emp
+  3  where sal >= (select deptno, l;
+where sal >= (select deptno, l
+              *
+3행에 오류:
+ORA-00921: SQL 명령어가 불완전합니다 
+
+
+HR20164091>select ename 이름, sal 급여, deptno 급여, AVG(sal) 부서) 부서평균급여
+  2  from emp
+  3  gruop by deptno;
+select ename 이름, sal 급여, deptno 급여, AVG(sal) 부서) 부서평균급여
+                                                       *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>select ename 이름, sal 급여, deptno 부서, AVG(sal) 부서평균급여
+  2  from emp
+  3  group by deptno;
+select ename 이름, sal 급여, deptno 부서, AVG(sal) 부서평균급여
+       *
+1행에 오류:
+ORA-00979: GROUP BY 표현식이 아닙니다. 
+
+
+HR20164091>
+HR20164091>
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 부서, t.av 부서평균급여
+  2  from emp e, (select deptno, trunc(avg(sal),1) av from emp group by deptno) t;
+
+이름             급여       부서 부서평균급여                                                                           
+---------- ---------- ---------- ------------                                                                           
+SMITH             800         20       1566.6                                                                           
+ALLEN            1600         30       1566.6                                                                           
+WARD             1250         30       1566.6                                                                           
+JONES            2975         20       1566.6                                                                           
+MARTIN           1250         30       1566.6                                                                           
+BLAKE            2850         30       1566.6                                                                           
+CLARK            2450         10       1566.6                                                                           
+SCOTT            3000         20       1566.6                                                                           
+KING             5000         10       1566.6                                                                           
+TURNER           1500         30       1566.6                                                                           
+ADAMS            1100         20       1566.6                                                                           
+JAMES             950         30       1566.6                                                                           
+FORD             3000         20       1566.6                                                                           
+MILLER           1300         10       1566.6                                                                           
+SMITH             800         20         2175                                                                           
+ALLEN            1600         30         2175                                                                           
+WARD             1250         30         2175                                                                           
+JONES            2975         20         2175                                                                           
+MARTIN           1250         30         2175                                                                           
+BLAKE            2850         30         2175                                                                           
+CLARK            2450         10         2175                                                                           
+SCOTT            3000         20         2175                                                                           
+KING             5000         10         2175                                                                           
+TURNER           1500         30         2175                                                                           
+ADAMS            1100         20         2175                                                                           
+JAMES             950         30         2175                                                                           
+FORD             3000         20         2175                                                                           
+MILLER           1300         10         2175                                                                           
+SMITH             800         20       2916.6                                                                           
+ALLEN            1600         30       2916.6                                                                           
+WARD             1250         30       2916.6                                                                           
+JONES            2975         20       2916.6                                                                           
+MARTIN           1250         30       2916.6                                                                           
+BLAKE            2850         30       2916.6                                                                           
+CLARK            2450         10       2916.6                                                                           
+SCOTT            3000         20       2916.6                                                                           
+KING             5000         10       2916.6                                                                           
+TURNER           1500         30       2916.6                                                                           
+ADAMS            1100         20       2916.6                                                                           
+JAMES             950         30       2916.6                                                                           
+FORD             3000         20       2916.6                                                                           
+MILLER           1300         10       2916.6                                                                           
+
+42 개의 행이 선택되었습니다.
+
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 부서, t.av 부서평균급여
+  2  from emp e, (select deptno, trunc(avg(sal),1) av from emp group by deptno) t
+  3  where e.deptno = t.deptno;
+
+이름             급여       부서 부서평균급여                                                                           
+---------- ---------- ---------- ------------                                                                           
+SMITH             800         20         2175                                                                           
+ALLEN            1600         30       1566.6                                                                           
+WARD             1250         30       1566.6                                                                           
+JONES            2975         20         2175                                                                           
+MARTIN           1250         30       1566.6                                                                           
+BLAKE            2850         30       1566.6                                                                           
+CLARK            2450         10       2916.6                                                                           
+SCOTT            3000         20         2175                                                                           
+KING             5000         10       2916.6                                                                           
+TURNER           1500         30       1566.6                                                                           
+ADAMS            1100         20         2175                                                                           
+JAMES             950         30       1566.6                                                                           
+FORD             3000         20         2175                                                                           
+MILLER           1300         10       2916.6                                                                           
+
+14 개의 행이 선택되었습니다.
+
+HR20164091>select e.ename 이름, e.sal 급여, e.deptno 부서, t.av 부서평균급여
+  2  from emp e, (select deptno, trunc(avg(sal),1) av from emp group by deptno) t
+  3  where e.deptno = t.deptno and e.sal >= t.av;
+
+이름             급여       부서 부서평균급여                                                                           
+---------- ---------- ---------- ------------                                                                           
+ALLEN            1600         30       1566.6                                                                           
+JONES            2975         20         2175                                                                           
+BLAKE            2850         30       1566.6                                                                           
+SCOTT            3000         20         2175                                                                           
+KING             5000         10       2916.6                                                                           
+FORD             3000         20         2175                                                                           
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>spool off
+
+
+#과제#
+
+#1번
+select e.ename 이름, e.sal 급여, e.deptno 부서, t.av 부서평균급여
+from emp e, (select deptno, trunc(avg(sal),1) av from emp group by deptno) t
+where e.deptno = t.deptno and e.sal >= t.av;
+
+#2번
+select worker.ename 이름, worker.deptno 부서번호, mgr.ename 상사이름, mgr.deptno 상사부서
+from emp worker, emp mgr
+where worker.mgr = mgr.empno and worker.deptno = mgr.deptno
+order by worker.ename;

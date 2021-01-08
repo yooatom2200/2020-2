@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9322B68-974E-4EB5-8898-E8CC3FFE0B5E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>서점앱구현</RootNamespace>
+    <AssemblyName>서점앱구현</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.19.10.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.OracleClient, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.OracleClient.1.0.8\lib\netstandard2.0\System.Data.OracleClient.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="관리자메뉴.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="관리자메뉴.Designer.cs">
+      <DependentUpon>관리자메뉴.cs</DependentUpon>
+    </Compile>
+    <Compile Include="관리자페이지.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="관리자페이지.Designer.cs">
+      <DependentUpon>관리자페이지.cs</DependentUpon>
+    </Compile>
+    <Compile Include="도서관리.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="도서관리.Designer.cs">
+      <DependentUpon>도서관리.cs</DependentUpon>
+    </Compile>
+    <Compile Include="마이페이지.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="마이페이지.Designer.cs">
+      <DependentUpon>마이페이지.cs</DependentUpon>
+    </Compile>
+    <Compile Include="메인화면.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="메인화면.Designer.cs">
+      <DependentUpon>메인화면.cs</DependentUpon>
+    </Compile>
+    <Compile Include="배송주소.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="배송주소.Designer.cs">
+      <DependentUpon>배송주소.cs</DependentUpon>
+    </Compile>
+    <Compile Include="비밀번호찾기.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="비밀번호찾기.Designer.cs">
+      <DependentUpon>비밀번호찾기.cs</DependentUpon>
+    </Compile>
+    <Compile Include="아이디찾기.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="아이디찾기.Designer.cs">
+      <DependentUpon>아이디찾기.cs</DependentUpon>
+    </Compile>
+    <Compile Include="로그인.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="로그인.Designer.cs">
+      <DependentUpon>로그인.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="신용카드.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="신용카드.Designer.cs">
+      <DependentUpon>신용카드.cs</DependentUpon>
+    </Compile>
+    <Compile Include="장바구니관리.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="장바구니관리.Designer.cs">
+      <DependentUpon>장바구니관리.cs</DependentUpon>
+    </Compile>
+    <Compile Include="장바구니담기.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="장바구니담기.Designer.cs">
+      <DependentUpon>장바구니담기.cs</DependentUpon>
+    </Compile>
+    <Compile Include="바로주문.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="바로주문.Designer.cs">
+      <DependentUpon>바로주문.cs</DependentUpon>
+    </Compile>
+    <Compile Include="장바구니주문.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="장바구니주문.Designer.cs">
+      <DependentUpon>장바구니주문.cs</DependentUpon>
+    </Compile>
+    <Compile Include="주문성공.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="주문성공.Designer.cs">
+      <DependentUpon>주문성공.cs</DependentUpon>
+    </Compile>
+    <Compile Include="주문내역.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="주문내역.Designer.cs">
+      <DependentUpon>주문내역.cs</DependentUpon>
+    </Compile>
+    <Compile Include="주문관리.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="주문관리.Designer.cs">
+      <DependentUpon>주문관리.cs</DependentUpon>
+    </Compile>
+    <Compile Include="판매이력조회.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="판매이력조회.Designer.cs">
+      <DependentUpon>판매이력조회.cs</DependentUpon>
+    </Compile>
+    <Compile Include="회원가입.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="회원가입.Designer.cs">
+      <DependentUpon>회원가입.cs</DependentUpon>
+    </Compile>
+    <Compile Include="회원정보수정.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="회원정보수정.Designer.cs">
+      <DependentUpon>회원정보수정.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="관리자메뉴.resx">
+      <DependentUpon>관리자메뉴.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="관리자페이지.resx">
+      <DependentUpon>관리자페이지.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="도서관리.resx">
+      <DependentUpon>도서관리.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="로그인.resx">
+      <DependentUpon>로그인.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="마이페이지.resx">
+      <DependentUpon>마이페이지.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="메인화면.resx">
+      <DependentUpon>메인화면.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="배송주소.resx">
+      <DependentUpon>배송주소.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="비밀번호찾기.resx">
+      <DependentUpon>비밀번호찾기.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="아이디찾기.resx">
+      <DependentUpon>아이디찾기.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="신용카드.resx">
+      <DependentUpon>신용카드.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="장바구니관리.resx">
+      <DependentUpon>장바구니관리.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="장바구니담기.resx">
+      <DependentUpon>장바구니담기.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="바로주문.resx">
+      <DependentUpon>바로주문.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="장바구니주문.resx">
+      <DependentUpon>장바구니주문.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="주문성공.resx">
+      <DependentUpon>주문성공.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="주문내역.resx">
+      <DependentUpon>주문내역.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="주문관리.resx">
+      <DependentUpon>주문관리.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="판매이력조회.resx">
+      <DependentUpon>판매이력조회.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="회원가입.resx">
+      <DependentUpon>회원가입.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="회원정보수정.resx">
+      <DependentUpon>회원정보수정.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\고객센터_내전화.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\로그인.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\영풍문고이미지.png" />
+    <None Include="Resources\페이지.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\notfound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2910384756.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1029384756.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6413978052.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3021594687.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2648315790.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9514682730.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6413025897.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9073148256.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6479132508.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8520134679.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4679130285.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4679130220.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8193470256.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7946130258.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9146082573.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7896540123.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8521473609.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9517534682.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9876543210.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1234567890.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

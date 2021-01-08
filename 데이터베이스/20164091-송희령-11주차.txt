@@ -1,0 +1,1165 @@
+HR20164091>select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>grant all on emp to HR_SUB;
+
+권한이 부여되었습니다.
+
+HR20164091>revoke all on emp from lhk2;
+revoke all on emp from lhk2
+                       *
+1행에 오류:
+ORA-01917: 사용자 또는 롤 'LHK2'(이)가 존재하지 않습니다 
+
+
+HR20164091>revoke all on emp from HR_SUB;
+
+권한이 취소되었습니다.
+
+HR20164091> SELECT EMPNO, ENAME, JOB
+  2    FROM EMP
+  3    WHERE DEPTNO = 10;
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7782 CLARK      MANAGER                                                                                           
+      7839 KING       PRESIDENT                                                                                         
+      7934 MILLER     CLERK                                                                                             
+      7196 GREEN      SALESMAN                                                                                          
+      8003 GREEN3     SALESMAN                                                                                          
+
+HR20164091>CREATE VIEW EMP_10 AS
+  2    SELECT EMPNO, ENAME, JOB
+  3    FROM EMP
+  4    WHERE DEPTNO = 10;
+CREATE VIEW EMP_10 AS
+            *
+1행에 오류:
+ORA-01031: 권한이 불충분합니다 
+
+
+HR20164091>CREATE VIEW EMP_10 AS
+  2    SELECT EMPNO, ENAME, JOB
+  3    FROM EMP
+  4    WHERE DEPTNO = 10;
+CREATE VIEW EMP_10 AS
+            *
+1행에 오류:
+ORA-01031: 권한이 불충분합니다 
+
+
+HR20164091>CREATE VIEW EMP_10 AS
+  2    SELECT EMPNO, ENAME, JOB
+  3    FROM EMP
+  4    WHERE DEPTNO = 10;
+
+뷰가 생성되었습니다.
+
+HR20164091>select * from EMP_10;
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7782 CLARK      MANAGER                                                                                           
+      7839 KING       PRESIDENT                                                                                         
+      7934 MILLER     CLERK                                                                                             
+      7196 GREEN      SALESMAN                                                                                          
+      8003 GREEN3     SALESMAN                                                                                          
+
+HR20164091>grant all on EMP_10 to HR_SUB;
+
+권한이 부여되었습니다.
+
+HR20164091>UPDATE EMP_10
+  2  SET ENAME='SMITH2'
+  3  WHERE EMPNO=7369;
+
+0 행이 갱신되었습니다.
+
+HR20164091>SELECT * FROM EMP_10
+  2  WHERE JOB='CLERK';
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7934 MILLER     CLERK                                                                                             
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>UPDATE EMP SET DEPTNO = 10 WHERE ENAME = 'SMITH';
+
+1 행이 갱신되었습니다.
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    10                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>DROP VIEW EMP_10;
+
+뷰가 삭제되었습니다.
+
+HR20164091>CREATE VIEW EMP_10 AS
+  2    SELECT EMPNO, ENAME, JOB
+  3    FROM EMP
+  4    WHERE DEPTNO = 10;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM EMP_10
+  2  ;
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7369 SMITH      CLERK                                                                                             
+      7782 CLARK      MANAGER                                                                                           
+      7839 KING       PRESIDENT                                                                                         
+      7934 MILLER     CLERK                                                                                             
+      7196 GREEN      SALESMAN                                                                                          
+      8003 GREEN3     SALESMAN                                                                                          
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>GRANT ALL ON EMP_10 TO HR_SUB;
+
+권한이 부여되었습니다.
+
+HR20164091>SELECT * FROM EMP_10 WHERE JOB='CLERK';
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7369 SMITH      CLERK                                                                                             
+      7934 MILLER     CLERK                                                                                             
+
+HR20164091>UPDATE EMP_10 SET ENAME = 'SMITH2' WHERE EMPNO=7369;
+
+1 행이 갱신되었습니다.
+
+HR20164091>SELECT * FROM EMP_10;
+
+     EMPNO ENAME      JOB                                                                                               
+---------- ---------- ---------                                                                                         
+      7369 SMITH2     CLERK                                                                                             
+      7782 CLARK      MANAGER                                                                                           
+      7839 KING       PRESIDENT                                                                                         
+      7934 MILLER     CLERK                                                                                             
+      7196 GREEN      SALESMAN                                                                                          
+      8003 GREEN3     SALESMAN                                                                                          
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM USER_TABLES;
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+DEPT                           STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         12          5  
+           0          0          0          19                         0                   0          1                 
+         1               N      ENABLED           12 20/10/15 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+EMP                            STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         16          5  
+           0          0          0          37                         0                   0          1                 
+         1               N      ENABLED           16 20/11/05 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+BONUS                          STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+                                                                                           YES N          0          0  
+           0          0          0           0                         0                   0          1                 
+         1               N      ENABLED            0 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  NO  DEFAULT                                                                      
+                                                                                                                        
+SALGRADE                       STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          5          5  
+           0          0          0          10                         0                   0          1                 
+         1               N      ENABLED            5 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+DUMMY                          STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          1          5  
+           0          0          0           2                         0                   0          1                 
+         1               N      ENABLED            1 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+S                              STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          5          5  
+           0          0          0          21                         0                   0          1                 
+         1               N      ENABLED            5 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+P                              STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          6          5  
+           0          0          0          27                         0                   0          1                 
+         1               N      ENABLED            6 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+SP                             STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         12          5  
+           0          0          0          11                         0                   0          1                 
+         1               N      ENABLED           12 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+MANAGER                        STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          3          5  
+           0          0          0          22                         0                   0          1                 
+         1               N      ENABLED            3 20/10/15 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+주문                           STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         21          5  
+           0          0          0          13                         0                   0          1                 
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+         1               N      ENABLED           21 20/10/22 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+
+10 개의 행이 선택되었습니다.
+
+HR20164091>SELECT TABLE_NAME FROMO USER_TABLE;
+SELECT TABLE_NAME FROMO USER_TABLE
+                        *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>SELECT TABLE_NAME FROM USER_TABLE;
+SELECT TABLE_NAME FROM USER_TABLE
+                       *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+HR20164091>select table_name from user_tables;
+
+TABLE_NAME                                                                                                              
+------------------------------                                                                                          
+DEPT                                                                                                                    
+EMP                                                                                                                     
+BONUS                                                                                                                   
+SALGRADE                                                                                                                
+DUMMY                                                                                                                   
+S                                                                                                                       
+P                                                                                                                       
+SP                                                                                                                      
+MANAGER                                                                                                                 
+주문                                                                                                                    
+
+10 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>CREATE VIEW MY_TABLE AS
+  2    SELECT TABLE_NAME
+  3    FROM USER_TABLES;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM MY_TABLE;
+
+TABLE_NAME                                                                                                              
+------------------------------                                                                                          
+DEPT                                                                                                                    
+EMP                                                                                                                     
+BONUS                                                                                                                   
+SALGRADE                                                                                                                
+DUMMY                                                                                                                   
+S                                                                                                                       
+P                                                                                                                       
+SP                                                                                                                      
+MANAGER                                                                                                                 
+주문                                                                                                                    
+
+10 개의 행이 선택되었습니다.
+
+HR20164091>create view summary as
+  2  select a.empno,a.ename, b.dname, a.job, d.ename mgr, a.hiredate, a.sal, c.grade, a.comm
+  3  from emp a, dept b, salgrade c, emp d
+  4  where   (a.deptno = b.deptno)
+  5      and (a.sal between c.losal and c.hisal)
+  6      and (a.mgr=d.empno(+))
+  7  order by a.empno;
+
+뷰가 생성되었습니다.
+
+HR20164091>select * from summary;
+
+     EMPNO ENAME      DNAME          JOB       MGR        HIREDATE        SAL      GRADE       COMM                     
+---------- ---------- -------------- --------- ---------- -------- ---------- ---------- ----------                     
+      7196 GREEN      ACCOUNTING     SALESMAN  CLARK      20/10/15       2000          3                                
+      7369 SMITH2     ACCOUNTING     CLERK     FORD       80/12/17        800          1                                
+      7499 ALLEN      SALES          SALESMAN  BLAKE      81/02/20       1600          3        300                     
+      7521 WARD       SALES          SALESMAN  BLAKE      81/02/22       1250          2        500                     
+      7566 JONES      RESEARCH       MANAGER   KING       81/04/02       2975          4                                
+      7654 MARTIN2    RESEARCH       SALESMAN  BLAKE      81/09/28       1250          2       1400                     
+      7698 BLAKE      SALES          MANAGER   KING       81/05/01       2850          4                                
+      7782 CLARK      ACCOUNTING     MANAGER   KING       81/09/09       2450          4                                
+      7788 SCOTT      RESEARCH       ANALYST   JONES      82/12/09       3000          4                                
+      7839 KING       ACCOUNTING     PRESIDENT            81/11/17       5000          5                                
+      7844 TURNER     SALES          SALESMAN  BLAKE      81/09/08       1500          3          0                     
+      7876 ADAMS      RESEARCH       CLERK     SCOTT      83/01/12       1100          1                                
+      7900 JAMES      SALES          CLERK     BLAKE      81/12/03        950          1                                
+      7902 FORD       RESEARCH       ANALYST   JONES      81/12/03       3000          4                                
+      7934 MILLER     ACCOUNTING     CLERK     CLARK      82/01/23       1300          2                                
+      8003 GREEN3     ACCOUNTING     SALESMAN  CLARK      20/10/15       2000          3                                
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>CREATE OR REPLACE VIEW EMP_10 AS
+  2  SELECT EMPNOO, ENAME, JOB, SAL
+  3  FROM EMP
+  4  WHERE DEPTNO=10;
+SELECT EMPNOO, ENAME, JOB, SAL
+       *
+2행에 오류:
+ORA-00904: "EMPNOO": 부적합한 식별자 
+
+
+HR20164091>CREATE OR REPLACE VIEW EMP_10 AS
+  2  SELECT EMPNO, ENAME, JOB, SAL
+  3  FROM EMP
+  4  WHERE DEPTNO=10;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM EMP_10;
+
+     EMPNO ENAME      JOB              SAL                                                                              
+---------- ---------- --------- ----------                                                                              
+      7369 SMITH2     CLERK            800                                                                              
+      7782 CLARK      MANAGER         2450                                                                              
+      7839 KING       PRESIDENT       5000                                                                              
+      7934 MILLER     CLERK           1300                                                                              
+      7196 GREEN      SALESMAN        2000                                                                              
+      8003 GREEN3     SALESMAN        2000                                                                              
+
+6 개의 행이 선택되었습니다.
+
+HR20164091>CREATE VIEW DEPT_SUM(NAME, MINSAL, MAXSAL, AVGSAL) AS
+  2     SELECT D.DNAME, MIN(E.SAL), MAX(E.SAL), AVG(E.SAL)
+  3     FROM EMP E, DEPT D
+  4     WHERE E.DEPTNO=D.DEPTNO
+  5     GROUP BY D.DNAME;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM DEPT_SUM;
+
+NAME               MINSAL     MAXSAL     AVGSAL                                                                         
+-------------- ---------- ---------- ----------                                                                         
+ACCOUNTING            800       5000 2258.33333                                                                         
+RESEARCH             1100       3000       2265                                                                         
+SALES                 950       2850       1630                                                                         
+
+HR20164091>DROP VIEW EMP_10;
+
+뷰가 삭제되었습니다.
+
+HR20164091>DROP VIEW DEPT_SUM;
+
+뷰가 삭제되었습니다.
+
+HR20164091>DROP VIEW SUMMARY;
+
+뷰가 삭제되었습니다.
+
+HR20164091>CREATE INDEX EMP_ENAME_IDX
+  2  ON EMP(ENAME);
+
+인덱스가 생성되었습니다.
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM EMP WHERE ENAME='SCOTT';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+
+HR20164091>SELECT INDEX_NAME FROM USER_INDEXES
+  2  WHERE TABLE_NAME = 'EMP';
+
+INDEX_NAME                                                                                                              
+------------------------------                                                                                          
+EMP_ENAME_IDX                                                                                                           
+SYS_C0011101                                                                                                            
+
+HR20164091>DROP INDEX EMP_ENAME_IDX;
+
+인덱스가 삭제되었습니다.
+
+HR20164091>CREATE VIEW MAX_SAL AS
+  2  SELECT ENAME, SAL, DNAME
+  3  FROM EMP
+  4  
+
+HR20164091>SELECT ENAME, SAL, DNAME
+  2  FROM EMP
+  3  WHERE SAL IN (\
+  4  ZZ
+  5  Z
+  6  Z
+  7  XX
+  8  C
+  9  C;
+WHERE SAL IN (\
+              *
+3행에 오류:
+ORA-00911: 문자가 부적합합니다 
+
+
+HR20164091>SELECT ENAME, SAL, DNAME FROM EMP
+  2  WHERE SAL IN (
+  3  SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+SELECT ENAME, SAL, DNAME FROM EMP
+                   *
+1행에 오류:
+ORA-00904: "DNAME": 부적합한 식별자 
+
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO);
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  ORDER BY A.ENAME;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  ORDER BY A.EMPNO;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  ORDER BY A.EMPNO;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP);
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+
+12 개의 행이 선택되었습니다.
+
+HR20164091>WHERE SAL IN (SELECT MAX(SAL) FROM EMP);
+SP2-0734: "WHERE SAL ..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  ORDER BY A.ENAME;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE A.SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  ORDER BY A.ENAME;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      AAA                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      MIS                  2850                                                                                    
+BLAKE      FINANCE              2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+BLAKE      OPERATIONS           2850                                                                                    
+BLAKE      SALES                2850                                                                                    
+BLAKE      RESEARCH             2850                                                                                    
+BLAKE      ACCOUNTING           2850                                                                                    
+BLAKE      DEVELOPMENT          2850                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       AAA                  3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+FORD       MIS                  3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       DEVELOPMENT          3000                                                                                    
+FORD       OPERATIONS           3000                                                                                    
+FORD       SALES                3000                                                                                    
+FORD       RESEARCH             3000                                                                                    
+FORD       ACCOUNTING           3000                                                                                    
+FORD       FINANCE              3000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       AAA                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       MIS                  5000                                                                                    
+KING       FINANCE              5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+KING       OPERATIONS           5000                                                                                    
+KING       SALES                5000                                                                                    
+KING       RESEARCH             5000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+KING       DEVELOPMENT          5000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      AAA                  3000                                                                                    
+SCOTT      FINANCE              3000                                                                                    
+SCOTT      MIS                  3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      DEVELOPMENT          3000                                                                                    
+SCOTT      OPERATIONS           3000                                                                                    
+SCOTT      SALES                3000                                                                                    
+SCOTT      ACCOUNTING           3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+
+48 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM DEPT;
+
+    DEPTNO DNAME          LOC                                                                                           
+---------- -------------- -------------                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                      
+        20 RESEARCH       DALLAS                                                                                        
+        30 SALES          CHICAGO                                                                                       
+        40 OPERATIONS     BOSTON                                                                                        
+        50 DEVELOPMENT    DETROIT                                                                                       
+        60 DEVELOPMENT    DETROIT                                                                                       
+        65 MIS                                                                                                          
+        70 FINANCE                                                                                                      
+        80 AAA            SEOUL                                                                                         
+        95 FINANCE        SAN FRANCISCO                                                                                 
+        96 FINANCE        SAN FRANCISCO                                                                                 
+        97 FINANCE        SAN FRANCISCO                                                                                 
+
+12 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE A.SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  AND A.DEPTNO = B.DEPTNO
+  4  ORDER BY A.ENAME;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      SALES                2850                                                                                    
+FORD       RESEARCH             3000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+
+HR20164091>SELECT A.ENAME, B.DNAME, A.SAL FROM EMP A, DEPT B
+  2  WHERE A.SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  3  AND A.DEPTNO = B.DEPTNO;
+
+ENAME      DNAME                 SAL                                                                                    
+---------- -------------- ----------                                                                                    
+BLAKE      SALES                2850                                                                                    
+FORD       RESEARCH             3000                                                                                    
+SCOTT      RESEARCH             3000                                                                                    
+KING       ACCOUNTING           5000                                                                                    
+
+HR20164091>CREATE VIEW MAX_SAL AS
+  2  SELECT A.ENAME, A.SAL, B.DNAME FROM EMP A, DEPT B
+  3  WHERE A.SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+  4  AND A.DEPTNO = B.DEPTNO;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM MAX_SAL;
+
+ENAME             SAL DNAME                                                                                             
+---------- ---------- --------------                                                                                    
+BLAKE            2850 SALES                                                                                             
+FORD             3000 RESEARCH                                                                                          
+SCOTT            3000 RESEARCH                                                                                          
+KING             5000 ACCOUNTING                                                                                        
+
+HR20164091>SELECT * FROM EML
+  2  ;
+SELECT * FROM EML
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+HR20164091>SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10                                    
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DEPTNAME
+  2  FROM EMP A, DEPT B
+  3  WHERE A.DEPTNO = B.DEPTNO;
+SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DEPTNAME
+                                                                            *
+1행에 오류:
+ORA-00904: "B"."DEPTNAME": 부적합한 식별자 
+
+
+HR20164091>SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DNAME
+  2  FROM EMP A, DEPT B
+  3  WHERE A.DEPTNO = B.DEPTNO;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO DNAME                              
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- --------------                     
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10 ACCOUNTING                         
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30 SALES                              
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30 SALES                              
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20 RESEARCH                           
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20 RESEARCH                           
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30 SALES                              
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10 ACCOUNTING                         
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20 RESEARCH                           
+      7839 KING       PRESIDENT            81/11/17       5000                    10 ACCOUNTING                         
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30 SALES                              
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20 RESEARCH                           
+      7900 JAMES      CLERK           7698 81/12/03        950                    30 SALES                              
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20 RESEARCH                           
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10 ACCOUNTING                         
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10 ACCOUNTING                         
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10 ACCOUNTING                         
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>CREATE EMP_DNAME AS
+  2  SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DNAME
+  3  FROM EMP A, DEPT B
+  4  WHERE A.DEPTNO = B.DEPTNO;
+CREATE EMP_DNAME AS
+       *
+1행에 오류:
+ORA-00901: CREATE 명령어가 부적합합니다 
+
+
+HR20164091>CREATE VIEW EMP_DNAME AS
+  2  SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DNAME
+  3  FROM EMP A, DEPT B
+  4  WHERE A.DEPTNO = B.DEPTNO;
+
+뷰가 생성되었습니다.
+
+HR20164091>SELECT * FROM EMP_DNAME;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO DNAME                              
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- --------------                     
+      7369 SMITH2     CLERK           7902 80/12/17        800                    10 ACCOUNTING                         
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30 SALES                              
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30 SALES                              
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20 RESEARCH                           
+      7654 MARTIN2    SALESMAN        7698 81/09/28       1250       1400         20 RESEARCH                           
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30 SALES                              
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10 ACCOUNTING                         
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20 RESEARCH                           
+      7839 KING       PRESIDENT            81/11/17       5000                    10 ACCOUNTING                         
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30 SALES                              
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20 RESEARCH                           
+      7900 JAMES      CLERK           7698 81/12/03        950                    30 SALES                              
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20 RESEARCH                           
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10 ACCOUNTING                         
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10 ACCOUNTING                         
+      8003 GREEN3     SALESMAN        7782 20/10/15       2000                    10 ACCOUNTING                         
+
+16 개의 행이 선택되었습니다.
+
+HR20164091>SPOOL OFF;
+
+*과제*
+1. 여러분이 생각하는 아주 편리한 뷰 하나씩 만들기
+-EMP테이블에서 부서이름까지 나열-
+CREATE VIEW EMP_DNAME AS
+SELECT A.EMPNO, A.ENAME, A.JOB, A.MGR, A.HIREDATE, A.SAL, A.COMM, A.DEPTNO, B.DNAME
+FROM EMP A, DEPT B
+WHERE A.DEPTNO = B.DEPTNO;
+
+
+2. 다음의 뷰를 생성하시오
+부서별 최고급여자의 이름과 급여액수를 가지는 뷰
+SELECT * FROM MAX_SAL을 수행하면 결과가 나오는 뷰
+
+CREATE VIEW MAX_SAL AS
+SELECT A.ENAME, A.SAL, B.DNAME FROM EMP A, DEPT B
+WHERE A.SAL IN (SELECT MAX(SAL) FROM EMP GROUP BY DEPTNO)
+AND A.DEPTNO = B.DEPTNO;

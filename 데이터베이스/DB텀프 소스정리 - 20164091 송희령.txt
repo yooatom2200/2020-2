@@ -1,0 +1,1412 @@
+여러분들 소스 제출에 대한 안내입니다. 오늘밤 자정까지 다음 양식에 따라 소스를 택스트파일(메모장 파일)로 편집하여 제출하여 주시기 바랍니다.
+
+1. 시스템 접속(관리자, 회원의 로그인) 
+   (소스)
+string search_id = textBox1.Text;
+            string search_pw = textBox2.Text;
+            if(string.IsNullOrEmpty(search_id) || string.IsNullOrEmpty(search_pw))
+            {
+                MessageBox.Show("아이디와 비밀번호를 입력해주세요!", "입력오류");
+                return;
+            }
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "select * from 회원 where 회원번호='" + search_id + "' and 비밀번호 = '" +
+                    search_pw + "'";
+                cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                read.Read();
+                login_id = read.GetValue(0).ToString();
+                login_name = read.GetValue(2).ToString();
+                textBox2.Text = "";
+                read.Close();
+                if(login_id == "admin")//관리자 접속
+                {
+                    관리자메뉴 admin_menu = new 관리자메뉴();
+                    admin_menu.Owner = this;
+                    admin_menu.Show();
+                    this.Hide();
+                    return;
+                }
+                메인화면 main = new 메인화면();
+                main.Owner = this;
+                main.Show();
+                this.Hide();
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("아이디와 비밀번호를 확인해 주세요!","오류",MessageBoxButtons.OK,MessageBoxIcon.Error); //에러 메세지 
+            }
+
+2. 관리자계정에서 모든 데이터 입력, 수정, 삭제, 검색
+   (소스)
+입력:
+private void button2_Click(object sender, EventArgs e)//입력버튼
+        {
+            OleDbCommand cmd = new OleDbCommand();
+            if(MessageBox.Show("DB를 변경하는 작업입니다. 신중하게 진행해 주세요.\n생성작업을 진행하시겠습니까?", "경고", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                if (radioButton1.Checked)//회원
+                {
+                    cmd.CommandText = "INSERT INTO 회원 VALUES ('" + textBox4.Text + "','" + textBox5.Text + "', '" + textBox6.Text + "')";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton2.Checked)//회원 주소록
+                {
+                    cmd.CommandText = "INSERT INTO 회원_주소록 VALUES ('" + textBox4.Text + "','" + textBox5.Text + "', '" + textBox6.Text +
+                        "', '" + textBox7.Text + "', '" + textBox8.Text + "')";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton3.Checked)//회원 신용카드
+                {
+                    cmd.CommandText = "INSERT INTO 회원_신용카드 VALUES ('" + textBox4.Text +
+                    "','" + textBox5.Text + "',TO_DATE('" + textBox6.Text + "','YYYY-MM-DD'),'" +
+                    textBox7.Text + "')";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton4.Checked)//도서
+                {
+                    cmd.CommandText = "INSERT INTO 도서 VALUES ('" + textBox4.Text + "','" + textBox5.Text + "', " + textBox6.Text +
+                        ", " + textBox7.Text + ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton5.Checked)//주문 선택
+                {
+                    cmd.CommandText = "INSERT INTO 주문_선택 VALUES ('" + textBox4.Text + "','" + textBox5.Text + "', " + textBox6.Text +
+                        ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton6.Checked)//주문
+                {
+                    cmd.CommandText = "INSERT INTO 주문 VALUES('"+ textBox4.Text + "',TO_DATE('" + textBox5.Text + "', 'YYYY-MM-DD')," + textBox6.Text + 
+                        ",'" + textBox7.Text + "', '" + textBox8.Text + "', TO_DATE('" + textBox9.Text + "', 'YYYY-MM-DD'), '" + textBox10.Text + "', '" +
+                        textBox11.Text + "', '" + textBox12.Text + "', '" + textBox13.Text + "', '" + textBox14.Text + "')";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                }
+                else if (radioButton7.Checked)//장바구니
+                {
+                    cmd.CommandText = "INSERT INTO 장바구니 VALUES(" + textBox4.Text + ",TO_DATE('" + textBox5.Text + "','YYYY-MM-DD'), '" + textBox6.Text + "')";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton8.Checked)//장바구니담기
+                {
+                    cmd.CommandText = "INSERT INTO 장바구니_담기 VALUES(" + textBox4.Text + ",'" + textBox5.Text + "'," + textBox6.Text + ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            db_load();
+            MessageBox.Show("데이터가 추가되었습니다.", "추가 완료");
+        }
+
+수정:
+private void button3_Click(object sender, EventArgs e)//수정
+        {
+            OleDbCommand cmd = new OleDbCommand();
+            if (MessageBox.Show("DB를 변경하는 작업입니다. 신중하게 진행해 주세요.\n수정작업을 진행하시겠습니까?", "경고", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                if (radioButton1.Checked)//회원
+                {
+                    cmd.CommandText = "UPDATE 회원 SET 비밀번호 = '" + textBox5.Text + "', 성명 = '" + textBox6.Text +
+                        "' WHERE 회원번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton2.Checked)//회원 주소록
+                {
+                    cmd.CommandText = "UPDATE 회원_주소록 SET 우편번호 = '" + textBox6.Text + "', 기본주소 = '" + textBox7.Text +
+                        "', 상세주소 = '" + textBox8.Text + "' WHERE 회원번호 = '" + textBox4.Text + "' AND 배송지 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton3.Checked)//회원 신용카드
+                {
+                    cmd.CommandText = "UPDATE 회원_신용카드 SET 유효기간 = TO_DATE('" + textBox6.Text + "','YYYY-MM'), 카드종류 = '" + 
+                        textBox7.Text + "' WHERE 회원번호 = '" + textBox4.Text + "' AND 카드번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton4.Checked)//도서
+                {
+                    cmd.CommandText = "UPDATE 도서 set 도서명 = '" + textBox5.Text + "', 재고량 = " + textBox6.Text + 
+                        ", 판매가 = " + textBox7.Text + " where 도서번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton5.Checked)//주문 선택
+                {
+                    cmd.CommandText = "UPDATE 주문_선택 SET 수량 = " + textBox6.Text + " WHERE 주문번호 = '" + textBox4.Text +
+                        "' AND 도서번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton6.Checked)//주문
+                {
+                    cmd.CommandText = "UPDATE 주문 SET 주문일자 = TO_DATE('" + textBox5.Text + "','YYYY-MM-DD'), 주문총액 = " + textBox6.Text +
+                        ", 주문상태 = '" + textBox7.Text + "', 신용카드_카드번호 = '" + textBox8.Text + "', 신용카드_유효기간 = TO_DATE('" + textBox9.Text +
+                        "','YYYY-MM'), 신용카드_카드종류 = '" + textBox10.Text + "', 배송지_우편번호 = '" + textBox11.Text + "', 배송지_기본주소 = '" +
+                        textBox12.Text + "', 배송지_상세주소 = '" + textBox13.Text + "', 회원번호 = '" + textBox14.Text + "' WHERE 주문번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                }
+                else if (radioButton7.Checked)//장바구니
+                {
+                    cmd.CommandText = "UPDATE 장바구니 SET 생성일자 = TO_DATE('" + textBox5.Text + "','YYYY-MM-DD'), 회원번호 = '" +
+                        textBox6.Text + "' WHERE 바구니번호 = " + textBox4.Text;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton8.Checked)//장바구니담기
+                {
+                    cmd.CommandText = "UPDATE 장바구니_담기 SET 수량 = " + textBox6.Text + " WHERE 바구니번호 = " + textBox4.Text +
+                        " AND 도서번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            db_load();
+            MessageBox.Show("데이터가 수정되었습니다.", "추가 완료");
+        }
+
+삭제:
+private void button4_Click(object sender, EventArgs e)//삭제
+        {
+            OleDbCommand cmd = new OleDbCommand();
+            if (MessageBox.Show("DB를 변경하는 작업입니다. 신중하게 진행해 주세요.\n삭제작업을 진행하시겠습니까?\n" +
+                "삭제시 하위 FK 사용 데이터까지 모두 삭제됩니다.", "경고", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                if (radioButton1.Checked)//회원
+                {
+                    cmd.CommandText = "DELETE FROM 회원 WHERE 회원번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton2.Checked)//회원 주소록
+                {
+                    cmd.CommandText = "DELETE FROM 회원_주소록 WHERE 회원번호 = '" + textBox4.Text + "' AND 배송지 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton3.Checked)//회원 신용카드
+                {
+                    cmd.CommandText = "DELETE FROM 회원_신용카드 WHERE 회원번호 = '" + textBox4.Text + "' AND 카드번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton4.Checked)//도서
+                {
+                    cmd.CommandText = "DELETE FROM 도서 WHERE 도서번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton5.Checked)//주문 선택
+                {
+                    cmd.CommandText = "DELETE FROM 주문_선택 WHERE 주문번호 = '" + textBox4.Text + "' AND 도서번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton6.Checked)//주문
+                {
+                    cmd.CommandText = "DELETE FROM 주문 WHERE 주문번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+
+                }
+                else if (radioButton7.Checked)//장바구니
+                {
+                    cmd.CommandText = "DELETE FROM 장바구니 WHERE 바구니번호 = '" + textBox4.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                else if (radioButton8.Checked)//장바구니담기
+                {
+                    cmd.CommandText = "DELETE FROM 장바구니_담기 WHERE 바구니번호 = '" + textBox4.Text + "' AND 도서번호 = '" + textBox5.Text + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            db_load();
+            MessageBox.Show("데이터가 삭제되었습니다.", "추가 완료");
+        }
+
+검색:
+private void button1_Click(object sender, EventArgs e)//검색
+        {
+            dataGridView1.Rows.Clear();
+            if (radioButton1.Checked)//회원
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 회원 where 회원번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 3;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                        return;
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 .
+                    return;
+                }
+            }
+            else if (radioButton2.Checked)//회원 주소록
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 회원_주소록 where 회원번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 5;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton3.Checked)//회원 신용카드
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 회원_신용카드 where 회원번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 4;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                        return;
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton4.Checked)//도서
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 도서 where 도서번호 = '" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 4;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton5.Checked)//주문 선택
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 주문_선택 where 주문번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 3;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton6.Checked)//주문
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 주문 where 회원번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 11;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton7.Checked)//장바구니
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 장바구니 where 회원번호='" + textBox1.Text + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 3;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+            else if (radioButton8.Checked)//장바구니담기
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "select * from 장바구니_담기 where 바구니번호 = " + textBox1.Text;
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+
+                    OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                    dataGridView1.ColumnCount = 3;
+                    //필드명 받아오는 반복문
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        dataGridView1.Columns[i].Name = read.GetName(i);
+                    }
+
+                    while (read.Read())
+                    {
+                        object[] obj = new object[dataGridView1.ColumnCount]; // 필드수만큼 오브젝트 배열
+
+                        for (int i = 0; i < dataGridView1.ColumnCount; i++) // 필드 수만큼 반복
+                        {
+                            obj[i] = new object();
+                            obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                        }
+
+                        dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                    }
+                    read.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+                    return;
+                }
+            }
+        }
+
+3. 회원계정에서 본인의 정보 입력, 검색, 수정, 탈퇴
+   (소스)
+입력:
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (!is_checked_id)
+            {
+                MessageBox.Show("아이디 중복 체크를 해주세요!", "중복체크");
+                return;
+            }
+            if(textBox2.Text != textBox3.Text)
+            {
+                MessageBox.Show("비밀번호가 서로 다릅니다. 다시 확인해 주세요!", "비밀번호 오류");
+                return;
+            }
+            if(string.IsNullOrEmpty(textBox1.Text)|| string.IsNullOrEmpty(textBox1.Text)||
+                string.IsNullOrEmpty(textBox1.Text)|| string.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("모든 값을 입력해 주세요!", "입력 오류");
+                return;
+            }
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "INSERT INTO 회원 VALUES ('" + textBox1.Text + "','" +
+                    textBox2.Text + "','" + textBox4.Text + "')";
+                cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("회원 ID : " + textBox1.Text +
+                    "\n회원 비밀번호 : " + textBox2.Text +
+                    "\n회원 이름 : " + textBox4.Text +
+                    "\n회원가입을 축하합니다!");
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.Close();
+                return;
+            }
+        }
+
+검색:
+OleDbCommand cmd = new OleDbCommand();
+            cmd.CommandText = "select * from 회원 where 회원번호='" + 로그인.login_id + "'";
+            cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+            cmd.Connection = conn;
+
+            OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+            read.Read();
+            textBox1.Text = read.GetValue(0).ToString();
+            textBox2.Text = read.GetValue(1).ToString();
+            textBox3.Text = read.GetValue(2).ToString();
+            read.Close();
+
+수정:
+private void button1_Click(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox3.Text)
+                || string.IsNullOrEmpty(textBox4.Text))
+            {
+                MessageBox.Show("모든칸이 입력되지 않았습니다.\n확인해 주세요!", "입력 오류");
+                return;
+            }
+            if(textBox2.Text != textBox4.Text)
+            {
+                MessageBox.Show("비밀번호가 일치하지 않습니다.\n확인해 주세요!", "비밀번호 오류");
+                return;
+            }
+            try
+            {
+                로그인.login_name = textBox3.Text;
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "update 회원 set 비밀번호='" + textBox2.Text + "', 성명='" + textBox3.Text + "'" +
+                    " where 회원번호='" + 로그인.login_id + "'";
+                cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("회원정보 수정이 완료되었습니다.");
+                ma.refresh();
+                pa.refresh();
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+탈퇴:
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("정말로 계정을 삭제하실겁니까?\n삭제된 이후 정보는 모두 사라지며 프로그램은 종료됩니다.","YesOrNo",MessageBoxButtons.YesNo)
+                == DialogResult.No)
+            {
+                MessageBox.Show("취소하셨습니다.");
+                return;
+            }
+            else
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "delete from 회원 where 회원번호='" + 로그인.login_id + "'";
+                    cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("회원탈퇴가 완료되었습니다.\n다음에 더 좋은 모습으로 뵙겠습니다.");
+                    Application.ExitThread();
+                    Environment.Exit(0);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+4. 회원계정에서 주문입력 및 검색/수정/삭제
+   (소스)
+주문 입력:
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked)
+            {
+                MessageBox.Show("주문내역확인 동의에 체크해 주세요!", "동의 확인");
+                return;
+            }
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (Int32.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString()) >
+                    Int32.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString()))
+                {
+                    MessageBox.Show("구매수량이 보유재고보다 많습니다.\n장바구니를 확인후 다시 진행해주세요!", "수량 오류");
+                    return;
+                }
+            }
+
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                cmd.CommandText = "INSERT INTO 주문 VALUES(TO_CHAR(SYSDATE, 'YYYYMMDD') || TO_CHAR(SETNO.NEXTVAL, 'FM000'), SYSDATE, " +
+                    total_cost.ToString() + ", '신청','" + label22.Text + "', TO_DATE('" + dataGridView2.SelectedRows[0].Cells[1].Value.ToString() +
+                    "', 'YYYY-MM'), '" + label20.Text + "', '" + dataGridView3.SelectedRows[0].Cells[1].Value.ToString() +
+                    "', '" + label23.Text + "', '" + label24.Text + "', '" + 로그인.login_id + "')";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                for(int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    cmd.CommandText = "INSERT INTO 주문_선택 VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')" + 
+                        "||TO_CHAR((SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'SETNO')"+
+                        " - 1,'FM000'), '" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "', " +
+                        dataGridView1.Rows[i].Cells[4].Value.ToString() + ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+
+                for(int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    cmd.CommandText = "UPDATE 도서 SET 재고량=" + (Int32.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString()) -
+                    Int32.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())).ToString()
+                        + "WHERE 도서번호='" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = "DELETE FROM 장바구니_담기 WHERE 바구니번호 = " + 장바구니관리.kart_num.ToString();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("주문이 성공적으로 접수되었습니다!", "주문성공");
+                주문성공 success = new 주문성공();
+                success.Show();
+                ma.refresh();
+                ka.refresh();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+검색:
+private void updatedb_up()
+        {
+            dataGridView1.Rows.Clear();
+            try
+            {
+                //conn.Open(); //데이터베이스 연결
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "select * from 주문 where 회원번호='" + 로그인.login_id + "'";
+                cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                dataGridView1.ColumnCount = 10;
+                //필드명 받아오는 반복문
+                for (int i = 0; i < 10; i++)
+                {
+                    dataGridView1.Columns[i].Name = read.GetName(i);
+                }
+
+                while (read.Read())
+                {
+                    object[] obj = new object[10]; // 필드수만큼 오브젝트 배열
+
+                    for (int i = 0; i < 10; i++) // 필드 수만큼 반복
+                    {
+                        obj[i] = new object();
+                        if (i == 1)
+                        {
+                            obj[i] = read.GetValue(i).ToString().Substring(0, 10); // 오브젝트배열에 데이터 저장
+                            continue;
+                        }
+                        if (i == 5)
+                        {
+                            obj[i] = read.GetValue(i).ToString().Substring(0, 7); // 오브젝트배열에 데이터 저장
+                            continue;
+                        }
+                        obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                    }
+
+                    dataGridView1.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                }
+                read.Close();
+                if(dataGridView1.Rows.Count == 0)
+                {
+                    MessageBox.Show("주문내역이 없습니다.", "주문내역");
+                    is_history = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+            }
+        }
+
+        private void updatedb_down()
+        {
+            dataGridView2.Rows.Clear();
+            if (is_history == false)
+                return;
+            try
+            {
+                //conn.Open(); //데이터베이스 연결
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "SELECT 주문_선택.도서번호, 도서.도서명, 주문_선택.수량, 도서.판매가, 주문_선택.수량*도서.판매가 AS 총_가격 " +
+                    "FROM 주문_선택, 도서 WHERE 주문_선택.도서번호 = 도서.도서번호 AND 주문_선택.주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                cmd.CommandType = CommandType.Text; //검색명령을 쿼리 형태로
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+                dataGridView2.ColumnCount = 5;
+                //필드명 받아오는 반복문
+                for (int i = 0; i < 5; i++)
+                {
+                    dataGridView2.Columns[i].Name = read.GetName(i);
+                }
+
+                while (read.Read())
+                {
+                    object[] obj = new object[5]; // 필드수만큼 오브젝트 배열
+
+                    for (int i = 0; i < 5; i++) // 필드 수만큼 반복
+                    {
+                        obj[i] = new object();
+                        obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                    }
+
+                    dataGridView2.Rows.Add(obj); //데이터그리드뷰에 오브젝트 배열 추가
+                }
+                read.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message); //에러 메세지 
+            }
+        }
+
+수정:
+private void button1_Click(object sender, EventArgs e)//수취확인
+        {
+            if(MessageBox.Show("주문하신 물품은 잘 받으셨습니까?\n수취확인시 구매확정으로 간주됩니다","수취확인",MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                MessageBox.Show("취소하셨습니다.", "취소");
+                return;
+            }
+            OleDbCommand cmd = new OleDbCommand();
+
+            cmd.CommandText = "UPDATE 주문 SET 주문상태 = '판매완료' WHERE 주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "commit";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("수취확인으로 처리되었습니다.\n이용해주셔서 감사합니다!", "수취 완료");
+            updatedb_up();
+            updatedb_down();
+            check_on_off();
+        }
+
+삭제:
+private void button2_Click(object sender, EventArgs e)//취소
+        {
+            List<string> book_code = new List<string>();
+            List<int> book_amount = new List<int>();
+            if(dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("선택하신 주문이 없습니다.", "주문취소 오류");
+                return;
+            }
+            if (MessageBox.Show("주문 취소를 하시겠습니까?\n주문취소시 결제 및 배송이 취소됩니다.", "수취확인", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                MessageBox.Show("승인거부 하셨습니다.", "취소");
+                return;
+            }
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                cmd.CommandText = "select 도서번호, 수량 from 주문_선택 where 주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                OleDbDataReader read = cmd.ExecuteReader(); //select * from emp 결과
+
+                while (read.Read())
+                {
+                    object[] obj = new object[2]; // 필드수만큼 오브젝트 배열
+
+                    for (int i = 0; i < 2; i++) // 필드 수만큼 반복
+                    {
+                        obj[i] = new object();
+                        obj[i] = read.GetValue(i).ToString(); // 오브젝트배열에 데이터 저장
+                    }
+                    book_code.Add(obj[0].ToString());
+                    book_amount.Add(Int32.Parse(obj[1].ToString()));
+                }
+                read.Close();
+
+                int tmp = book_code.Count;
+                for (int i = 0; i < tmp; i++)
+                {
+                    cmd.CommandText = "UPDATE 도서 SET 재고량 = 재고량 + " + book_amount[i] +
+                        " WHERE 도서번호 = '" + book_code[i] + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = "DELETE FROM 주문 WHERE 주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("주문취소가 처리되었습니다.\n환불 정책은 결제회사 규제에 따라 진행됩니다.\n이용해주셔서 감사합니다!", "주문 취소 완료");
+                updatedb_up();
+                updatedb_down();
+                check_on_off();
+                ma.Refresh();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+5. 회원계정에서 장바구니입력/검색/수정/삭제/주문신청
+   (소스)
+
+입력: -장바구니 생성-
+private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "INSERT INTO 장바구니 VALUES (KART_NUM.NEXTVAL, TO_CHAR(SYSDATE, 'YYYYMMDD'), '" + 로그인.login_id + "')";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "commit";//커밋으로 적용
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                updatedb_left();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+입력: -장바구니에 책 담기-
+private void button3_Click(object sender, EventArgs e)//품목담기
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("장바구니가 존재하지 않습니다.", "담기 오류");
+                return;
+            }
+
+            try
+            {
+                for(int i = 0; i < dataGridView3.Rows.Count; i++)
+                {
+                    if (string.IsNullOrEmpty(dataGridView3.Rows[i].Cells[3].Value.ToString()) || dataGridView3.Rows[i].Cells[3].Value.ToString() == "선택" ||
+                        Int32.Parse(dataGridView3.Rows[i].Cells[3].Value.ToString()) == 0)
+                    {
+                        MessageBox.Show("수량 선택이 안된 책이 존재합니다.\n확인후 다시 진행해주세요!", "수량 오류");
+                        return;
+                    }
+                }
+                OleDbCommand cmd = new OleDbCommand();
+                for(int i = 0; i < dataGridView3.Rows.Count; i++)
+                {
+                    cmd.CommandText = "INSERT INTO 장바구니_담기 VALUES (" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() +
+                    ",'" + dataGridView3.Rows[i].Cells[0].Value.ToString() + "'," + dataGridView3.Rows[i].Cells[3].Value.ToString() + ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+                cmd.CommandText = "commit";//커밋으로 적용
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                updatedb_right();
+                MessageBox.Show("물품들이 정상적으로 장바구니에 담겼습니다.", "담기완료");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("장바구니에 이미 담긴 책이 있습니다.\n해당 책을 제거하고 다시 진행해 주세요!","중복");
+                return;
+            }
+        }
+
+검색: -회원의 장바구니 검색-
+private void updatedb_left()
+        {
+            dataGridView1.Rows.Clear();
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "select * from 장바구니 where 회원번호='" + 로그인.login_id + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader();
+                dataGridView1.ColumnCount = 1;
+                dataGridView1.Columns[0].Name = read.GetName(0);
+
+                while (read.Read())
+                {
+                    object obj = new object();
+                    obj = new object();
+                    obj = read.GetValue(0).ToString();
+
+                    dataGridView1.Rows.Add(obj);
+                }
+                read.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+검색: -검색한 장바구니에 담긴 책 검색-
+private void updatedb_right()
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                return;
+            }
+            dataGridView2.Rows.Clear();
+            
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "SELECT 장바구니_담기.도서번호, 도서.도서명, 장바구니_담기.수량 " +
+                    "FROM 장바구니_담기 INNER JOIN 도서 ON 장바구니_담기.도서번호 = 도서.도서번호 " +
+                    "WHERE 장바구니_담기.바구니번호=" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader();
+                dataGridView2.ColumnCount = 3;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    dataGridView2.Columns[i].Name = read.GetName(i);
+                }
+
+                while (read.Read())
+                {
+                    object[] obj = new object[3];
+
+                    for (int i = 0; i < 3; i++)
+                    {
+                        obj[i] = new object();
+                        obj[i] = read.GetValue(i).ToString();
+                    }
+
+                    dataGridView2.Rows.Add(obj);
+                }
+                read.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+수정:-장바구니에 담긴 책 수량 수정-
+private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count == 0)
+            {
+                MessageBox.Show("장바구니에 담은 품목이 존재하지 않습니다.", "삭제 오류");
+                return;
+            }
+
+            if (comboBox1.Text == string.Empty)
+            {
+                MessageBox.Show("수량이 적절하지 않습니다.", "수량 오류");
+                return;
+            }
+
+            DataGridViewRow dr = dataGridView2.SelectedRows[0];
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "UPDATE 장바구니_담기 SET 수량=" + (comboBox1.SelectedIndex + 1).ToString() + " WHERE 도서번호='" +
+                    dr.Cells[0].Value.ToString() + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "commit";//커밋으로 적용
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                updatedb_right();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+삭제:
+-장바구니 삭제-
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("장바구니가 존재하지 않습니다.", "삭제 오류");
+                return;
+            }
+            if (MessageBox.Show("정말 장바구니를 삭제하시겠습니까?\n삭제하시면 해당 장바구니의 내용은 모두 없어집니다.", "삭제", MessageBoxButtons.YesNo) ==
+                DialogResult.Yes)
+            {
+                try
+                {
+                    OleDbCommand cmd = new OleDbCommand();
+                    cmd.CommandText = "DELETE FROM 장바구니 WHERE 바구니번호=" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                    cmd.CommandText = "commit";//커밋으로 적용
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    updatedb_left();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+        }
+
+-장바구니에 담긴 책 삭제-
+private void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count == 0)
+            {
+                MessageBox.Show("장바구니에 담은 품목이 존재하지 않습니다.", "삭제 오류");
+                return;
+            }
+
+            DataGridViewRow dr = dataGridView2.SelectedRows[0];
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.CommandText = "DELETE FROM 장바구니_담기 WHERE 도서번호=" + dr.Cells[0].Value.ToString();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "commit";//커밋으로 적용
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                updatedb_right();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+주문신청:
+private void button2_Click(object sender, EventArgs e)
+        {
+            if (!checkBox1.Checked)
+            {
+                MessageBox.Show("주문내역확인 동의에 체크해 주세요!", "동의 확인");
+                return;
+            }
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (Int32.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString()) >
+                    Int32.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString()))
+                {
+                    MessageBox.Show("구매수량이 보유재고보다 많습니다.\n장바구니를 확인후 다시 진행해주세요!", "수량 오류");
+                    return;
+                }
+            }
+
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand();
+
+                cmd.CommandText = "INSERT INTO 주문 VALUES(TO_CHAR(SYSDATE, 'YYYYMMDD') || TO_CHAR(SETNO.NEXTVAL, 'FM000'), SYSDATE, " +
+                    total_cost.ToString() + ", '신청','" + label22.Text + "', TO_DATE('" + dataGridView2.SelectedRows[0].Cells[1].Value.ToString() +
+                    "', 'YYYY-MM'), '" + label20.Text + "', '" + dataGridView3.SelectedRows[0].Cells[1].Value.ToString() +
+                    "', '" + label23.Text + "', '" + label24.Text + "', '" + 로그인.login_id + "')";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                for(int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    cmd.CommandText = "INSERT INTO 주문_선택 VALUES(TO_CHAR(SYSDATE,'YYYYMMDD')" + 
+                        "||TO_CHAR((SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'SETNO')"+
+                        " - 1,'FM000'), '" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "', " +
+                        dataGridView1.Rows[i].Cells[4].Value.ToString() + ")";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+
+                for(int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    cmd.CommandText = "UPDATE 도서 SET 재고량=" + (Int32.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString()) -
+                    Int32.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString())).ToString()
+                        + "WHERE 도서번호='" + dataGridView1.Rows[i].Cells[0].Value.ToString() + "'";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = "DELETE FROM 장바구니_담기 WHERE 바구니번호 = " + 장바구니관리.kart_num.ToString();
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+
+                cmd.CommandText = "commit";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("주문이 성공적으로 접수되었습니다!", "주문성공");
+                주문성공 success = new 주문성공();
+                success.Show();
+                ma.refresh();
+                ka.refresh();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+        }
+
+
+6. 관리자계정에서 주문승인처리
+   (소스)
+private void button2_Click(object sender, EventArgs e)
+        {
+            OleDbCommand cmd = new OleDbCommand();
+            try
+            {
+                cmd.CommandText = "UPDATE 주문 set 주문상태 = '발송' where 주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            cmd.CommandText = "commit";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            db_load();
+            dataGridView1_CellClick(null, null);
+            MessageBox.Show("발송처리되었습니다.", "발송 처리");
+        }
+
+7. 회원계정에서 주문에 대한 수취확인
+   (소스)
+private void button1_Click(object sender, EventArgs e)//수취확인
+        {
+            if(MessageBox.Show("주문하신 물품은 잘 받으셨습니까?\n수취확인시 구매확정으로 간주됩니다","수취확인",MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                MessageBox.Show("취소하셨습니다.", "취소");
+                return;
+            }
+            OleDbCommand cmd = new OleDbCommand();
+
+            cmd.CommandText = "UPDATE 주문 SET 주문상태 = '판매완료' WHERE 주문번호 = '" + dataGridView1.SelectedRows[0].Cells[0].Value.ToString() + "'";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "commit";
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("수취확인으로 처리되었습니다.\n이용해주셔서 감사합니다!", "수취 완료");
+            updatedb_up();
+            updatedb_down();
+            check_on_off();
+        }
+
+
+8. 관리자계정에서 회원별 판매이력 검색
+  (소스)
+public void db_load(string id)
+        {
+            dataGridView1.Rows.Clear();
+            OleDbCommand cmd = new OleDbCommand();
+            try
+            {
+                if(string.IsNullOrEmpty(id))
+                    cmd.CommandText = "select 주문.회원번호, 주문.주문번호, 주문.주문일자, 도서.도서번호, 도서.도서명, 주문_선택.수량, 도서.판매가, 주문_선택.수량*도서.판매가 AS 총_가격" +
+                        " from 주문, 주문_선택, 도서 WHERE 주문_선택.도서번호 = 도서.도서번호 AND 주문.주문번호 = 주문_선택.주문번호";
+                else
+                    cmd.CommandText = "select 주문.회원번호, 주문.주문번호, 주문.주문일자, 도서.도서번호, 도서.도서명, 주문_선택.수량, 도서.판매가, 주문_선택.수량*도서.판매가 AS 총_가격" +
+                        " from 주문, 주문_선택, 도서 WHERE 주문_선택.도서번호 = 도서.도서번호 AND 주문.주문번호 = 주문_선택.주문번호 AND 주문.회원번호 = '" + id + "'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = conn;
+
+                OleDbDataReader read = cmd.ExecuteReader();
+                dataGridView1.ColumnCount = 7;
+                //필드명 받아오는 반복문
+                for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                {
+                    dataGridView1.Columns[i].Name = read.GetName(i);
+                }
+
+                while (read.Read())
+                {
+                    object[] obj = new object[dataGridView1.ColumnCount];
+
+                    for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                    {
+                        obj[i] = new object();
+                        obj[i] = read.GetValue(i).ToString();
+                    }
+
+                    dataGridView1.Rows.Add(obj);
+                }
+                read.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+                return;
+            }
+        }

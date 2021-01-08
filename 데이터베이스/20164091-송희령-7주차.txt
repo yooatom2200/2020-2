@@ -1,0 +1,1109 @@
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB FROM EMP);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+            *
+1행에 오류:
+ORA-00947: 값의 수가 충분하지 않습니다 
+
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+COMM,DNAME FROM EMP,DEPT);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(HR20164091.ES_PK)에 위배됩니다 
+
+
+HR20164091>select * from dept
+  2  ;
+
+    DEPTNO DNAME          LOC                                                                                           
+---------- -------------- -------------                                                                                 
+        10 ACCOUNTING     NEW YORK                                                                                      
+        20 RESEARCH       DALLAS                                                                                        
+        30 SALES          CHICAGO                                                                                       
+        40 OPERATIONS     BOSTON                                                                                        
+        50 DEVELOPMENT    DETROIT                                                                                       
+        60 DEVELOPMENT    DETROIT                                                                                       
+        65 MIS                                                                                                          
+        70 FINANCE                                                                                                      
+        80 AAA            SEOUL                                                                                         
+        95 FINANCE        SAN FRANCISCO                                                                                 
+        96 FINANCE        SAN FRANCISCO                                                                                 
+        97 FINANCE        SAN FRANCISCO                                                                                 
+
+12 개의 행이 선택되었습니다.
+
+HR20164091>select * from emp
+  2  ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                    
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                    
+      7782 CLARK      MANAGER         7839 81/09/09       2450                    10                                    
+      7788 SCOTT      ANALYST         7566 82/12/09       3000                    20                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                    
+      7876 ADAMS      CLERK           7788 83/01/12       1100                    20                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                    
+      7196 GREEN      SALESMAN        7782 20/10/15       2000                    10                                    
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+COMM,DNAME FROM EMP,DEPT);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(HR20164091.ES_PK)에 위배됩니다 
+
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME)
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+COMM FROM EMP);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>select * from EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7369 SMITH      CLERK                                                                                             
+      7499 ALLEN      SALESMAN       19500                                                                              
+      7521 WARD       SALESMAN       15500                                                                              
+      7566 JONES      MANAGER                                                                                           
+      7654 MARTIN     SALESMAN       16400                                                                              
+      7698 BLAKE      MANAGER                                                                                           
+      7782 CLARK      MANAGER                                                                                           
+      7788 SCOTT      ANALYST                                                                                           
+      7839 KING       PRESIDENT                                                                                         
+      7844 TURNER     SALESMAN       18000                                                                              
+      7876 ADAMS      CLERK                                                                                             
+      7900 JAMES      CLERK                                                                                             
+      7902 FORD       ANALYST                                                                                           
+      7934 MILLER     CLERK                                                                                             
+      7196 GREEN      SALESMAN                                                                                          
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY;
+
+15 행이 삭제되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,NVL(INCOME,0))
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+COMM FROM EMP);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,NVL(INCOME,0))
+                                           *
+1행에 오류:
+ORA-00917: 누락된 콤마 
+
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0) FROM EMP);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>select * from EMP_SUMMARY
+  2  ;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7369 SMITH      CLERK              0                                                                              
+      7499 ALLEN      SALESMAN       19500                                                                              
+      7521 WARD       SALESMAN       15500                                                                              
+      7566 JONES      MANAGER            0                                                                              
+      7654 MARTIN     SALESMAN       16400                                                                              
+      7698 BLAKE      MANAGER            0                                                                              
+      7782 CLARK      MANAGER            0                                                                              
+      7788 SCOTT      ANALYST            0                                                                              
+      7839 KING       PRESIDENT          0                                                                              
+      7844 TURNER     SALESMAN       18000                                                                              
+      7876 ADAMS      CLERK              0                                                                              
+      7900 JAMES      CLERK              0                                                                              
+      7902 FORD       ANALYST            0                                                                              
+      7934 MILLER     CLERK              0                                                                              
+      7196 GREEN      SALESMAN           0                                                                              
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY;
+
+15 행이 삭제되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0) FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+            *
+1행에 오류:
+ORA-00947: 값의 수가 충분하지 않습니다 
+
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0), DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>select * from emp_summary;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER            0 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN           0 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT          0 ACCOUNTING                                                                   
+      7934 MILLER     CLERK              0 ACCOUNTING                                                                   
+      7566 JONES      MANAGER            0 RESEARCH                                                                     
+      7369 SMITH      CLERK              0 RESEARCH                                                                     
+      7788 SCOTT      ANALYST            0 RESEARCH                                                                     
+      7902 FORD       ANALYST            0 RESEARCH                                                                     
+      7876 ADAMS      CLERK              0 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK              0 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER            0 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY;
+
+15 행이 삭제되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DEPT.DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0), DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DEPT.DNAME)
+                                               *
+1행에 오류:
+ORA-00904: "DEPT"."DNAME": 부적합한 식별자 
+
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO,ENAME,JOB,INCOME,DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0), DEPT.DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>select * from emp_summary;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER            0 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN           0 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT          0 ACCOUNTING                                                                   
+      7934 MILLER     CLERK              0 ACCOUNTING                                                                   
+      7566 JONES      MANAGER            0 RESEARCH                                                                     
+      7369 SMITH      CLERK              0 RESEARCH                                                                     
+      7788 SCOTT      ANALYST            0 RESEARCH                                                                     
+      7902 FORD       ANALYST            0 RESEARCH                                                                     
+      7876 ADAMS      CLERK              0 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK              0 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER            0 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>delete from emp_summary;
+
+15 행이 삭제되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO, ENAME, JOB, INCOME, DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, NVL(SAL*12+COMM,0), DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>select * from emp_summary
+  2  ;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER            0 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN           0 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT          0 ACCOUNTING                                                                   
+      7934 MILLER     CLERK              0 ACCOUNTING                                                                   
+      7566 JONES      MANAGER            0 RESEARCH                                                                     
+      7369 SMITH      CLERK              0 RESEARCH                                                                     
+      7788 SCOTT      ANALYST            0 RESEARCH                                                                     
+      7902 FORD       ANALYST            0 RESEARCH                                                                     
+      7876 ADAMS      CLERK              0 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK              0 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER            0 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>update emp_summary set income = (select income from emp_summary where ename = ALLEN)
+  2  where ename = SMITH;
+where ename = SMITH
+              *
+2행에 오류:
+ORA-00904: "SMITH": 부적합한 식별자 
+
+
+HR20164091>update emp_summary set income = (select income from emp_summary where ename = "ALLEN")
+  2  where ename = "SMITH";
+where ename = "SMITH"
+              *
+2행에 오류:
+ORA-00904: "SMITH": 부적합한 식별자 
+
+
+HR20164091>
+HR20164091>update emp_summary set income = (select income from emp_summary where ename = 'ALLEN')
+  2  where ename = 'smith';
+
+0 행이 갱신되었습니다.
+
+HR20164091>update emp_summary set income = (select income from emp_summary where ename = 'ALLEN')
+  2  where ename = 'smith';
+
+0 행이 갱신되었습니다.
+
+HR20164091>UPDATE EMP_SUMMARY SET INCOME = (SELECT INCOME FROM EMP_SUMMARY WHERE ENAME = 'ALLEN')
+  2  WHERE ENAME = 'SMITH'L
+  3  ;
+WHERE ENAME = 'SMITH'L
+                     *
+2행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+HR20164091>UPDATE EMP_SUMMARY SET INCOME = (SELECT INCOME FROM EMP_SUMMARY WHERE ENAME = 'ALLEN')
+  2  WHERE ENAME = 'SMITH';
+
+1 행이 갱신되었습니다.
+
+HR20164091>SELECT * FROM EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER            0 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN           0 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT          0 ACCOUNTING                                                                   
+      7934 MILLER     CLERK              0 ACCOUNTING                                                                   
+      7566 JONES      MANAGER            0 RESEARCH                                                                     
+      7369 SMITH      CLERK          19500 RESEARCH                                                                     
+      7788 SCOTT      ANALYST            0 RESEARCH                                                                     
+      7902 FORD       ANALYST            0 RESEARCH                                                                     
+      7876 ADAMS      CLERK              0 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK              0 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER            0 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY WHERE ENAME = (SELECT ENAME FROM EMP WHERER SAL >= 2000);
+DELETE FROM EMP_SUMMARY WHERE ENAME = (SELECT ENAME FROM EMP WHERER SAL >= 2000)
+                                                                    *
+1행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+HR20164091>DELETE FROM EMP_SUMMARY WHERE ENAME = (SELECT ENAME FROM EMP WHERE SAL >= 2000);
+DELETE FROM EMP_SUMMARY WHERE ENAME = (SELECT ENAME FROM EMP WHERE SAL >= 2000)
+                                       *
+1행에 오류:
+ORA-01427: 단일 행 하위 질의에 2개 이상의 행이 리턴되었습니다. 
+
+
+HR20164091>DELETE FROM EMP_SUMMARY WHERE ENAME IN (SELECT ENAME FROM EMP WHERE SAL >= 2000);
+
+7 행이 삭제되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY
+  2  ;
+
+8 행이 삭제되었습니다.
+
+HR20164091>INSERT INTO EMP_SUMMARY(EMPNO, ENAME, JOB, INCOME, DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+NVL(COMM,0), DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+15 개의 행이 만들어졌습니다.
+
+HR20164091>SELECT * FROM EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER        29400 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN       24000 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT      60000 ACCOUNTING                                                                   
+      7934 MILLER     CLERK          15600 ACCOUNTING                                                                   
+      7566 JONES      MANAGER        35700 RESEARCH                                                                     
+      7369 SMITH      CLERK           9600 RESEARCH                                                                     
+      7788 SCOTT      ANALYST        36000 RESEARCH                                                                     
+      7902 FORD       ANALYST        36000 RESEARCH                                                                     
+      7876 ADAMS      CLERK          13200 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK          11400 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER        34200 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>UPDATE EMP_SUMMARY SET INCOME = (SELECT INCOME FROM EMP_SUMMARY WHERE ENAME = 'ALLEN')
+  2  WHERE ENAME = 'SMITH';
+
+1 행이 갱신되었습니다.
+
+HR20164091>SELECT * FROM EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7782 CLARK      MANAGER        29400 ACCOUNTING                                                                   
+      7196 GREEN      SALESMAN       24000 ACCOUNTING                                                                   
+      7839 KING       PRESIDENT      60000 ACCOUNTING                                                                   
+      7934 MILLER     CLERK          15600 ACCOUNTING                                                                   
+      7566 JONES      MANAGER        35700 RESEARCH                                                                     
+      7369 SMITH      CLERK          19500 RESEARCH                                                                     
+      7788 SCOTT      ANALYST        36000 RESEARCH                                                                     
+      7902 FORD       ANALYST        36000 RESEARCH                                                                     
+      7876 ADAMS      CLERK          13200 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK          11400 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+      7698 BLAKE      MANAGER        34200 SALES                                                                        
+
+15 개의 행이 선택되었습니다.
+
+HR20164091>DELETE FROM EMP_SUMMARY WHERE ENAME IN (SELECT ENAME FROM EMP WHERE SAL >= 2000);
+
+7 행이 삭제되었습니다.
+
+HR20164091>SELECT * FROM EMP_SUMMARY;
+
+     EMPNO ENAME      JOB           INCOME DNAME                                                                        
+---------- ---------- --------- ---------- --------------                                                               
+      7934 MILLER     CLERK          15600 ACCOUNTING                                                                   
+      7369 SMITH      CLERK          19500 RESEARCH                                                                     
+      7876 ADAMS      CLERK          13200 RESEARCH                                                                     
+      7844 TURNER     SALESMAN       18000 SALES                                                                        
+      7499 ALLEN      SALESMAN       19500 SALES                                                                        
+      7900 JAMES      CLERK          11400 SALES                                                                        
+      7521 WARD       SALESMAN       15500 SALES                                                                        
+      7654 MARTIN     SALESMAN       16400 SALES                                                                        
+
+8 개의 행이 선택되었습니다.
+
+HR20164091>CREATE TABLE 주분
+  2  (주문번호 CHAR(12));
+
+테이블이 생성되었습니다.
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH (SELECT TO_NUMBER(SELECT CONCAT(SELECT TO_CHAR(SYSDATE,'YYYYMMDD')),'000'))
+  4  MAXVALUE 100
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH (SELECT TO_NUMBER(SELECT CONCAT(SELECT TO_CHAR(SYSDATE,'YYYYMMDD')),'000'))
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT TO_CHAR(SYSDATE,'YYYYMMDD'),'000'))
+  4  MAXVALUE 100
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT TO_CHAR(SYSDATE,'YYYYMMDD'),'000'))
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+  4  MAXVALUE 100
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>NCREATE SEQUENCE PLUSNO
+SP2-0734: "NCREATE SE..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>INCREMENT BY 1
+SP2-0734: "INCREMENT ..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+SP2-0310: 파일 "WITH.sql"을 열 수 없습니다.
+HR20164091>MAXVALUE 99999999999
+SP2-0734: "MAXVALUE 9..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>NOCYCLE
+SP2-0042: 알 수 없는 명령어 "NOCYCLE" - 나머지 줄 무시.
+HR20164091>NOCACHE;
+SP2-0042: 알 수 없는 명령어 "NOCACHE" - 나머지 줄 무시.
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT CONCAT(SELECT DATE_FORMAT(SYSDATE, '%Y%m%d'),'000'))
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+  7  
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH 1
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+
+시퀀스가 생성되었습니다.
+
+HR20164091>DELETE SEQUENCE PLUSNO
+  2  ;
+DELETE SEQUENCE PLUSNO
+       *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+HR20164091>DROP SEQUENCE PLUSNOO;
+DROP SEQUENCE PLUSNOO
+              *
+1행에 오류:
+ORA-02289: 시퀀스가 존재하지 않습니다. 
+
+
+HR20164091>DROP SEQUENCE PLUSNO;
+
+시퀀스가 삭제되었습니다.
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH 1
+  4  MAXVALUE 999
+  5  NOCYCLE
+  6  NOCACHE;
+
+시퀀스가 생성되었습니다.
+
+HR20164091>DROP SEQUENCE PLUSNO;
+
+시퀀스가 삭제되었습니다.
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(SELECT TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(SELECT TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(SELECT TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(TO_CHAR(SYSDATE,YYYYMMDD)||'000')
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT TO_NUMBER(TO_CHAR(SYSDATE,YYYYMMDD)||'000') FROM DUAL
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT TO_NUMBER(TO_CHAR(SYSDATE,YYYYMMDD)||'000') FROM DUAL
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL
+  2  ;
+
+TO_CHAR(                                                                                                                
+--------                                                                                                                
+20201015                                                                                                                
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+  2  ;
+
+CONCAT((SEL                                                                                                             
+-----------                                                                                                             
+20201015000                                                                                                             
+
+HR20164091>SELECT H CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL;
+SELECT H CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+               *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') AS H FROM DUAL;
+
+H                                                                                                                       
+-----------                                                                                                             
+20201015000                                                                                                             
+
+HR20164091>SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL;
+SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL
+                 *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL;
+SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL
+                 *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL;
+SELECT TO_NUMBER(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL) FROM DUAL
+                 *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH 1
+  4  MAXVALUE 999
+  5  NOCYCLE
+  6  NOCACHE;
+
+시퀀스가 생성되었습니다.
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO) FROM DUAL;
+SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO) FROM DUAL
+                                                             *
+1행에 오류:
+ORA-00904: "PLUSNO": 부적합한 식별자 
+
+
+HR20164091>CREATE SEQUENCE PLUSNO
+  2  INCREMENT BY 1
+  3  START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL
+  4  MAXVALUE 99999999999
+  5  NOCYCLE
+  6  NOCACHE;
+START WITH SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL
+           *
+3행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL
+  2  ;
+
+CONCAT((SELECTTO_CHAR(SYSDATE,'YYYYMMDD')FROMDUA                                                                        
+------------------------------------------------                                                                        
+202010151                                                                                                               
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL + PLUSNO.NEXTVAL.
+  2  ;
+SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL + PLUSNO.NEXTVAL.
+                                                                              *
+1행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL + PLUSNO.NEXTVAL;
+SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL + PLUSNO.NEXTVAL
+                                                                              *
+1행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+HR20164091>SELECT SUM((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL),PLUSNO.NEXTVAL)
+  2  ;
+SELECT SUM((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL),PLUSNO.NEXTVAL)
+       *
+1행에 오류:
+ORA-00909: 인수의 개수가 부적합합니다 
+
+
+HR20164091>SELECT SUM((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL;
+SELECT SUM((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),'000') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL
+       *
+1행에 오류:
+ORA-00909: 인수의 개수가 부적합합니다 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),PLUSNO.NEXTVAL) FROM DUAL
+  2  ;
+
+CONCAT((SELECTTO_CHAR(SYSDATE,'YYYYMMDD')FROMDUA                                                                        
+------------------------------------------------                                                                        
+202010152                                                                                                               
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL
+  2  ;
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015003                                                                                                             
+
+HR20164091>SELECT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+SELECT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+       *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT INTO 주문 VALUES SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL
+  2  ;
+SELECT INTO 주문 VALUES SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL
+       *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015004                                                                                                             
+
+HR20164091>SELECT * FROM 주문;
+SELECT * FROM 주문
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+HR20164091>SELECT * FROM TABS;
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+DEPT                           STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          4          5  
+           0          0          0          20                         0                   0          1                 
+         1               N      ENABLED            4 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+EMP                            STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         14          5  
+           0          0          0          38                         0                   0          1                 
+         1               N      ENABLED           14 20/09/17 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+BONUS                          STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+                                                                                           YES N          0          0  
+           0          0          0           0                         0                   0          1                 
+         1               N      ENABLED            0 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  NO  DEFAULT                                                                      
+                                                                                                                        
+SALGRADE                       STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          5          5  
+           0          0          0          10                         0                   0          1                 
+         1               N      ENABLED            5 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+DUMMY                          STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          1          5  
+           0          0          0           2                         0                   0          1                 
+         1               N      ENABLED            1 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+S                              STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          5          5  
+           0          0          0          21                         0                   0          1                 
+         1               N      ENABLED            5 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+P                              STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N          6          5  
+           0          0          0          27                         0                   0          1                 
+         1               N      ENABLED            6 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+SP                             STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N         12          5  
+           0          0          0          11                         0                   0          1                 
+         1               N      ENABLED           12 20/09/03 NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+YES NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+MANAGER                        STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N                        
+                                                                                                      1                 
+         1               N      ENABLED                       NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+NO  NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+EMP_SUMMARY                    STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+         65536     1048576           1  2147483645                                         YES N                        
+                                                                                                      1                 
+
+TABLE_NAME                     TABLESPACE_NAME                                                                          
+------------------------------ ------------------------------                                                           
+CLUSTER_NAME                                                                                                            
+------------------------------------------------------------                                                            
+IOT_NAME                                                     STATUS     PCT_FREE   PCT_USED  INI_TRANS  MAX_TRANS       
+------------------------------------------------------------ -------- ---------- ---------- ---------- ----------       
+INITIAL_EXTENT NEXT_EXTENT MIN_EXTENTS MAX_EXTENTS PCT_INCREASE  FREELISTS FREELIST_GROUPS LOG B   NUM_ROWS     BLOCKS  
+-------------- ----------- ----------- ----------- ------------ ---------- --------------- --- - ---------- ----------  
+EMPTY_BLOCKS  AVG_SPACE  CHAIN_CNT AVG_ROW_LEN AVG_SPACE_FREELIST_BLOCKS NUM_FREELIST_BLOCKS DEGREE                     
+------------ ---------- ---------- ----------- ------------------------- ------------------- --------------------       
+INSTANCES            CACHE      TABLE_LO SAMPLE_SIZE LAST_ANA PAR IOT_TYPE     T S NES BUFFER_ FLASH_C CELL_FL ROW_MOVE 
+-------------------- ---------- -------- ----------- -------- --- ------------ - - --- ------- ------- ------- -------- 
+GLO USE DURATION                       SKIP_COR MON CLUSTER_OWNER                                                       
+--- --- ------------------------------ -------- --- ------------------------------------------------------------        
+DEPENDEN COMPRESS COMPRESS_FOR DRO REA SEG RESULT_                                                                      
+-------- -------- ------------ --- --- --- -------                                                                      
+         1               N      ENABLED                       NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+NO  NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  YES DEFAULT                                                                      
+                                                                                                                        
+주분                           STUDENT                                                                                  
+                                                                                                                        
+                                                             VALID            10                     1        255       
+                                                                                           YES N                        
+                                                                                                      1                 
+         1               N      ENABLED                       NO               N N NO  DEFAULT DEFAULT DEFAULT DISABLED 
+NO  NO                                 DISABLED YES                                                                     
+DISABLED DISABLED              NO  NO  NO  DEFAULT                                                                      
+                                                                                                                        
+
+11 개의 행이 선택되었습니다.
+
+HR20164091>SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                                                                       
+------------------------------ ------- ----------                                                                       
+BIN$1/iyLeAIQGudg49JaGnIQg==$0 TABLE                                                                                    
+BIN$Exkf2dHZT4WKJf07bvzgTQ==$0 TABLE                                                                                    
+BIN$LSoYeJ2kScuI2IO+9GBtSQ==$0 TABLE                                                                                    
+BIN$SHKT36ppTQKLzJa27FrhCQ==$0 TABLE                                                                                    
+BIN$VDRzPmJQRBy/mLX2BVE0TA==$0 TABLE                                                                                    
+BIN$fhpuzY2USzmkkCiezsF4ng==$0 TABLE                                                                                    
+BIN$sj+V56hUTWCL0ygAYTtR3A==$0 TABLE                                                                                    
+BIN$wRbrw8RMR9WJ5wRMrBhyqg==$0 TABLE                                                                                    
+BIN$wpUK776tQ+Krj6aXGpkWtg==$0 TABLE                                                                                    
+BONUS                          TABLE                                                                                    
+DEPT                           TABLE                                                                                    
+DUMMY                          TABLE                                                                                    
+EMP                            TABLE                                                                                    
+EMP_SUMMARY                    TABLE                                                                                    
+MANAGER                        TABLE                                                                                    
+P                              TABLE                                                                                    
+S                              TABLE                                                                                    
+SALGRADE                       TABLE                                                                                    
+SP                             TABLE                                                                                    
+주분                           TABLE                                                                                    
+
+20 개의 행이 선택되었습니다.
+
+HR20164091>DROP TABLE 주분;
+
+테이블이 삭제되었습니다.
+
+HR20164091>CREATE TABLE 주문(
+  2  주문번호 CHAR(12));
+
+테이블이 생성되었습니다.
+
+HR20164091>SELECT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+SELECT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+       *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+                         *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015005                                                                                                             
+
+HR20164091>INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+                         *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL));
+INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL))
+                                                                                                  *
+1행에 오류:
+ORA-02287: 시퀀스 번호는 이 위치에 사용할 수 없습니다 
+
+
+HR20164091>(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015006                                                                                                             
+
+HR20164091>(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015007                                                                                                             
+
+HR20164091>INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL));
+INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL))
+                                                                                                  *
+1행에 오류:
+ORA-02287: 시퀀스 번호는 이 위치에 사용할 수 없습니다 
+
+
+HR20164091>INSET INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+SP2-0734: "INSET INTO..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+HR20164091>INSERT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL));
+INSERT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL))
+                        *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL));
+INSERT 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL))
+       *
+1행에 오류:
+ORA-00925: INTO 키워드가 누락되었습니다. 
+
+
+HR20164091>INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL));
+INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') ),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL))
+                                                                           *
+1행에 오류:
+ORA-00923: FROM 키워드가 필요한 위치에 없습니다. 
+
+
+HR20164091>INSERT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL));
+INSERT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL))
+                        *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL));
+INSERT INTO 주문 VALUES((SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL))
+                                                                                                                 *
+1행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+HR20164091>SELECT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL);
+SELECT INTO 주문 VALUES(SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL)
+       *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT INTO 주문 VALUES(SELECT CONCAT((TO_CHAR(SYSDATE,'YYYYMMDD')),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+SELECT INTO 주문 VALUES(SELECT CONCAT((TO_CHAR(SYSDATE,'YYYYMMDD')),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+       *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT INTO 주문 VALUES (SELECT CONCAT((TO_CHAR(SYSDATE,'YYYYMMDD')),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL);
+INSERT INTO 주문 VALUES (SELECT CONCAT((TO_CHAR(SYSDATE,'YYYYMMDD')),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL)
+                         *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL);
+INSERT INTO 주문 VALUES (SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0') FROM DUAL) FROM DUAL)
+                         *
+1행에 오류:
+ORA-00936: 누락된 표현식 
+
+
+HR20164091>SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+CONCAT((SELECT                                                                                                          
+--------------                                                                                                          
+20201015008                                                                                                             
+
+HR20164091>INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
+
+1 개의 행이 만들어졌습니다.
+
+HR20164091>SELECT * FROM 주문;
+
+주문번호                                                                                                                
+------------                                                                                                            
+20201015010                                                                                                             
+
+HR20164091>
+HR20164091>
+HR20164091>SPOOL OFF
+
+1번
+CREATE TABLE EMP_SUMMARY(
+EMPNO NUMBER(4),
+ENAME VARCHAR2(10),
+JOB VARCHAR2(9),
+INCOME NUMBER(7,2),
+DNAME VARCHAR2(14),
+CONSTRAINT ES_PK PRIMARY KEY (EMPNO));
+
+2번
+INSERT INTO EMP_SUMMARY(EMPNO, ENAME, JOB, INCOME, DNAME)
+  2  (SELECT EMPNO, ENAME, JOB, SAL*12+NVL(COMM,0), DNAME FROM EMP,DEPT
+  3  WHERE EMP.DEPTNO = DEPT.DEPTNO);
+
+3번
+UPDATE EMP_SUMMARY SET INCOME = (SELECT INCOME FROM EMP_SUMMARY WHERE ENAME = 'ALLEN')
+WHERE ENAME = 'SMITH';
+
+4번
+DELETE FROM EMP_SUMMARY WHERE ENAME IN (SELECT ENAME FROM EMP WHERE SAL >= 2000);
+
+5번
+CREATE TABLE 주문 (주문번호 CHAR(12));
+
+CREATE SEQUENCE PLUSNO
+INCREMENT BY 1
+START WITH 1
+MAXVALUE 999
+NOCYCLE
+NOCACHE;
+
+INSERT INTO 주문 SELECT CONCAT((SELECT TO_CHAR(SYSDATE,'YYYYMMDD') FROM DUAL),LPAD(PLUSNO.NEXTVAL,3,'0')) FROM DUAL;
