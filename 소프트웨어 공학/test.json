@@ -1,0 +1,290 @@
+{
+    "list": [
+        {
+            "unitName": "내린천휴게소(양양)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "249",
+            "routeNo": "0600",
+            "routeName": "서울양양선",
+            "xValue": "127.804532",
+            "yValue": "35.550789"
+        },
+        {
+            "unitName": "홍천휴게소(서울)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "250",
+            "routeNo": "0600",
+            "routeName": "서울양양선",
+            "xValue": "127.806488",
+            "yValue": "35.551736"
+        },
+        {
+            "unitName": "홍천휴게소(양양)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "251",
+            "routeNo": "0600",
+            "routeName": "서울양양선",
+            "xValue": "128.403586",
+            "yValue": "35.767024"
+        },
+        {
+            "unitName": "내린천휴게소(서울)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "253",
+            "routeNo": "0600",
+            "routeName": "서울양양선",
+            "xValue": "128.444761",
+            "yValue": "36.410784"
+        },
+        {
+            "unitName": "동해휴게소(삼척)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "025",
+            "routeNo": "0650",
+            "routeName": "동해선(삼척-속초)",
+            "xValue": "129.074237",
+            "yValue": "37.601565"
+        },
+        {
+            "unitName": "옥계휴게소(속초)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "135",
+            "routeNo": "0650",
+            "routeName": "동해선(삼척-속초)",
+            "xValue": "129.059527",
+            "yValue": "37.615770"
+        },
+        {
+            "unitName": "구정휴게소(주문진)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "136",
+            "routeNo": "0650",
+            "routeName": "동해선(삼척-속초)",
+            "xValue": "128.853983",
+            "yValue": "37.722730"
+        },
+        {
+            "unitName": "구정휴게소(동해)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "137",
+            "routeNo": "0650",
+            "routeName": "동해선(삼척-속초)",
+            "xValue": "128.851470",
+            "yValue": "37.722470"
+        },
+        {
+            "unitName": "장안휴게소(부산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "172",
+            "routeNo": "0651",
+            "routeName": "부산울산선",
+            "xValue": "126.799831",
+            "yValue": "36.258669"
+        },
+        {
+            "unitName": "장안휴게소(울산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "173",
+            "routeNo": "0651",
+            "routeName": "부산울산선",
+            "xValue": "126.796921",
+            "yValue": "36.257748"
+        },
+        {
+            "unitName": "외동휴게소(울산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "230",
+            "routeNo": "0652",
+            "routeName": "동해선(부산-포항)",
+            "xValue": "127.105204",
+            "yValue": "37.235102"
+        },
+        {
+            "unitName": "외동휴게소(포항)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "231",
+            "routeNo": "0652",
+            "routeName": "동해선(부산-포항)",
+            "xValue": "127.406646",
+            "yValue": "37.264224"
+        },
+        {
+            "unitName": "서하남휴게소(판교)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "186",
+            "routeNo": "1000",
+            "routeName": "수도권제1순환선",
+            "xValue": "128.346804",
+            "yValue": "35.293779"
+        },
+        {
+            "unitName": "구리휴게소(퇴계원)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "244",
+            "routeNo": "1000",
+            "routeName": "수도권제1순환선",
+            "xValue": null,
+            "yValue": null
+        },
+        {
+            "unitName": "시흥하늘휴게소(구리)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "254",
+            "routeNo": "1000",
+            "routeName": "수도권제1순환선",
+            "xValue": "128.447588",
+            "yValue": "36.409625"
+        },
+        {
+            "unitName": "시흥하늘휴게소(일산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "255",
+            "routeNo": "1000",
+            "routeName": "수도권제1순환선",
+            "xValue": "129.011593",
+            "yValue": "36.456696"
+        },
+        {
+            "unitName": "장유휴게소(부산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "083",
+            "routeNo": "1040",
+            "routeName": "남해2지선",
+            "xValue": "128.794142",
+            "yValue": "35.212103"
+        },
+        {
+            "unitName": "장유휴게소(부산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "234",
+            "routeNo": "1040",
+            "routeName": "남해2지선",
+            "xValue": null,
+            "yValue": null
+        },
+        {
+            "unitName": "부여휴게소(동서천)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "203",
+            "routeNo": "1510",
+            "routeName": "서천공주선",
+            "xValue": "126.577780",
+            "yValue": "35.343050"
+        },
+        {
+            "unitName": "부여휴게소(서공주)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "204",
+            "routeNo": "1510",
+            "routeName": "서천공주선",
+            "xValue": "126.990306",
+            "yValue": "36.398395"
+        },
+        {
+            "unitName": "청양휴게소(서공주)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "205",
+            "routeNo": "1510",
+            "routeName": "서천공주선",
+            "xValue": "126.992874",
+            "yValue": "36.399585"
+        },
+        {
+            "unitName": "청양휴게소(동서천)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "209",
+            "routeNo": "1510",
+            "routeName": "서천공주선",
+            "xValue": "126.996820",
+            "yValue": "36.523390"
+        },
+        {
+            "unitName": "계룡휴게소(대전)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "042",
+            "routeNo": "2510",
+            "routeName": "호남지선",
+            "xValue": "127.270254",
+            "yValue": "36.210530"
+        },
+        {
+            "unitName": "벌곡휴게소(논산)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "043",
+            "routeNo": "2510",
+            "routeName": "호남지선",
+            "xValue": "127.274017",
+            "yValue": "36.217785"
+        },
+        {
+            "unitName": "양촌휴게소(대전)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "046",
+            "routeNo": "2510",
+            "routeName": "호남지선",
+            "xValue": null,
+            "yValue": null
+        },
+        {
+            "unitName": "벌곡휴게소(회덕)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "223",
+            "routeNo": "2510",
+            "routeName": "호남지선",
+            "xValue": "128.403670",
+            "yValue": "35.767150"
+        },
+        {
+            "unitName": "현풍휴게소(대구)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "089",
+            "routeNo": "4510",
+            "routeName": "중부내륙지선",
+            "xValue": "128.437688",
+            "yValue": "35.702351"
+        },
+        {
+            "unitName": "현풍휴게소(현풍)",
+            "pageNo": null,
+            "numOfRows": null,
+            "unitCode": "090",
+            "routeNo": "4510",
+            "routeName": "중부내륙지선",
+            "xValue": "128.435982",
+            "yValue": "35.702309"
+        }
+    ],
+    "count": 226,
+    "pageNo": 3,
+    "numOfRows": 99,
+    "pageSize": 3,
+    "message": "인증키가 유효합니다.",
+    "code": "SUCCESS"
+}
