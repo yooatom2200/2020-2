@@ -1,0 +1,4 @@
+﻿  소스.c
+D:\공부\데구2\Report_2_Project\Report_2_Project\소스.c(273,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\공부\데구2\Report_2_Project\Report_2_Project\소스.c(288,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Report_2_Project.vcxproj -> D:\공부\데구2\Report_2_Project\Debug\Report_2_Project.exe
